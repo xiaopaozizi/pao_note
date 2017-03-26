@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+*{margin:0;padding:0;}
+ul{list-style:none;height:170px;margin:100px auto;width:960px;overflow:hidden;}
+li{height:170px;width:120px;position:relative;float:left;}
+div{height:340px;position:absolute;width:120px;}
+img{vertical-align:top;width:120px;height:170px;}
+</style>
+<script src="yang.js"></script>
+<script>
+window.onload = function () {
+	var aDiv = document.getElementsByTagName('div');
+	var aImg = document.querySelectorAll('li>img');
+	var nowTime = '';
+	var oldTime = getTime();
+	var timer = null;
+	
+	draw();
+	autoPlay();
+	
+	function autoPlay() {
+		clearInterval(timer);
+		timer = setInterval(function () {
+			for ( var i = 0; i < aImg.length; i++ ) {
+				aImg[i].src = 'img/colon1.JPG';
+			}
+			setTimeout(function () {
+				for ( var i = 0; i < aImg.length; i++ ) {
+					aImg[i].src = 'img/colon.JPG';
+				}	
+			}, 500);
+			nowTime = getTime();
+			draw();
+		}, 1000);
+	}
+	
+	function draw() {
+		nowTime = getTime();
+		for ( var i = 0; i < nowTime.length; i++ ) {
+			aDiv[i].firstElementChild.src = 'img/' + nowTime[i] + '.JPG';
+			if (nowTime[i] !== oldTime[i]) {
+				aDiv[i].lastElementChild.src = 'img/' + nowTime[i] + '.JPG';
+				siled(i);
+			}
+		}
+		oldTime = nowTime;
+	}
+	function siled(index) {
+		move(aDiv[index], 'top', 10, -170, function () {
+			aDiv[index].style.top = 0;
+		});
+		
+	}
+	function getTime(){
+		var date = new Date();
+		var h = date.getHours();
+		var m = date.getMinutes();
+		var s = date.getSeconds();
+		return fillZero(h) + fillZero(m) + fillZero(s);
+	}
+	function fillZero(num) {
+		return num < 10 ? '0' + num : '' + num;
+	}
+}
+</script>
+</head>
+<body>
+<ul>
+	<li>
+		<div>
+			<img src="img/0.JPG"/>
+			<img src="img/0.JPG"/>
+		</div>
+	</li>
+	<li>
+		<div>
+			<img src="img/0.JPG"/>
+			<img src="img/0.JPG"/>
+		</div>
+	</li>
+	<li><img src="img/colon.JPG"/></li>
+	<li>
+		<div>
+			<img src="img/0.JPG"/>
+			<img src="img/0.JPG"/>
+		</div>
+	</li>
+	<li>
+		<div>
+			<img src="img/0.JPG"/>
+			<img src="img/0.JPG"/>
+		</div>
+	</li>
+	<li><img src="img/colon.JPG"/></li>
+	<li>
+		<div>
+			<img src="img/0.JPG"/>
+			<img src="img/0.JPG"/>
+		</div>
+	</li>
+	<li>
+		<div>
+			<img src="img/0.JPG"/>
+			<img src="img/0.JPG"/>
+		</div>
+	</li>
+</ul>
+</body>
+</html>

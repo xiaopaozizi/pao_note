@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>商品抢购倒计时</title>
+<style>
+*{padding:0;margin:0;}
+#box{width:800px;height:750px;margin:20px auto;border:1px solid red;position:relative;}
+#box h2{position:absolute;top:0;left:0;width:inherit;height:40px;line-height:40px;}
+#box ul{width:inherit;height:300px;list-style:none;top:40px;position:relative;}
+#box ul li{width:190px;height:300px;border:1px solid #ccc;margin:4px;position:absolute;float:left;border:1px solid black;}
+#box ul li input:first-child{width:140px;}
+#box ul li img{width:190px;height:150px;}
+#box ul li img.bigPic{height:300px;}
+#box ul li p{margin-top:10px;text-align:center;}
+#box ul li span{margin-top:10px;display:inline-block;height:20px;line-height:20px;text-align:center;}
+#box ul li p span.red{color:red;}
+#box table{position:absolute;top:340px;width:inherit;background:pink;}
+#box table img{width:60px;height:60px;}
+#box table tr{border:1px solid #ccc;width:inherit;height:70px;}
+#box table tr td{text-align:center;}
+#box div{position:absolute;bottom:0;height:50px;line-height:50px;font-size:20px;}
+#box div span{color:red;font-weight:bold;}
+</style>
+<script src="yang.js"></script>
+<script>
+window.onload = function () {
+	var aLi = document.querySelectorAll('#box ul li');
+	var totalPrice = $('totalPrice');
+	var prices = 0;
+	var oTable = document.getElementsByTagName('table')[0];
+	for ( var i = 0; i < aLi.length; i++ ) {
+		// 初始化位置
+		aLi[i].style.left = 200 * i + 'px';
+		var aInp = aLi[i].querySelectorAll('input');
+		aInp[1].index = i;
+		// 点击确定按钮，自动倒计时
+		aInp[1].onclick = function () {	
+			autoPlay(this);
+			this.previousElementSibling.disabled="disabled";
+		}
+		
+	}
+	// 倒计时
+	function autoPlay(_this) {
+		clearInterval(timer);
+		var timer = setInterval(function () {
+			diffTime(_this, timer);
+		}, 1000);
+	}
+	// 计算时间差
+	function diffTime(_this, timer) {
+		var feture = new Date(_this.previousElementSibling.value).getTime();
+		var now = new Date().getTime();
+		var diff = Math.floor((feture - now)/1000);
+		if(diff < 0) {
+			// 父节点
+			var parent = _this.parentNode;
+			// 抖动父节点
+			shake(parent, 'left', parseInt(getStyle(parent)), function () {
+				// 向购物车中添加商品，并且计算总价
+				// 商品描述、价格、图片
+				var gDesc = parent.querySelector('.desc').innerHTML;
+				var gPrice = parent.querySelector('.price').innerHTML;
+				var gPicture = parent.querySelector('.picture').alt;
+				var newTr = '<tr><td>'+gDesc+'</td><td>'+gPrice+'</td><td><img src="'+gPicture+'"/></td></tr>';
+				oTable.innerHTML += newTr;
+				// 总价
+				prices += parseFloat(gPrice);
+				//console.log(prices);
+				totalPrice.innerHTML = prices;
+				// 添加下架图片
+				parent.innerHTML = '<img src="img/off.jpg" class="bigPic"/>';
+			});
+			clearInterval(timer);
+		}
+		// 获取天时分秒
+		var day = Math.floor(diff/86400);
+		var hour = Math.floor(diff%86400/3600);
+		var mini = Math.floor(diff%86400%3600/60);
+		var seco = Math.floor(diff%86400%3600%60);
+		var str = '还剩' + day + '天' + hour + '时' + mini +'分' + seco +'秒';
+		_this.nextElementSibling.nextElementSibling.innerHTML = str;
+	}
+	
+}
+</script>
+</head>
+<body>
+<div id="box">
+	<h2>限购时间</h2>
+	<ul>
+		<li>
+			<input value="January 21 2017 22:40:00"/>
+			<input type="button" value="确定"/><br/>
+			<span>还剩00天00时00分00秒</span><br/>
+			<img src="img/1.PNG" alt="img/1.png" class="picture"/>
+			<p class="desc">商品一那个描述描述商品一那个描述描商品一那个</p>
+			<p>抢购价：￥<span class="red price">100.00</span></p>
+		</li>
+		<li>
+			<input value="January 21 2017 22:40:00"/>
+			<input type="button" value="确定"/><br/>
+			<span>还剩00天00时00分00秒</span><br/>
+			<img src="img/2.PNG" alt="img/2.png" class="picture"/>
+			<p class="desc">商品2那个描述描述商品一那个描述描商品一那个</p>
+			<p>抢购价：￥<span class="red price">200.00</span></p>
+		</li>
+		<li>
+			<input value="January 21 2018 22:40:00"/>
+			<input type="button" value="确定"/><br/>
+			<span>还剩00天00时00分00秒</span><br/>
+			<img src="img/3.PNG" alt="img/3.png" class="picture"/>
+			<p class="desc">商品3那个描述描述商品一那个描述描商品一那个</p>
+			<p>抢购价：￥<span class="red price">300.00</span></p>
+		</li>
+		<li>
+			<input value="January 21 2017 22:40:00"/>
+			<input type="button" value="确定"/><br/>
+			<span>还剩00天00时00分00秒</span><br/>
+			<img src="img/4.PNG" alt="img/4.png" class="picture"/>
+			<p class="desc">商品4那个描述描述商品一那个描述描商品一那个</p>
+			<p>抢购价：￥<span class="red price">400.00</span></p>
+		</li>
+	</ul>
+	<table>
+		<tr>
+			<th>商品描述</th>
+			<th>价格</th>
+			<th>图片</th>
+		</tr>
+	</table>
+	<div>总价：￥<span class="red" id="totalPrice">1000.00</span>元</div>
+</div>
+</body>
+</html>

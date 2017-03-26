@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+*{padding:0;margin:0;}
+ul{list-style:none;height:172px;width:976px;margin:100px auto;}
+ul li{float:left;width:122px;}
+</style>
+<script>
+window.onload = function () {
+	var oUl = document.getElementsByTagName('ul')[0];
+	var aDiv = oUl.getElementsByTagName('div');
+	var date = new Date();
+	var hour = date.getHours();
+	var mini = date.getMinutes();
+	var seco = date.getSeconds();
+	var time = fillZero(hour) + fillZero(mini) + fillZero(seco);
+	
+	for( var i = 0; i < aDiv.length; i++ ) {
+		aDiv[i].firstElementChild.src = 'img/' + time[i] + '.JPG';
+	}
+
+}
+function fillZero(n){
+	return n < 10 ? '0' + n : '' + n;
+}
+</script>
+</head>
+<body>
+<ul>
+	<li>
+		<div>
+			<img src="img/0.JPG"/>
+			<img src="img/0.JPG"/>
+		</div>
+	</li>
+	<li>
+		<div>
+			<img src="img/0.JPG"/>
+			<img src="img/0.JPG"/>
+		</div>
+	</li>
+	<li>
+		<img src="img/colon.JPG"/>
+	</li>
+	<li>
+		<div>
+			<img src="img/0.JPG"/>
+			<img src="img/0.JPG"/>
+		</div>
+	</li>
+	<li>
+		<div>
+			<img src="img/0.JPG"/>
+			<img src="img/0.JPG"/>
+		</div>
+	</li>
+	<li>
+		<img src="img/colon.JPG"/>
+	</li>
+	<li>
+		<div>
+			<img src="img/0.JPG"/>
+			<img src="img/0.JPG"/>
+		</div>
+	</li>
+	<li>
+		<div>
+			<img src="img/0.JPG"/>
+			<img src="img/0.JPG"/>
+		</div>
+	</li>
+</ul>
+</body>
+</html>

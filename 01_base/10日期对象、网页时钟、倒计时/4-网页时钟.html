@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+ul{
+	margin: 0;
+	padding: 0;
+	position: relative;
+	height: 170px;
+	overflow: hidden;
+}
+li{
+	list-style: none;
+	width: 120px;
+	height: 170px;
+	position: relative;
+	float: left;
+}
+div{
+	height: 340px;
+	position: absolute;
+	top: 0;
+}
+img{
+	width: 120px;
+	height: 170px;
+	vertical-align: top;
+}
+</style>
+<script src="yang.js"></script>
+<script>
+window.onload = function () {
+	var oUl = document.getElementsByTagName('ul')[0];
+	var aDiv = oUl.getElementsByTagName('div');
+	var aImg = document.querySelectorAll('li>img');
+	var timer = null;
+	var date = null;
+	var time = '';		// 现在的时间
+	var old = '';		// 过去的时间
+	
+	drawClock();
+	// 绘制时钟
+	autoPlay();
+	
+	
+	
+	
+	
+	
+	// 自动播放
+	function autoPlay() {
+		clearInterval(timer);
+		timer = setInterval(function () {
+			// 停顿闪烁
+			for ( var i = 0; i < aImg.length; i++ ) {
+				aImg[i].src = 'img/colon1.JPG';
+			}
+			setTimeout(function () {
+				for ( var i = 0; i < aImg.length; i++ ) {
+					aImg[i].src = 'img/colon.JPG';
+				}
+			}, 500);
+			drawClock();
+		},1000);
+	}
+	// 绘制时钟
+	function drawClock() {	
+		date = new Date();
+		time = fillZero(date.getHours()) + fillZero(date.getMinutes()) 
+					+ fillZero(date.getSeconds());
+		for( var i = 0; i < aDiv.length; i++ ) {
+			aDiv[i].firstElementChild.src = 'img/' + time[i] + '.JPG';
+		}
+		// 判断过去的时间和现在的事件的不同，然后上翻运动
+		for ( var i = 0; i < time.length; i++ ) {			
+			if (old[i] !== time[i]) {
+				slied(i, time);
+			} 
+		}
+		old = time;
+	}
+	function slied(n,time){
+		var aImg = aDiv[n].getElementsByTagName('img');
+		aImg[1].src = 'img/' + time[n] + '.JPG';
+		move(aDiv[n], 'top', 10, -170, function () {
+			aImg[0].src = 'img/' + time[n] + '.JPG';
+			aDiv[n].style.top = 0;
+		});
+	}
+	// 填充零
+	function fillZero(n){
+		return n < 10 ? '0' + n : '' + n;
+	}
+
+}
+
+</script>
+</head>
+<body>
+<ul>
+	<li>
+		<div>
+			<img src="img/0.JPG"/>
+			<img src="img/0.JPG"/>
+		</div>
+	</li>
+	<li>
+		<div>
+			<img src="img/0.JPG"/>
+			<img src="img/0.JPG"/>
+		</div>
+	</li>
+	<li>
+		<img src="img/colon.JPG"/>
+	</li>
+	<li>
+		<div>
+			<img src="img/0.JPG"/>
+			<img src="img/0.JPG"/>
+		</div>
+	</li>
+	<li>
+		<div>
+			<img src="img/0.JPG"/>
+			<img src="img/0.JPG"/>
+		</div>
+	</li>
+	<li>
+		<img src="img/colon.JPG"/>
+	</li>
+	<li>
+		<div>
+			<img src="img/0.JPG"/>
+			<img src="img/0.JPG"/>
+		</div>
+	</li>
+	<li>
+		<div>
+			<img src="img/0.JPG"/>
+			<img src="img/0.JPG"/>
+		</div>
+	</li>
+</ul>
+</body>
+</html>
