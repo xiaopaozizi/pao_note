@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style>
+ul,h2 {padding:0;margin:0;}
+li{list-style:none;}
+#list{width:200px;margin:0 auto;border:1px solid #000;}
+#list{width:200px;}
+#list h2{width:200px;height:30px;line-height:30px;text-align:center;background:url(img/ico1.gif) no-repeat 20% 50% #6699FF;text-indent:24px;border-bottom:1px dotted #000;}
+#list h2.active{background:url(img/ico2.gif) no-repeat 20% 50% #FFCC99;}
+#list ul{width:200px;text-align:center;display:none;}
+#list ul li{width:200px;height:30px;line-height:30px;}
+#list ul li.highlight{background:#FF66FF;}
+</style>
+<title>无标题文档</title>
+<script>
+window.onload = function () {
+	var oUl = document.getElementById('list');
+	var oH2 = oUl.getElementsByTagName('h2');
+	var aUl = oUl.getElementsByTagName('ul');
+	var aLi = [];
+	var arr = [];
+	var oldLi = null;
+	var num = 0;
+	
+	// 点击菜单显示隐藏
+	for( var i = 0; i < oH2.length; i++ ) {
+		oH2[i].index = i;
+		oH2[i].onclick = function () {
+			if (this.className === '') {
+				aUl[this.index].style.display = 'block';
+				this.className = 'active';
+			} else {
+				aUl[this.index].style.display = 'none';
+				this.className = '';
+			}
+		}
+	}
+	// 获取菜单中的每个li
+	for ( var i = 0; i < aUl.length; i++ ) {
+		aLi = aUl[i].getElementsByTagName('li');
+		for ( var j = 0; j < aLi.length; j++ ) {
+			arr.push(aLi[j]);
+		}
+	}
+	// 遍历aLi
+	for ( var i = 0; i < arr.length; i++ ) {
+		arr[i].onOff = false;
+		arr[i].onclick = function () {
+			// 当上一个点击的li不是当前点击的Li
+			if (oldLi && oldLi !== this) {
+				oldLi.className = '';
+				oldLi.onOff = false;
+			}
+			this.className = this.onOff ? '' : 'highlight';
+			this.onOff = !this.onOff;
+			oldLi = this;
+		}
+	}
+}
+</script>
+</head>
+
+<body>
+<ul id="list">
+	<li class="lis">
+		<h2>我的好友</h2>
+		<ul>
+			<li>张三1</li>
+			<li>张三2</li>
+			<li>张三3</li>
+		</ul>
+	</li>
+	<li class="lis">
+		<h2>企业好友</h2>
+		<ul>
+			<li>李四1</li>
+			<li>李四2</li>
+			<li>李四3</li>
+		</ul>
+	</li>
+	<li class="lis">
+		<h2>黑名单</h2>
+		<ul>
+			<li>王五1</li>
+			<li>王五2</li>
+		</ul>
+	</li>
+</ul>
+</body>
+</html>

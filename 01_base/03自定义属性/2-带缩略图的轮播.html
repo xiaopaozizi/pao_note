@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style>
+*{padding:0;margin:0;}
+#content {width:400px;height:500px;margin:10px auto;position:relative;border:1px solid #000;color:red;font-size:20px;}
+#title, #bottom{position:absolute;width:400px;height:30px;line-height:30px;text-align:center;font-size:20px;background:#f1f1f1;}
+#bottom{bottom:0;cursor:pointer;}
+#bottom span{display:inline-block;width:15px;height:15px;border-radius:15px;background:#000;text-align:center;line-height:15px;position:relative;}
+#bottom span.active{background: #FFFF33;}
+#bottom span div {position:absolute;width:110px;height:110px;top:-125px;left:-46px;display:none;}
+#bottom span div:after{content:'';position:absolute;left:49px;bottom:-12px;border-top:7px solid #fff;border-right:5px solid transparent;border-bottom:5px solid transparent;border-left:5px solid transparent;}
+#bottom span img {width:100px;height:100px;border:5px solid #fff;}
+#left, #right{position:absolute;width:60px;height:60px;border-radius:60px;line-height:60px;font-size:60px;background:#FFFF66;font-weight:bold;text-align:center;top:50%;margin-top:-25px;color:#fff;cursor:pointer;filter(opacity:70);opacity:0.7;}
+#left:hover,#right:hover{filter(opacity:100);opacity:1;}
+#left{left:0px;}
+#right{right:0px;} 
+#img{width:400px;height:500px;}
+</style>
+<script>
+window.onload = function () {
+	var bottom = $('bottom'),title = $('title'),
+		img = $('img'),left = $('left'),right = $('right');
+	var aSpan = bottom.getElementsByTagName('span');
+	var aDiv = bottom.getElementsByTagName('div');
+	var arr = ['图片一','图片二','图片三', '图片四'];
+	var num = 0;
+	// 初始化
+	picTab();
+	
+	// 点击下一张
+	right.onclick = function () {
+		if (num === aDiv.length - 1) num = -1;
+		num++;
+		picTab();
+	}
+	
+	// 点击上一张
+	left.onclick = function () {
+		if (num === 0) num = aDiv.length;
+		num--;
+		picTab();
+	}
+	
+	function picTab() {
+		title.innerHTML = arr[num];
+		img.src = 'img/' + (num + 1) + '.png';
+		for ( var i = 0; i < aSpan.length; i++ ) {
+			aSpan[i].className = '';
+		}
+		aSpan[num].className = 'active';
+	}
+	// 鼠标移入移出显示缩略图
+	for ( var i = 0; i < aSpan.length; i++ ) {
+		aSpan[i].index = i;
+		aSpan[i].onmouseover = function () {
+			aDiv[this.index].style.display = 'block';
+		}
+		aSpan[i].onmouseout = function () {
+			aDiv[this.index].style.display = 'none';
+		}
+		aSpan[i].onclick = function () {
+			num = this.index;
+			picTab();
+		}
+	}
+	function $(id) { return document.getElementById(id);}
+}
+</script>
+</head>
+<body>
+<div id="content">
+	<div id="title">带缩略图的轮播</div>
+	<div id="left"><</div>
+	<div id="right">></div>
+	<div id="bottom">
+		<span><div><img src="img/1.png"/></div></span>
+		<span><div><img src="img/2.png"/></div></span>
+		<span><div><img src="img/3.png"/></div></span>
+		<span><div><img src="img/4.png"/></div></span>
+	</div>
+	<img src="" id="img"/>
+</div>
+</body>
+</html>

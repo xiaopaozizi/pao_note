@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style>
+*{padding:0;margin:0;}
+#content{width:550px;height:300px;margin:50px auto;position:relative;}
+#content input{width:60px;height:30px;margin-right:10px;}
+#content div{diplay:inline-block;position:absolute;bottom:0;;border:1px solid #ccc;width:250px;height:250px;background:url(img/loader_ico.gif) no-repeat center #f1f1f1;}
+#content div.left{left:0;}
+#content div.right{right:0;}
+#content div span{display:inline-block;width:250px;height:30px;line-height:30px;background:#ccc;color:red;text-align:center;}
+#content div img {height:250px;width:250px;}
+</style>
+<script>
+window.onload = function () {
+	var content = $('content'),prev = $('prev'),next = $('next'),
+		left = $('left'),right = $('right');
+	var aSpan = content.getElementsByTagName('span');
+	var aImg = content.getElementsByTagName('img');
+	
+	var arr = [
+		['img/1.png','img/2.png','img/3.png','img/4.png'],
+		['img/2.png','img/3.png','img/4.png']
+	];
+	var num = [0, 0];
+	
+	
+	// 初始化
+	for ( var i = 0; i < aSpan.length; i++ ) {
+		carousel(i);
+		aImg[i].index = i;
+		aImg[i].onclick = function () {	
+			if (num[this.index] === arr[this.index].length - 1) num[this.index] = -1;
+			num[this.index]++;
+			carousel(this.index);
+		}
+	}
+	
+	// 下一组
+	next.onclick = function () {
+		for ( var i = 0; i < aSpan.length; i++ ) {
+			if (num[i] === arr[i].length - 1) num[i] = -1;
+			num[i]++;
+			carousel(i);
+		}
+	}
+	// 上一组
+	prev.onclick = function () {
+		for ( var i = 0; i < aSpan.length; i++ ) {
+			if (num[i] === 0) num[i] = arr[i].length;
+			num[i]--;
+			carousel(i);
+		}
+	}
+	function carousel(index) {
+		aSpan[index].innerHTML = num[index] + 1 + ' / ' + arr[index].length;
+		aImg[index].src = arr[index][num[index]];
+	}
+		
+	function $(id) {return document.getElementById(id);}
+}
+</script>
+</head>
+<body>
+<div id="content">
+	<input type="button" value="上一组" id="prev" />
+	<input type="button" value="下一组" id="next" />
+	<div class="left">
+		<span>图片数量加载中</span>
+		<img />
+	</div>
+	<div class="right">
+		<span>图片数量加载中</span>
+		<img />
+	</div>
+</div>
+</body>
+</html>
