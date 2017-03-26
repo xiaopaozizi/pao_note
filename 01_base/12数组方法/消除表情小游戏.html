@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>无标题文档</title>
+<style>
+*{padding:0;margin:0;}
+ul{list-style:none;}
+#box{width:600px;height:450px;margin:10px auto;padding:20px;text-align:center;}
+#box h2, #box p{width:inherit;text-align:center;margin-bottom:10px;}
+#box input{text-align:center;text-decoration:none;color:#000;border:1px solid #ccc;display:inline-block;padding:5px;margin:0 auto;background:#fff;}
+#game{width:400px;height:300px;border:2px solid #000;margin:10px auto;position:relative;top:0;}
+#game ul{position:absolute;width:100px;height:60px;left:-102px;border:1px solid #66FFFF;background:#FFCCFF;top:-1px;}
+#game ul li{width:inherit;height:30px;line-height:30px;font-size:20px;}
+#game div{position:absolute;width:24px;height:24px;top:300px;left:0;top:0;display:inline-block;background:url(img/1.png);display:none;}
+</style>
+<script src="yang.js"></script>
+<script>
+window.onload = function () {
+	var start = $('start');
+	var get = $('get');
+	var lost = $('lost');
+	var lostScore = 0;
+	var getScore = 0;
+	var game = $('game');
+	var face = $('face');
+	// 计算表情的活动范围
+	var maxLeft = parseInt(getStyle(game, 'width')) - parseInt(getStyle(face, 'width'));
+	var maxTop = parseInt(getStyle(game, 'height')) - parseInt(getStyle(face, 'height'));
+	var timer = null;
+	var speed = 1; // 下落的速度
+	
+	// 随机安放图标的位置 (left, 0)
+	face.style.left = randomNumber(0, maxLeft) + 'px';
+	face.style.top = 0;
+	// 点击开始自由落体
+	start.onclick = function () {
+		startGame();
+	}
+	face.onclick = function () {
+		clearInterval(timer);
+		var posX = parseInt(getStyle(this, 'left'));
+		// 加分+1
+		getScore++;
+		get.innerHTML = getScore;
+			face.style.backgroundImage = 'url(img/12.png)';
+		shake(this, 'left', posX, function () {
+			face.style.display = 'none';
+			// 加速
+			speed++;
+		});
+		loadAgan();
+	}
+	function startGame() {
+		getScore = lostScore = 0;
+		speed = 1;
+		get.innerHTML = '0';
+		lost.innerHTML = '0';
+		start.value = '游戏进行中...';
+		start.disabled = 'disabled';
+		loadAgan();
+	}
+	function loadAgan() {
+		setTimeout(function () {
+			face.style.backgroundImage = 'url(img/1.png)';
+			face.style.left = randomNumber(0, maxLeft) + 'px';
+			face.style.top = 0;
+			face.style.display = 'block';
+			drop();
+		}, 1000);
+	}
+	function drop() {
+		clearInterval(timer);
+		timer = setInterval(function () {
+			move(face, 'top', speed, maxTop, function () {
+				clearInterval(timer);
+				face.style.display = 'none';
+				shake(game, 'top', 0);
+				// 失分+1
+				lostScore++;
+				lost.innerHTML = lostScore;
+				if (lostScore>=10) {
+					clearInterval(timer);
+					alert('Game Over!!!');
+					start.value = '开始游戏';
+					start.disabled = '';
+					return;
+				}
+				loadAgan();
+			});
+		}, 200);
+	}
+	
+}
+</script>
+</head>
+<body>
+<div id="box">
+	<h2>你的鼠标有多快？</h2>
+	<p>游戏说明：点击“开始游戏”,随机掉下QQ表情，点击它，不要让它掉下来。<br/>点中，得分加1；未点中，失分加1；若失10分，Game Over!!!</p>
+	<input type="button" value="开始游戏" id="start"/>
+	<div id="game">
+		<div id="face"></div>
+		<!--<img src="img/1.png" id="face"/>-->
+		<ul class="score">
+			<li>得分：<span id="get">0</span>分</li>
+			<li>失分：<span id="lost">0</span>分</li>
+		</ul>
+	</div>
+</div>
+</body>
+</html>

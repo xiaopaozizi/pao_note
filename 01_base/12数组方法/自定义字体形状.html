@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+*{padding:0;margin:0;}
+ul{list-style:none;}
+#box{width:600px;height:450px;;border:2px solid #000;margin:100px auto;padding:20px;}
+#box ul.content{width:550px;height:200px;border:1px solid #000;margin-top:10px;}
+#box ul.content p{height:24px;}
+#box ul.content p span {height:24px;width:24px;display:inline-block;text-align:center;line-height:24px;}
+#box ul.content div img{height:24px;width:24px;}
+#box .face{width:300px;height:30px;line-height:30px;margin-top:10px;border:1px solid #ccc;font-size:20px;color:blue;font-weight:bold;position:relative;}
+#face{position:absolute;top:-70px;width:160px;height:60px;border:1px solid #ccc;z-index:1000;cursor:pointer;display:none;padding:5px;}
+#box .face a{text-decoration:none;font-size:20px;display:inline-block;height:30px;line-height:30px;text-align:center;}
+#box .face a:first-child{font-size:30px;width:60px;}
+#box select{margin-top:10px;width:200px;height:30px;}
+#box textarea{width:550px;height:50px;margin-top:10px;resize:none;}
+#box input{width:100px;height:30px;margin-top:10px;}
+
+</style>
+<script>
+window.onload = function () {
+	var faceBtn = document.getElementById('faceBtn');
+	var resetBtn = document.getElementById('resetBtn');
+	var face = document.getElementById('face');
+	var content = document.getElementById('content');
+	var txt = document.getElementById('txt');
+	var send = document.getElementById('send');
+	var faceImg = document.querySelectorAll('#face>img');
+	var faceSpan = document.querySelector('#box .face span');
+	var faceDesc = ['微笑','悲伤','告白','害羞','耍帅','发呆','美丽','kiss','大兵','阳光','爱心','囧'];
+	var hide = true;
+	var font = '';
+	
+	
+	// 初始化图标字体
+	for ( var i = 0; i < faceDesc.length; i++ ) {
+		var oImg = document.createElement('img');
+		oImg.src = 'img/' + (i + 1) + '.png';
+		oImg.title = faceDesc[i];
+		oImg.index = i;
+		oImg.onclick = function () {
+			faceSpan.innerHTML = faceDesc[this.index] + '字体';
+			face.style.display = 'none';
+			font = 'img/' + (this.index + 1) + '.png';
+		}
+		face.appendChild(oImg);
+	}
+	
+	// 点击显示自定义字体
+	faceBtn.onclick = function () {
+		var display = face.style.display;
+		if (display === 'block') {
+			face.style.display = 'none';
+		} else {
+			face.style.display = 'block';
+		}
+	}
+	// 重置字体
+	resetBtn.onclick = function () {
+		if (!font) return;
+		font = '';
+		faceSpan.innerHTML = '默认字体';
+	}
+	txt.focus();
+	// 发送文字
+	send.onclick = function () {
+		var val = txt.value.trim();
+		if(!val) {
+			alert('亲，请输入文字~~');
+			txt.focus();
+			return;
+		}
+		var len = val.length;
+		var oLi = document.createElement('li');
+		var oP = document.createElement('p');
+		var oDiv = document.createElement('div');
+		for ( var i = 0; i < len; i++ ) {
+			var oSpan = document.createElement('span');
+			oSpan.innerHTML = val.charAt(i);
+			oP.appendChild(oSpan);
+			
+			if (font){
+				var oImg = document.createElement('img');
+				oImg.src = font;
+				oDiv.appendChild(oImg);
+			}
+		}
+		oLi.appendChild(oP);
+		if (font) {oLi.appendChild(oDiv);}	
+		content.appendChild(oLi);	
+	}
+
+}
+</script>
+</head>
+
+<body>
+<div id="box">
+	<ul class="content" id="content">
+		<!--<li>
+			<p>
+				<span>我</span>
+				<span>们</span>
+				<span>都</span>
+				<span>很</span>
+				<span>好</span>
+			</p>
+			<div>
+				<img src="img/1.png"/>
+				<img src="img/1.png"/>
+				<img src="img/1.png"/>
+				<img src="img/1.png"/>
+				<img src="img/1.png"/>
+			</div>
+		</li>-->
+	</ul>
+	<div class="face">
+		<a href="javascript:;" id="faceBtn">A</a>
+		<span>默认字体</span>
+		<a href="javascript:;" id="resetBtn">重置字体</a>
+		<div id="face">
+			<!--<img src="img/1.png" title="微信"/>
+			<img src="img/2.png"/>
+			<img src="img/3.png"/>
+			<img src="img/4.png"/>
+			<img src="img/5.png"/>
+			<img src="img/6.png"/>
+			<img src="img/7.png"/>
+			<img src="img/8.png"/>
+			<img src="img/9.png"/>
+			<img src="img/10.png"/>
+			<img src="img/11.png"/>
+			<img src="img/12.png"/>-->
+		</div>
+	</div>
+	<textarea id="txt"></textarea>
+	<input type="button" value="发送" id="send"/>
+</div>
+</body>
+</html>
