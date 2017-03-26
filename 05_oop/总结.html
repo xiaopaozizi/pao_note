@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>无标题文档</title>
+<script>
+/*
+
+创建对象 = 构造函数（属性） +  原型（方法）
+
+
+继承对象
+	① 拷贝继承  call + for in	通吃
+	
+	② 类式继承（构造函数继承） call + new + 中间对象（F） 有new
+	
+	③ 原型继承	中间对象（F） 无new
+	
+
+
+*/
+
+
+
+
+
+
+
+
+
+
+/*
+// 拷贝继承 call + for in
+
+function A (name) {
+	this.name = name;
+}
+A.prototype.showName = function () {
+	return this.name;
+}
+
+function B(name, age) {
+	A.call(this, name);
+	this.age = age;
+}
+copy(B.prototype, A.prototype);
+// 扩展B的原型
+B.prototype.showAge = function () {
+	return this.age;
+}
+var a1 = new A('张三');
+alert(a1.showName());	// 张三
+var b1 = new B('李四', 23);
+alert(b1.showName());	// 李四
+alert(b1.showAge());	// 23
+// 拷贝
+function copy(child, parent) {
+	for ( var attr in parent ) {
+		child[attr] = parent[attr];
+	}
+}
+*/
+
+
+/* 
+// 类式继承（构造函数继承）   构造函数继承） call + new + 中间对象（F） 有new
+function A (name) {
+	this.name = name;
+}
+A.prototype.showName = function () {
+	return this.name;
+}
+function B(name, age) {
+	A.call(this, name);
+	this.age = age;
+}
+// 中间件
+var F = function (){};
+F.prototype = A.prototype;
+B.prototype = new F();
+// 构造函数指向
+B.prototype.constructor = B;
+
+// 扩展B的原型
+B.prototype.showAge = function () {
+	return this.age;
+}
+var a1 = new A('张三');
+alert(a1.showName());	// 张三
+var b1 = new B('李四', 23);
+alert(b1.showName());	// 李四
+alert(b1.showAge());	// 23
+
+*/
+
+
+
+
+
+
+
+
+
+// 原型继承	中间对象（F） 无new
+
+var a = {
+	name : [1,2,3,4],
+}
+function extend(obj){
+	var F = function (){};
+	F.prototype = obj;
+	return new F;
+}
+var b = extend(a);
+alert(b.name);	// 1,2,3,4
+b.name = [1,2,3,4,5];
+b.name.push(6);
+alert(b.name);//1,2,3,4,5,6
+alert(a.name);// 1,2,3,4
+</script>
+</head>
+
+<body>
+</body>
+</html>

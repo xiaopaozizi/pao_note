@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>无标题文档</title>
+<style>
+*{padding:0;margin:0;}
+#box div{width:200px;height:200px;border:1px solid #000;display:none;}
+#box div.show{display:block;}
+.active{background:yellow;}
+</style>
+<script>
+function Tab() {
+	this.oParent = document.getElementById('box');
+	this.aBtn = this.oParent.getElementsByTagName('input');
+	this.aBox = this.oParent.getElementsByTagName('div');
+}
+
+Tab.prototype.init = function() {
+	var _this = this;
+	for ( var i = 0; i < this.aBtn.length; i++ ) {
+		this.aBtn[i].index = i;
+		this.aBtn[i].onclick = function () {
+			_this.change(this);
+		};
+	}
+}
+Tab.prototype.change = function (obj) {
+	for ( var i = 0; i < this.aBtn.length; i++ ) {
+		this.aBtn[i].className = '';
+		this.aBox[i].className = '';
+	}
+	obj.className = 'active';
+	this.aBox[obj.index].className = 'show';
+}
+
+window.onload = function () {
+
+	var t1 = new Tab();
+	t1.init();
+	
+
+}
+
+</script>
+</head>
+
+<body>
+<div id="box">
+	<input class="active" type="button" value="首页" />
+	<input type="button" value="体育" />
+	<input type="button" value="娱乐" />
+	<div class="show">首页</div>
+	<div>体育</div>
+	<div>娱乐</div>
+</div>
+</body>
+</html>

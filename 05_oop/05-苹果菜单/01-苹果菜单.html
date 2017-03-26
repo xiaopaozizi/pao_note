@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>无标题文档</title>
+<style>
+*{margin:0;padding:0;}
+#box{width:100%;height:auto;text-align:center;position:absolute;bottom:0;}
+#box img{width:64px;}
+</style>
+</head>
+
+<body>
+<script>
+window.onload = function () {
+
+	var oBox = document.getElementById('box');
+	var aInput = document.getElementsByTagName('input');
+	var aImg = oBox.getElementsByTagName('img');
+	
+	document.onmousemove = function (ev) {
+	
+		var ev = ev || window.event;
+		
+		for ( var i = 0; i < aImg.length; i++ ) {
+			
+			// 求出每个图片的中心点
+			var x = aImg[i].offsetLeft + aImg[i].offsetWidth/2;
+			var y = aImg[i].offsetTop + aImg[i].offsetHeight/2 + oBox.offsetTop;
+			
+			var a = ev.clientX - x;
+			var b = ev.clientY - y;
+			// 求出斜边的长度
+			var c = Math.sqrt(Math.pow(a,2) + Math.pow(b,2));
+			// 给个比率
+			var scale = 1 - c / 400;
+			if(scale < 0.5) scale = 0.5;
+			aInput[i].value = scale;
+			aImg[i].style.width = scale * 128 + 'px';
+			aImg[i].style.height = scale * 128 + 'px';
+		
+		}
+		
+	}
+	
+}
+</script>
+<input type="text"/>
+<input type="text"/>
+<input type="text"/>
+<input type="text"/>
+<input type="text"/>
+<div id="box">
+	<img src="images/1.png"/>
+	<img src="images/2.png"/>
+	<img src="images/3.png"/>
+	<img src="images/4.png"/>
+	<img src="images/5.png"/>
+</div>
+</body>
+</html>

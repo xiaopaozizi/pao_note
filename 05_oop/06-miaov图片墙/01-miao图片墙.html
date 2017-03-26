@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>无标题文档</title>
+<style>
+*{margin:0;padding:0;}
+li{list-style:none;}
+#box{width:660px;height:auto;margin:10px auto;}
+#box li{width:200px;height:150px;margin:10px;float:left;}
+#box li img{width:200px;height:150px;}
+</style>
+<script src="YCQ.js"></script>
+<script>
+window.onload = function () {
+	
+	var oBox = document.getElementById('box');
+	var oBtn = document.getElementById('btn');
+	var aLi = oBox.getElementsByTagName('li');
+	var posArr = [];
+	// Li的索引
+	var zIndex = 10; 
+	// 记录所有的图片的位置
+	for ( var i = 0; i < aLi.length; i++ ) {
+		posArr.push( [aLi[i].offsetLeft, aLi[i].offsetTop] );
+	}
+	// 随机排序
+	oBtn.onclick = function () {
+		var arr = [];
+		for ( var i = 0; i < aLi.length; i++ ) {
+			arr.push(i);
+		}
+		arr.sort(function (a,b) {
+			return Math.random() - 0.5;
+		});
+		
+		for ( var i = 0; i < aLi.length; i++ ) {
+			animate(aLi[i], {
+				left : posArr[arr[i]][0],
+				top : posArr[arr[i]][1]
+			});
+			aLi[i].index = arr[i];
+		}
+	
+	}
+	// 将浮动布局改为绝对定位
+	for ( var i = 0; i < aLi.length; i++ ) {
+		aLi[i].style.position = 'absolute';
+		aLi[i].style.left = posArr[i][0] + 'px';
+		aLi[i].style.top = posArr[i][1] + 'px';
+		aLi[i].style.margin = 0;
+	}
+	
+	for ( var i = 0; i < aLi.length; i++ ) {
+		aLi[i].index = i;
+		drag(aLi[i]);
+	}
+	
+	
+	// 拖拽
+	function drag(obj) {
+		
+		var disX = 0;
+		var disY = 0;
+		var finalIndex = -1;
+		
+		obj.onmousedown = function (ev) {
+				
+			var ev = ev || window.event;
+			disX = ev.clientX - obj.offsetLeft;
+			disY = ev.clientY - obj.offsetTop;
+			obj.style.zIndex = zIndex++;
+			
+			document.onmousemove = function (ev) {
+				
+				var ev = ev || window.event;
+				obj.style.left = ev.clientX - disX + 'px';
+				obj.style.top = ev.clientY - disY + 'px';
+				
+				// 碰撞检测，加红色边框
+				var oTargetLi = latelyLi(obj);
+				for ( var i = 0; i < aLi.length; i++ ) {
+					aLi[i].style.border = '';
+				}
+				
+				if (oTargetLi && oTargetLi.index !== -1) {
+					oTargetLi.style.border = '2px solid red';
+				} 
+			
+			}
+			
+			document.onmouseup = function () {
+			
+				document.onmousemove = document.onmouseup = null;
+				var oTargetLi = latelyLi(obj);
+				if(oTargetLi && oTargetLi.index !== -1) {
+					animate(obj, {
+						left : posArr[oTargetLi.index][0],
+						top : posArr[oTargetLi.index][1]
+					});
+					animate(oTargetLi, {
+						left : posArr[obj.index][0],
+						top : posArr[obj.index][1]
+					});
+					oTargetLi.style.border = '';
+					var temp = obj.index;
+					obj.index = oTargetLi.index;
+					oTargetLi.index = temp;
+				} else {
+					animate(obj, {
+						left : posArr[obj.index][0],
+						top : posArr[obj.index][1]
+					});
+				}
+			}
+			return false;
+		}
+		
+	}
+	
+	function latelyLi (obj) {
+		
+		var value = 9999;
+		var index = -1;
+		
+		// 碰撞检测，加红色边框
+		for ( var i = 0; i < aLi.length; i++ ) {
+			// 碰撞检测
+			if ( colDet(obj, aLi[i]) && obj !== aLi[i] ){
+				// 求出距离本物体最短的Li	
+				var lately = distance(obj, aLi[i]);
+				if( lately < value) {
+					value = lately;
+					index = i;
+				}
+			}	
+		}
+		return aLi[index];
+	
+	}
+	
+	// 碰撞检测
+	function colDet(obj1, obj2) {
+	
+		var L1 = obj1.offsetLeft;
+		var R1 = obj1.offsetLeft + obj1.offsetWidth;
+		var T1 = obj1.offsetTop;
+		var B1 = obj1.offsetTop + obj1.offsetHeight;
+		
+		var L2 = obj2.offsetLeft;
+		var R2 = obj2.offsetLeft + obj2.offsetWidth;
+		var T2 = obj2.offsetTop;
+		var B2 = obj2.offsetTop + obj2.offsetHeight;
+	
+		if ( R1 < L2 || L1 > R2 || B1 < T2 || T1 > B2 ) {
+			return false;
+		} else {
+			return true;
+		}
+	
+	
+	}
+	// 两个物体的距离
+	function distance(obj1, obj2) {
+		
+		var a = obj1.offsetLeft - obj2.offsetLeft;
+		var b = obj1.offsetTop - obj2.offsetTop;
+		return Math.sqrt( a*a + b*b );
+	
+	}
+}
+</script>
+</head>
+
+<body>
+<input type="button" id="btn" value="随机"/>
+<ul id="box">
+	<li><img src="photo/1.jpg"/></li>
+	<li><img src="photo/2.jpg"/></li>
+	<li><img src="photo/3.jpg"/></li>
+	<li><img src="photo/4.jpg"/></li>
+	<li><img src="photo/5.jpg"/></li>
+	<li><img src="photo/1.jpg"/></li>
+	<li><img src="photo/2.jpg"/></li>
+	<li><img src="photo/3.jpg"/></li>
+	<li><img src="photo/4.jpg"/></li>
+	
+</ul>
+</body>
+</html>

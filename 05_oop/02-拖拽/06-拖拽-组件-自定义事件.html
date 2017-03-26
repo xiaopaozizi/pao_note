@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>无标题文档</title>
+<style>
+*{padding:0;margin:0;}
+div{width:100px;height:100px;position:absolute;top:0;}
+#red{background:red;left:0;}
+</style>
+<script>
+
+window.onload = function () {
+
+	var oRedBox = document.getElementById('red');
+	var oYellowBox = document.getElementById('yellow');
+	var oGreenBox = document.getElementById('green');
+	var oBlueBox = document.getElementById('blue');
+	
+	
+	// 这些都是系统已有的事件
+	var d1 = new Drag(oRedBox);
+	d1.init();	
+	// 给他一个自定义事件
+	
+	bindEvent(oRedBox, 'toDown', function () {
+		console.log('人之初');
+	});
+	bindEvent(oRedBox, 'toDown', function () {
+		console.log('性本善');
+	});
+	bindEvent(oRedBox, 'toUp', function () {
+		console.log('习相近');
+	});
+}
+function Drag(obj) {
+	
+	this.obj = obj;
+	this.disX = 0;
+	this.disY = 0;
+
+}
+Drag.prototype.init = function() {
+	var _this = this;
+	this.obj.onmousedown = function (ev) {
+		var ev = ev || window.event;
+		_this.fnDown(ev);
+		fireEvent(_this.obj, 'toDown');
+		return false;
+	};
+}
+Drag.prototype.fnDown = function (ev) {
+		
+	this.disX = ev.clientX - this.obj.offsetLeft;
+	this.disY = ev.clientY - this.obj.offsetTop;
+	var _this = this;
+	
+	document.onmousemove = function (ev){
+		var ev = ev || window.event;
+		_this.fnMove(ev);
+	};
+	
+	document.onmouseup = function () {
+		_this.fnUp();
+	};
+	
+
+
+}
+
+Drag.prototype.fnMove = function (ev) {
+	
+	this.obj.style.left = ev.clientX - this.disX + 'px';
+	this.obj.style.top = ev.clientY - this.disY + 'px';
+
+}
+Drag.prototype.fnUp = function () {
+	fireEvent(this.obj, 'toUp');
+	document.onmousemove = document.onmousedown = null;
+}
+function bindEvent(obj, events, callback) {
+	// 自定义事件
+	// 大楼	obj
+	// 楼层 obj.listeners
+	// 书架	obj.listeners[event]
+	// 书籍 callback
+	obj.listeners = obj.listeners || {};
+	obj.listeners[events] = obj.listeners[events] || [];
+	obj.listeners[events].push(callback);
+	
+	return obj.addEventListener ? obj.addEventListener(events, callback, false) 
+		: obj.attachEvent('on'+events, callback);
+}
+// 主动触发自定义事件
+function fireEvent(obj, events){
+	if( obj.listeners && obj.listeners[events] ) {
+		for ( var i = 0; i < obj.listeners[events].length; i++ ) {
+			obj.listeners[events][i]();
+		}
+	}
+}
+</script>
+</head>
+
+<body>
+<div id="red"></div>
+</body>
+</html>

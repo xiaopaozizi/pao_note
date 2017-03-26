@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>无标题文档</title>
+<style>
+*{padding:0;margin:0;}
+.dialog{border:1px solid #ccc;position:absolute;left:0;top:0;z-index:999;}
+.dialog .header{background:#f1f1f1;height:30px;position:relative;}
+.dialog .header p{height:30px;line-height:30px;text-align:center;font-weight:bold;}
+.dialog .header .closeBtn{position:absolute;right:0px;top:-12px;padding:3px 5px;display:inline-block;cursor:pointer;font-size:30px;color:#000;}
+.dialog .content{background:#fff;height:90%;}
+.mark{width:300px;height:300px;background:#000;filter:alpha(opacity:50);opacity:0.5;z-index:998;position:absolute;top:0;left:0;}
+</style>
+<script>
+'use strict'
+var oDialog = null;
+var oHeader = null;
+var oTitle = null;
+var oCloseBtn = null;
+var oContent = null;
+window.onload = function (){
+	var aInput = document.getElementsByTagName('input');
+	
+	aInput[0].onclick = function () {
+		var d1 = new Dialog({
+			id : 1,
+		});
+		d1.init();
+	}
+	aInput[1].onclick = function () {
+		var d1 = new Dialog({
+			id : 2,
+			width : 200,
+			height : 300,
+			dir : 'lowerRight'
+		});
+		d1.init();
+	}
+	aInput[2].onclick = function () {
+		var d1 = new Dialog({
+			id : 3,
+			width : 350,
+			height : 350,
+			title : '登录+遮罩',
+			dir : 'center',
+			mark : true
+		});
+		d1.init();
+	}
+
+}
+function Dialog(opt) {
+	this.oDialog = null;
+	this.oHeader = null;
+	this.oTitle = null;
+	this.oCloseBtn = null;
+	this.oContent = null;
+	this.mark = null;
+	this.opt = opt;
+	// 默认值
+	this.setting = {
+		width : 300,
+		height : 300,
+		title : '标题',
+		content : '内容',
+		dir : 'center',
+		mark : false
+	}
+
+}
+Dialog.prototype.init = function () {
+	copy(this.setting, this.opt);
+	if(!this.json[this.setting.id]) {
+		if (this.setting.mark) {
+			this.createMark();
+		}
+		this.createDialog();
+		this.json[this.setting.id] = true;
+	}
+}
+Dialog.prototype.json = {};
+Dialog.prototype.createDialog = function (){
+	// 最外层的oDialog
+	this.oDialog = document.createElement('div');
+	this.oDialog.className = 'dialog';
+	this.oDialog.style.width = this.setting.width + 'px';
+	this.oDialog.style.height = this.setting.height + 'px';
+	// 头部
+	this.oHeader = document.createElement('div');
+	this.oHeader.className = 'header';
+	this.oTitle = document.createElement('p');
+	this.oTitle.innerText = this.setting.title;
+	this.oCloseBtn = document.createElement('span');
+	this.oCloseBtn.className = 'closeBtn';
+	var _this = this;
+	this.oCloseBtn.onclick = function () {
+		_this.closeDialog();
+	}
+	this.oCloseBtn.innerHTML = '×';
+	// 添加头部和内容
+	this.oHeader.appendChild(this.oTitle);
+	this.oHeader.appendChild(this.oCloseBtn);
+	// 内容区
+	this.oContent = document.createElement('div');
+	this.oContent.className = 'content';
+	this.oContent.innerHTML = this.setting.content;
+	// 添加头部和内容
+	this.oDialog.appendChild(this.oHeader);
+	this.oDialog.appendChild(this.oContent);
+	// 添加到body
+	document.body.appendChild(this.oDialog);
+	
+	switch(this.setting.dir) {
+		case 'center':
+			this.oDialog.style.left = (view().width - this.oDialog.offsetWidth)/2 + 'px';
+			this.oDialog.style.top = (view().height - this.oDialog.offsetHeight)/2 + 'px';
+		break;
+		case 'lowerRight':
+			this.oDialog.style.left = view().width - this.oDialog.offsetWidth + 'px';
+			this.oDialog.style.top = view().height - this.oDialog.offsetHeight + 'px';
+		break;
+	}
+}
+Dialog.prototype.createMark = function () {
+	this.mark = document.createElement('div');
+	this.mark.className = 'mark';
+	this.mark.style.width = view().width + 'px';
+	this.mark.style.height = view().height + 'px';
+	document.body.appendChild(this.mark);
+	
+}
+Dialog.prototype.closeDialog = function () {
+	document.body.removeChild(this.oDialog);
+	if(this.setting.mark){
+		document.body.removeChild(this.mark);
+	}
+	this.json[this.setting.id] = false; 
+}
+function view(){
+	var W = document.documentElement.clientWidth;
+	var H = document.documentElement.clientHeight;
+	return {
+		width : W,
+		height : H
+	}
+}
+function copy(child, parent) {
+	for ( var attr in parent ) {
+		child[attr] = parent[attr];
+	}
+}
+function bindEvent(obj, events, callback) {
+	// 自定义事件
+	// 大楼	obj
+	// 楼层 obj.listeners
+	// 书架	obj.listeners[event]
+	// 书籍 callback
+	obj.listeners = obj.listeners || {};
+	obj.listeners[events] = obj.listeners[events] || [];
+	obj.listeners[events].push(callback);
+	
+	return obj.addEventListener ? obj.addEventListener(events, callback, false) 
+		: obj.attachEvent('on'+events, callback);
+}
+// 主动触发自定义事件
+function fireEvent(obj, events){
+	if( obj.listeners && obj.listeners[events] ) {
+		for ( var i = 0; i < obj.listeners[events].length; i++ ) {
+			obj.listeners[events][i]();
+		}
+	}
+}
+</script>
+</head>
+
+<body>
+<!--<div class="dialog">
+	<div class="header">
+		<p>标题</p>
+		<span class="closeBtn">×</span>
+	</div>
+	<div class="content">111</div>
+</div>-->
+<!--<div class="mark"></div>-->
+<input type="button" value="登录"/>
+<input type="button" value="公告"/>
+<input type="button" value="遮罩登录"/>
+</body>
+</html>

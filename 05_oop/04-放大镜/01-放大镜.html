@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>无标题文档</title>
+<style>
+#magnifier .small{width:180px;height:180px;border:1px solid #000;position:relative;overflow:hidden;}
+#magnifier .small span{width:100px;height:100px;background:yellow;opacity:0.5;filter:alpha(opacity=50);position:absolute;top:0;left:0;display:none;}
+#magnifier .large{width:500px;height:500px;position:absolute;left:300px;top:50px;overflow:hidden;}
+#magnifier .large img{position:absolute;top:0;left:0;}
+</style>
+<script>
+window.onload = function () {
+	
+	var oMagnifier = document.getElementById('magnifier');
+	var oSmall = oMagnifier.getElementsByTagName('div')[0];
+	var oSpan = oSmall.getElementsByTagName('span')[0];
+	var oLarge = oMagnifier.getElementsByTagName('div')[2];
+	var oBigPic = oLarge.getElementsByTagName('img')[0];
+	console.log(oLarge);
+	
+	oSmall.onmouseover = function () {
+		oSpan.style.display = 'block';
+	}
+	
+	oSmall.onmouseout = function () {
+		oSpan.style.display = 'none';
+	}
+	
+	oSmall.onmousemove = function (ev) {
+		
+		var ev = ev || window.event;
+		var L = ev.clientX - oSmall.offsetLeft - oSpan.offsetWidth/2;
+		var T = ev.clientY - oSmall.offsetTop - oSpan.offsetHeight/2;
+		if( L < 0 ) {
+			L = 0;
+		} else if ( L > oSmall.offsetHeight - oSpan.offsetHeight ){
+			L = oSmall.offsetHeight - oSpan.offsetHeight;
+		}
+		if( T < 0 ) {
+			T = 0;
+		} else if ( T > oSmall.offsetWidth - oSpan.offsetWidth ){
+			T = oSmall.offsetWidth - oSpan.offsetWidth;
+		}
+		oSpan.style.left = L + 'px';
+		oSpan.style.top = T + 'px';
+		
+		var scaleX = L / oSmall.offsetWidth;
+		var scaleY = T / oSmall.offsetHeight;
+		
+		oBigPic.style.left = -scaleX * (oBigPic.offsetWidth - oLarge.offsetWidth) + 'px';
+		oBigPic.style.top = -scaleY * (oBigPic.offsetHeight - oLarge.offsetHeight) + 'px';
+	}
+	
+
+}
+</script>
+</head>
+
+<body>
+<div id="magnifier">
+	<div class="small">
+		<img src="img/b2.jpg"/>
+		<span></span>
+		<div class="mark"></div>
+	</div>
+	<div class="large">
+		<img src="img/b1.jpg"/>
+	</div>
+</div>
+</body>
+</html>
