@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Title</title>
+<style>
+	*{padding:0;margin:0;}
+	#ul1{position:absolute;right:20px;top:10px;width:500px;height:500px;overflow:hidden;border:1px solid #000;list-style:none;padding:20px;}
+	li{line-height:28px;border-bottom:1px dotted #000;word-break:break-all;overflow:hidden;text-indent:20px;}
+</style>
+</head>
+<body>
+<script src="YCQ.js"></script>
+<script>
+window.onload = function () {
+
+	var oContent = document.getElementById('content');
+	var oBtn = document.getElementById('btn');
+	var oUl = document.getElementById('ul1');
+
+	oBtn.onclick = function () {
+	
+		var oLi = document.createElement('li');
+		
+		if (oContent.value === '') return;
+		oLi.innerHTML = oContent.value;
+		if ( oUl.children[0] ) {
+			oUl.insertBefore( oLi, oUl.children[0] );
+		} else {
+			oUl.appendChild( oLi );
+		}
+		
+		var iH = parseInt( getStyle(oLi, 'height') );
+		oLi.style.height = '0px';
+		oLi.style.opacity = '0';
+		oLi.style.filter = 'alpha(opacity=0)';
+		animate(oLi, {
+			height : iH,
+			opacity : 100
+		});
+	
+	}
+
+}
+</script>
+
+<textarea id="content" rows="10" cols="50"></textarea>
+<button id="btn">留言</button>
+<ul id="ul1">
+</ul>
+</body>
+</html>

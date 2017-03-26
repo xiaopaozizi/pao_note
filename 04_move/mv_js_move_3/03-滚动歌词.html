@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{margin:0;padding:0}
+        div{
+            position:absolute;
+            left:0;
+            top:0;
+        }
+        #div2{
+            color:red;
+            width:15px;
+            height:20px;
+            overflow: hidden;
+        }
+        #div2 span{
+            width:2000px;
+            position:absolute;
+            left:0;
+            top:0;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+
+            var oDiv2 = document.getElementById('div2');
+            var oSpan2 = oDiv2.getElementsByTagName('span')[0];
+
+            setInterval(function () {
+
+                oDiv2.style.left = oDiv2.offsetLeft + 1 + 'px';
+                oSpan2.style.left = -oDiv2.offsetLeft + 'px';
+
+            }, 30);
+
+        }
+    </script>
+</head>
+<body>
+<div id="div1"><span>拉萨的减肥啦上看到放假老卡上的纠纷</span></div>
+<div id="div2"><span>拉萨的减肥啦上看到放假老卡上的纠纷</span></div>
+</body>
+</html>

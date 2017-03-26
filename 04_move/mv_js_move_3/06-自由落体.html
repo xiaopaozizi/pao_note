@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #box{ width : 100px; height: 100px; position:absolute;
+            background: red;}
+    </style>
+    <script src="YCQ.js"></script>
+    <script>
+        window.onload = function () {
+
+            var oBox = document.getElementById('box');
+
+            oBox.onclick = function () {
+                move(this);
+            };
+
+            function move(obj) {
+
+                var iSpeed = 0;
+                clearInterval(obj.timer);
+                obj.timer = setInterval(function () {
+
+                    iSpeed += 5;
+                    var T = obj.offsetTop + iSpeed;
+                    if ( T > document.documentElement.clientHeight - obj.offsetHeight) {
+                        T = document.documentElement.clientHeight - obj.offsetHeight;
+                        iSpeed *= -0.75;
+                    }
+                    obj.style.top = T + 'px';
+
+                }, 30);
+
+            }
+        }
+    </script>
+</head>
+<body>
+<div id="box"></div>
+</body>
+</html>

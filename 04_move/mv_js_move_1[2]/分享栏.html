@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #outer {width:100px;height:200px;background: red;position:absolute;left:-100px;top:100px;}
+        #inner{width:30px;height:70px;background:blue;position:absolute;top:70px;right:-30px;text-align:center;color:#fff;}
+    </style>
+</head>
+<body>
+<script src="../js/YCQ.js"></script>
+<script>
+window.onload = function () {
+
+    var oOuter = document.getElementById('outer');
+    var oInner = document.getElementById('inner');
+
+    oOuter.onmouseover = function () {
+        animate(this, 0, 10);
+    }
+    oOuter.onmouseout = function () {
+        animate(this, -100, -10);
+    }
+    function animate (obj, iTarget, iSpeed) {
+
+        clearInterval( obj.timer );
+        obj.timer = setInterval(function () {
+
+            if ( obj.offsetLeft === iTarget ) {
+                clearInterval( obj.timer );
+            } else {
+                obj.style.left = obj.offsetLeft + iSpeed + 'px';
+            }
+
+        }, 30);
+
+    }
+}
+</script>
+
+
+<div id="outer">
+    <div id="inner">分享到</div>
+</div>
+
+
+</body>
+</html>

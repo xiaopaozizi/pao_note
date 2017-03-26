@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{padding:0;margin:0;}
+        #img {position:absolute;left:200px;top:0px;opacity: 0.3;filter:alpha(opacity=30);}
+        #outer {width:100px;height:200px;background: red;position:absolute;left:-100px;top:100px;}
+        #inner{width:30px;height:70px;background:blue;position:absolute;top:70px;right:-30px;text-align:center;color:#fff;}
+    </style>
+</head>
+<body>
+
+<script>
+window.onload = function () {
+
+    var oOuter = document.getElementById('outer');
+    var oInner = document.getElementById('inner');
+    var oImg = document.getElementById('img');
+
+    oOuter.onmouseover = function () {
+        animate(this, 0, 'left', 10);
+    }
+    oOuter.onmouseout = function () {
+        animate(this, -100, 'left', -10);
+    }
+    oImg.onmouseover = function () {
+        animate(this, 100, 'opacity', 10);
+    }
+    oImg.onmouseout = function () {
+        animate(this, 30,  'opacity', -10);
+    }
+
+    function animate (obj, iTarget, attr, iSpeed) {
+
+        var iCur = 0;
+
+        clearInterval( obj.timer );
+        obj.timer = setInterval(function () {
+
+            if ( attr === 'opacity' ) {
+                iCur = Math.floor(getStyle( obj, 'opacity' ) * 100);
+            } else {
+                iCur = parseInt( getStyle( obj, attr ) );
+            }
+
+            if ( iCur === iTarget  ) {
+                clearInterval( obj.timer );
+            } else {
+                if ( attr === 'opacity' ) {
+                    obj.style.opacity = ( iCur + iSpeed ) / 100;
+                    obj.style.filter = 'alpha(opacity=' + ( iCur + iSpeed ) + ')';
+                } else {
+                    obj.style[attr] = ( iCur + iSpeed ) + 'px';
+                }
+            }
+
+        }, 30);
+
+    }
+
+
+    function getStyle(obj, attr) {
+        if ( obj.currentStyle ) {
+            return obj.currentStyle[attr];
+        } else {
+            return getComputedStyle(obj, false)[attr];
+        }
+    }
+}
+</script>
+
+<img id="img" src="1.jpg"/>
+
+<div id="outer">
+    <div id="inner">分享到</div>
+</div>
+
+
+</body>
+</html>

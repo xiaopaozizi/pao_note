@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #box{width:100px;height:100px;background:red;position:absolute;left:200px;top:200px;}
+    </style>
+</head>
+<body>
+<div id="box"></div>
+<script src="YCQ.js"></script>
+<script src="tween.js"></script>
+<script>
+
+    var oBox = document.getElementById('box');
+
+
+    oBox.onmouseover = function () {
+
+        timeMove(this, {
+            width : 200,
+            height : 200,
+            left : 150,
+            top : 150
+        }, 1000, 'easeIn', function () {
+            alert('ok');
+        })
+
+    }
+
+    oBox.onmouseout = function () {
+
+        timeMove(this, {
+            width : 100,
+            height : 100,
+            left : 200,
+            top : 200
+        }, 1000, 'easeBothStrong', function () {
+            alert('over');
+        })
+
+    }
+
+
+
+</script>
+</body>
+</html>

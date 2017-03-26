@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #box{width:100px;height:100px;background:red;position:absolute;}
+    </style>
+</head>
+<body>
+<script>
+    window.onload = function () {
+
+        var oBox = document.getElementById('box');
+        var disX = 0;
+        var disY = 0;
+        var timer = null;
+        var iSpeedX = 3;
+        var iSpeedY = 0;
+
+
+        oBox.onmousedown = function (ev) {
+
+            var ev = ev || window.event;
+
+            disX = ev.clientX - oBox.offsetLeft;
+            disY = ev.clientY - oBox.offsetTop;
+
+            document.onmousemove = function (ev) {
+
+                var ev = ev || window.event;
+
+                oBox.style.left = ev.clientX - disX + 'px';
+                oBox.style.top = ev.clientY - disY + 'px';
+
+            }
+
+            document.onmouseup = function () {
+
+                document.onmousemove = null;
+                document.onmousedown = null;
+
+                startMove();
+
+
+
+            }
+
+            return false;
+
+
+        }
+
+        function startMove() {
+
+            iSpeedX = 3;
+            clearInterval(timer);
+
+            timer = setInterval(function () {
+
+
+                iSpeedY += 3;
+
+                var T =  oBox.offsetTop + iSpeedY;
+                var L = oBox.offsetLeft + iSpeedX;
+                var diffHeight = document.documentElement.clientHeight - oBox.offsetHeight;
+
+                if ( Math.abs(T - diffHeight) <= 1
+                        && Math.abs(iSpeedX) <= 1) {
+                    clearInterval(timer);
+                    T = diffHeight;
+                    iSpeedX = iSpeedY = 0;
+                } else {
+                    if (T > diffHeight) {
+                        T = diffHeight;
+                        iSpeedY *= -1;
+                        iSpeedY *= 0.75;
+                        iSpeedX *= 0.75;
+                    }
+                    oBox.style.top = T + 'px';
+                    oBox.style.left = L + 'px';
+                }
+
+                //console.log(iSpeedX + ', ' + iSpeedY )
+            }, 30);
+
+        }
+
+    }
+</script>
+<div id="box"></div>
+</body>
+</html>

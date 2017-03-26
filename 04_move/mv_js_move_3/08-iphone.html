@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>iPhone手机图片查看器 - 妙味课堂 - www.miaov.com</title>
+<link href="style.css" rel="stylesheet" type="text/css" />
+	<script src="YCQ.js"></script>
+<script>
+window.onload = function(){
+
+	var oUl = document.getElementById('ul1');
+	var aLi = oUl.getElementsByTagName('li');
+	var oWrap = document.getElementById('wrap');
+	var iW = aLi[0].offsetWidth;
+	var disX = 0;
+	var clientX = 0;
+	var iNow = 0;
+
+	oUl.onmousedown = function (ev) {
+
+		var ev = ev || window.event;
+
+		disX = ev.clientX - oUl.offsetLeft;
+		clientX = ev.clientX;
+
+		document.onmousemove = function (ev) {
+
+			var ev = ev || window.event;
+
+			oUl.style.left = ev.clientX - disX + 'px';
+
+		}
+
+		document.onmouseup = function (ev) {
+
+			var ev = ev || window.event;
+
+			document.onmousedown = null;
+			document.onmousemove = null;
+
+			if (ev.clientX < clientX) {
+				iNow++;
+				if (iNow === aLi.length) iNow = aLi.length - 1;
+			} else {
+				iNow--;
+				if ( iNow < 0 ) iNow = 0;
+			}
+
+			elasticMove(oUl, {
+				left : -iNow * iW
+			});
+
+		}
+		return false;
+
+	}
+
+
+};
+</script>
+</head>
+
+<body>
+
+<div id="iphone" >
+	<div id="wrap">
+		<ul id="ul1">
+			<li style="background:url(images/pic1.png);" title="妙味课堂"></li>
+			<li style="background:url(images/pic2.png);" title="妙味课堂"></li>
+			<li style="background:url(images/pic3.png);" title="妙味课堂"></li>
+			<li style="background:url(images/pic4.png);" title="妙味课堂"></li>
+		</ul>
+	</div>
+</div>
+
+</body>
+</html>

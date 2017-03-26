@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{padding:0;margin:0;}
+		#ul1{width:330px;margin:50px auto 0;position:relative;}
+        ul li{width:100px;height:100px;background:red;float:left;margin:10px 0 0px 10px;list-style:none;}
+    </style>
+</head>
+<body>
+<script src="YCQ.js"></script>
+<script>
+window.onload = function () {
+
+	var oUl = document.getElementById('ul1');
+	var aLi = oUl.getElementsByTagName('li');
+	var arr = [];
+	
+	for ( var i = 0; i < aLi.length; i++ ) {
+		aLi[i].style.left = aLi[i].offsetLeft + 'px';
+		aLi[i].style.top = aLi[i].offsetTop + 'px';
+		arr.push({
+			left : aLi[i].offsetLeft,
+			top : aLi[i].offsetTop,
+		});
+	}
+	
+	for ( var i = 0; i < aLi.length; i++ ) {
+		aLi[i].style.position = 'absolute';
+		aLi[i].style.margin = '0px';
+		aLi[i].style.zIndex = 1;
+		aLi[i].index = i;
+		aLi[i].onmouseover = function () {
+			this.style.background = 'green';
+			this.style.zIndex++;
+			animate(this, {
+				width : 200,
+				height : 200,
+				left : arr[this.index].left - 50,
+				top : arr[this.index].top - 50,
+			});
+		}
+		aLi[i].onmouseout = function () {
+			this.style.background = 'red';
+			this.style.zIndex--;
+			animate(this, {
+				width : 100,
+				height : 100,
+				left : arr[this.index].left,
+				top : arr[this.index].top,
+			});
+		}
+	}
+
+
+}
+</script>
+
+
+
+
+<ul id="ul1">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>
+</body>
+</html>

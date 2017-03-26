@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        #ul1{
+            position:relative;
+            height:30px;
+            width:660px;
+            margin:100px auto 0;
+            list-style:none;
+        }
+        #ul1 li{
+            height:100%;
+            width:100px;
+            text-align: center;
+            line-height:30px;
+            margin-right:10px;
+            background:#e15671;
+            color:#fff;
+            float:left;
+        }
+        #ul1 #mark{
+            position:absolute;
+            left:0;
+            top:0px;
+            width:100px;
+            overflow: hidden;
+        }
+        #mark ul {
+            width : 660px;
+            position:absolute;
+            left:0;
+            top:0;
+            list-style: none;
+        }
+        #mark ul li{
+            color : #000;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+
+            var oUl = document.getElementById('ul1');
+            var aBox = oUl.getElementsByClassName('box');
+            var oMark = document.getElementById('mark');
+            var oMarkUl = oMark.getElementsByTagName('ul')[0];
+            var iW = aBox[0].offsetWidth;
+            var iLen = aBox.length;
+            var iSpeed = 0;
+            var timer = null;
+            var timer2 = null;
+
+
+            //oUl.style.width = ( iW + 10 )  * iLen + 'px';
+
+            for ( var i = 0; i < iLen; i++ ) {
+                aBox[i].index = i;
+                aBox[i].onmouseover = function () {
+
+                    clearTimeout(timer2);
+                    startMove( oMark, ( iW + 10 )  * this.index );
+
+                }
+
+                aBox[i].onmouseout = function () {
+
+                    timer2 = setTimeout(function () {
+                        startMove( oMark, 0);
+                    }, 100);
+
+                }
+            }
+            oMark.onmouseover = function () {
+                clearTimeout(timer2);
+            }
+            oMark.onmouseout = function () {
+                startMove(oMark, 0);
+            }
+
+            function startMove(obj, iTarget) {
+                clearInterval( timer );
+                timer = setInterval(function () {
+
+                    var iCur = obj.offsetLeft;
+
+                    iSpeed += ( iTarget - iCur ) / 6;
+                    iSpeed *= 0.75;
+                    if ( Math.abs(iSpeed) <= 1 && Math.abs(iTarget - iCur) <= 1 ) {
+                        clearInterval(timer);
+                        iSpeed = 0;
+                        obj.style.left = iTarget + 'px';
+                    } else {
+                        obj.style.left = ( iCur + iSpeed ) + 'px';
+                        oMarkUl.style.left = - obj.offsetLeft + 'px';
+                    }
+
+                }, 30);
+
+            }
+
+        }
+    </script>
+</head>
+<body>
+<ul id="ul1">
+    <li id="mark">
+        <ul>
+            <li>首页</li>
+            <li>动漫</li>
+            <li>视频</li>
+            <li>图片</li>
+            <li>小说</li>
+            <li>八卦</li>
+        </ul>
+    </li>
+    <li class="box">首页</li>
+    <li class="box">动漫</li>
+    <li class="box">视频</li>
+    <li class="box">图片</li>
+    <li class="box">小说</li>
+    <li class="box">八卦</li>
+</ul>
+</body>
+</html>

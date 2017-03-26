@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #div1{
+            width:1200px;
+            height:1200px;
+            margin:0px auto 0;
+            border:1px solid black;
+            position:relative;
+        }
+        #div1 div{
+            position:absolute;
+            width:50%;
+            height:100%;
+            top:0;
+            opacity:0;
+            filter:alpha(opacity=0);
+            cursor:pointer;
+        }
+        #left {
+            left:0;
+            background:red;
+        }
+        #right {
+            right:0;
+            background:green;
+        }
+        #img1{
+            position:absolute;
+            width:100%;
+            height:100%;
+        }
+
+    </style>
+    <script>
+        window.onload = function () {
+
+
+            var oImg = document.getElementById('img1');
+            var oLeft = document.getElementById('left');
+            var oRight = document.getElementById('right');
+            var aImg = [
+                'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1489051395813&di=1411df3aefee1e0e2ffc47d7271d3b82&imgtype=0&src=http%3A%2F%2Fimg.taopic.com%2Fuploads%2Fallimg%2F121119%2F240509-1211191409189.jpg',
+                'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1489051395812&di=6c9dffd89034a578cb65075581fc2421&imgtype=0&src=http%3A%2F%2Fimage.tianjimedia.com%2FuploadImages%2F2014%2F067%2F3I26385RL51U.jpg',
+                'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1489051395812&di=5d41fbf4ef606cc0e3eb0c937a6573e2&imgtype=0&src=http%3A%2F%2Fimg.taopic.com%2Fuploads%2Fallimg%2F121119%2F240509-121119152H955.jpg',
+                'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1489051395811&di=c3d978932bd849de90dbbf267616aae8&imgtype=0&src=http%3A%2F%2Fimg.taopic.com%2Fuploads%2Fallimg%2F121110%2F240494-12111020134693.jpg',
+                'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1489051395810&di=5b9ac73293ccec57be00ffd974428827&imgtype=0&src=http%3A%2F%2Ft1.55156.com%2Fuploads%2Ftu%2F201610%2Fpxh%2F20160704044709627.jpg',
+                'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1489051395810&di=99149309f7efd6bbc47eadef335903ff&imgtype=0&src=http%3A%2F%2Ffile.popoho.com%2Fyxnx%2F20170122%2F20150629141026156qis0eduuoxq.jpg',
+                'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1489051395809&di=cb9d8b544d78caccf21fabe47206fdfc&imgtype=0&src=http%3A%2F%2Ffile.popoho.com%2Fyxnx%2F20170122%2F2015062914102793313atlm4qcrt.jpg',
+                'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1489051395809&di=27f52eb67ea3672400ba58acdc537474&imgtype=0&src=http%3A%2F%2Fimg.taopic.com%2Fuploads%2Fallimg%2F121119%2F240509-12111915051242.jpg',
+                'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1489051395809&di=e296e9180bd995fd76137908b98904d7&imgtype=0&src=http%3A%2F%2Fimg.taopic.com%2Fuploads%2Fallimg%2F121116%2F240501-12111622093225.jpg',
+                'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1489051395808&di=4d6dfd39d80190d405fa11782989e798&imgtype=0&src=http%3A%2F%2Fpic.35pic.com%2Fnormal%2F00%2F00%2F96%2F3359577_115547038073_2.jpg',
+                'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1489051395807&di=0c8a50f5405c18f28e95a7c23a672596&imgtype=0&src=http%3A%2F%2Fimg.taopic.com%2Fuploads%2Fallimg%2F121119%2F240509-12111914042450.jpg',
+                'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1489051395806&di=a0425f906e1af2c4d411277387e87561&imgtype=0&src=http%3A%2F%2Fuploads.xuexila.com%2Fallimg%2F1701%2F848-1F124111205.jpg',
+                'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1489051395802&di=a80ed3cc261b3ec23d90149ad2b0224c&imgtype=0&src=http%3A%2F%2Fi2.sanwen.net%2Fdoc%2F1608%2F704-160Q1164035.jpg',
+                'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1489051395801&di=6ac5e441a27587d63730fe0de24275b4&imgtype=0&src=http%3A%2F%2Fimg1.3lian.com%2F2015%2Fa1%2F81%2Fd%2F242.jpg',
+                'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1489051647799&di=93708df0aa792b66b869c7964d2504c8&imgtype=0&src=http%3A%2F%2Fimg.taopic.com%2Fuploads%2Fallimg%2F121110%2F240494-12111021413914.jpg',
+                'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1489051647798&di=7434852ea7fbd43ccc934f94df86052d&imgtype=0&src=http%3A%2F%2Fwww.bz55.com%2Fuploads%2Fallimg%2F150401%2F139-150401164937.jpg',
+                'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1489051647794&di=94522da03e3c99f9484382439e7c2d56&imgtype=0&src=http%3A%2F%2Fimg.taopic.com%2Fuploads%2Fallimg%2F121112%2F240496-12111219193681.jpg',
+                'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1489051647794&di=60c2f2df2edfd3229963562c4c547305&imgtype=0&src=http%3A%2F%2Fwww.2298.com%2FUploadStorage%2Fgallery%2Fimg1%2F198942%2F201606%2Fcaad7ed88bb140a58a03e988f6a61b5f.jpg',
+                'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1489051647793&di=04f48462af83d43717bf54c837378458&imgtype=0&src=http%3A%2F%2Fimg.taopic.com%2Fuploads%2Fallimg%2F140322%2F235058-1403220QR847.jpg',
+                'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1489051647787&di=9e7cbc2894c688f0fdab9b42111cebd2&imgtype=0&src=http%3A%2F%2Fimg.taopic.com%2Fuploads%2Fallimg%2F121101%2F240513-121101215Z544.jpg'
+            ];
+            var iCur = 0;
+            var index = 0;
+            var oImage = new Image();
+            oImg.src = aImg[0];
+            loadImg();
+            function loadImg () {
+                iCur++;
+                if( iCur < aImg.length ) {
+                    oImage.src = aImg[iCur];
+                    oImage.onload = function () {
+                        document.title = ( iCur + 1 ) + ' / ' + aImg.length;
+                        loadImg();
+                    }
+                }
+            }
+
+            oLeft.onmouseover = oRight.onmouseover = function () {
+
+                this.style.opacity = 0.08;
+                this.style.filter = 'alpha(opacity=8)';
+
+            }
+            oLeft.onclick = function () {
+
+                index--;
+                if ( index === 0 ) index = aImg.length - 1;
+                oImg.src = aImg[index];
+
+            }
+            oLeft.onmouseout = oRight.onmouseout = function () {
+
+                this.style.opacity = 0;
+                this.style.filter = 'alpha(opacity=0)';
+
+            }
+            oRight.onclick = function () {
+
+                index++;
+                if (index === aImg.length) index = 0;
+                oImg.src = aImg[index];
+
+            }
+
+        }
+    </script>
+</head>
+<body>
+<div id="div1">
+    <img id="img1"/>
+    <div id="left"></div>
+    <div id="right"></div>
+</div>
+</body>
+</html>

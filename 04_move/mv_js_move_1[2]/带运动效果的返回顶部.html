@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #div1{
+            width : 100px;
+            height : 100px;
+            background : red;
+            position : absolute;
+            right : 0;
+            top : 0;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+
+            var oDiv = document.getElementById('div1');
+            var oContent = document.getElementById('content');
+            var iTimer = null;
+            var scrollType = 0;     // 滚动条滚动的类型；1为定时器触发滚动，2为非定时器滚动触发
+
+
+
+            var content = '';
+            for ( var i = 0; i < 1000; i++ ) {
+                content += '<p>' + i + '</p>';
+            }
+            oContent.innerHTML = content;
+
+            getTop();
+            document.onscroll = function () {
+
+                getTop();
+                if ( scrollType !== 1 ) {
+                    clearInterval(iTimer);
+                }
+                scrollType = 2;
+
+            }
+            oDiv.onclick = function () {
+
+                var iSpeed = 0;
+                var iCur = 0;
+
+                clearInterval(iTimer);
+
+                iTimer = setInterval(function () {
+
+                    iCur = document.documentElement.scrollTop || document.body.scrollTop;
+                    iSpeed = Math.floor( ( 0 - iCur ) / 8 );
+                    if ( iCur === 0 ) {
+                        clearInterval(iTimer);
+                    } else {
+                        document.documentElement.scrollTop = document.body.scrollTop = iCur + iSpeed;
+                    }
+                    scrollType = 1
+                }, 30);
+
+            }
+            function getTop () {
+
+                var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+
+                oDiv.style.top = document.documentElement.clientHeight + scrollTop - oDiv.offsetHeight + 'px';
+
+            }
+
+        }
+
+    </script>
+</head>
+<body>
+<div id="div1"></div>
+<div id="content"></div>
+</body>
+</html>
