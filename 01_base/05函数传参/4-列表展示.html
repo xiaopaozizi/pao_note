@@ -1,0 +1,252 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+*{margin:0;padding:0;}
+ul{list-style:none;}
+#list{width:300px;height:500px;margin:40px auto;border:1px solid #ccc;}
+#list .lis{width:300px;height:auto;line-height:50px;border-bottom:1px solid #ccc;float:left;}
+#list .lis ul {width:300px;height:50px;}
+#list .lis ul li {width:300px;height:50px;line-height:50px;display:none;}
+#list .lis ul li span {display:inline-block;margin:10px;width:30px;height:30px;text-align:center;line-height:30px;background:#3366FF;color:#fff;}
+#list .lis ul li p {display:inline-block;width:150px;height:50px;line-height:30px;}
+#list .lis ul li div.index {float:left;width:50px;height:150px;display:line-block;}
+#list .lis ul li div.index span.blur {font-weight:bold;background:#fff;color:blue;}
+#list .lis ul li img {width:120px;height:120px;margin:15px;float:left;display:inline-block;}
+#list .lis ul li div.desc {position:relative;float:left;width:100px;height:150px;}
+#list .lis ul li div.desc p {position:absolute;left:0px;top:20px;color:#000;width:100px;height:30px;line-height:30px;}
+#list .lis ul li div.desc a {width:60px;height:30px;position:absolute;bottom:5px;right:5px;text-decoration:none;background:blue;color:#fff;font-size:20px;padding:5px;border-radius:8px;dispaly:inline-block;line-height:30px;text-align:center;}
+#list .lis ul li:first-child{display:block;}
+</style>
+<script>
+window.onload = function (){
+
+	var oUl = document.getElementById('list');
+	var aUl = oUl.getElementsByTagName('ul');
+	var lis = oUl.getElementsByClassName('lis');
+	var arr = [
+		['小兵张嘎', 'img/1.png', '小兵张嘎的简介'],
+		['大耳朵图图', 'img/2.png', '大耳朵图图的简介'],
+		['海贼王', 'img/3.png', '海贼王的简介'],
+		['火影忍者', 'img/4.png', '火影忍者的简介'],
+		['奥特曼', 'img/1.png', '奥特曼的简介'],
+		['熊出没', 'img/2.png', '熊出没的简介'],
+		['小鬼到家', 'img/3.png', '小鬼到家的简介'],
+		['游戏王', 'img/4.png', '游戏王的简介'],
+		['哈利波特', 'img/1.png', '哈利波特的简介'],
+	];
+	for ( var i = 0; i < aUl.length; i ++ ) {
+		var aLi = aUl[i].getElementsByTagName('li');
+		aLi[0].getElementsByTagName('span')[0].innerHTML = i + 1;
+		aLi[0].getElementsByTagName('p')[0].innerHTML = arr[i][0];
+		var aSpan = aLi[1].getElementsByTagName('span');
+		var index = i + 1;
+		for ( var j = 0; j < aSpan.length; j ++) {
+			aSpan[j].innerHTML = index++;
+		}
+		aLi[1].getElementsByTagName('img')[0].src = arr[i][1];
+		aLi[1].getElementsByTagName('p')[0].innerHTML = arr[i][2];
+	}
+	for ( var i = 0; i < aUl.length; i ++ ) {
+		aUl[i].onmouseover = function () {
+			this.getElementsByTagName('li')[0].style.display = 'none';
+			//this.style.cssText = 'height:150px;line-height:150px;';
+			this.getElementsByTagName('li')[1].style.display = 'block';
+		}
+		aUl[i].onmouseout = function () {
+			this.getElementsByTagName('li')[1].style.display = 'none';
+			this.getElementsByTagName('li')[0].style.display = 'block';
+		}
+	}
+}
+</script>
+</head>
+
+<body>
+<ul id="list">
+	<li class="lis">
+		<ul>
+			<li>
+				<span></span>
+				<p></p>
+			</li>
+			<li>
+				<div class="index">
+					<span></span>
+					<span class="blur"></span>
+					<span class="blur"></span>
+				</div>
+				<img/>
+				<div class="desc">
+					<p></p>
+					<a href="javascript:;">播放</a>
+				</div>
+			</li>
+		</ul>
+	</li>
+	<li class="lis">
+		<ul>
+			<li>
+				<span></span>
+				<p></p>
+			</li>
+			<li>
+				<div class="index">
+					<span></span>
+					<span class="blur"></span>
+					<span class="blur"></span>
+				</div>
+				<img/>
+				<div class="desc">
+					<p></p>
+					<a href="javascript:;">播放</a>
+				</div>
+			</li>
+		</ul>
+	</li>
+	<li class="lis">
+		<ul>
+			<li>
+				<span></span>
+				<p></p>
+			</li>
+			<li>
+				<div class="index">
+					<span></span>
+					<span class="blur"></span>
+					<span class="blur"></span>
+				</div>
+				<img/>
+				<div class="desc">
+					<p></p>
+					<a href="javascript:;">播放</a>
+				</div>
+			</li>
+		</ul>
+	</li>
+	<li class="lis">
+		<ul>
+			<li>
+				<span></span>
+				<p></p>
+			</li>
+			<li>
+				<div class="index">
+					<span></span>
+					<span class="blur"></span>
+					<span class="blur"></span>
+				</div>
+				<img/>
+				<div class="desc">
+					<p></p>
+					<a href="javascript:;">播放</a>
+				</div>
+			</li>
+		</ul>
+	</li>
+	<li class="lis">
+		<ul>
+			<li>
+				<span></span>
+				<p></p>
+			</li>
+			<li>
+				<div class="index">
+					<span></span>
+					<span class="blur"></span>
+					<span class="blur"></span>
+				</div>
+				<img/>
+				<div class="desc">
+					<p></p>
+					<a href="javascript:;">播放</a>
+				</div>
+			</li>
+		</ul>
+	</li>
+	<li class="lis">
+		<ul>
+			<li>
+				<span></span>
+				<p></p>
+			</li>
+			<li>
+				<div class="index">
+					<span></span>
+					<span class="blur"></span>
+					<span class="blur"></span>
+				</div>
+				<img/>
+				<div class="desc">
+					<p></p>
+					<a href="javascript:;">播放</a>
+				</div>
+			</li>
+		</ul>
+	</li>
+	<li class="lis">
+		<ul>
+			<li>
+				<span></span>
+				<p></p>
+			</li>
+			<li>
+				<div class="index">
+					<span></span>
+					<span class="blur"></span>
+					<span class="blur"></span>
+				</div>
+				<img/>
+				<div class="desc">
+					<p></p>
+					<a href="javascript:;">播放</a>
+				</div>
+			</li>
+		</ul>
+	</li>
+	<li class="lis">
+		<ul>
+			<li>
+				<span></span>
+				<p></p>
+			</li>
+			<li>
+				<div class="index">
+					<span></span>
+					<span class="blur"></span>
+					<span class="blur"></span>
+				</div>
+				<img/>
+				<div class="desc">
+					<p></p>
+					<a href="javascript:;">播放</a>
+				</div>
+			</li>
+		</ul>
+	</li>
+	<li class="lis">
+		<ul>
+			<li>
+				<span></span>
+				<p></p>
+			</li>
+			<li>
+				<div class="index">
+					<span></span>
+					<span class="blur"></span>
+					<span class="blur"></span>
+				</div>
+				<img/>
+				<div class="desc">
+					<p></p>
+					<a href="javascript:;">播放</a>
+				</div>
+			</li>
+		</ul>
+	</li>
+	
+</ul>
+</body>
+</html>

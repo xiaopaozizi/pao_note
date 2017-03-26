@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> 
+<html>
+<head>
+<style type="text/css">
+*{padding:0;margin:0;}
+ul {list-style:none;}
+a{ text-decoration:none;}
+#list{width:600px;height:200px;margin:100px auto;border:1px solid #ccc;}
+#list h2{width:600px;height:40px;line-height:40px;background:#66CC99;text-indent:20px;}
+#list .lis {width:600px;height:40px;line-height:40px;border-top:1px solid #ccc;text-indent:20px;}
+#list .lis ul{width:600px;height:40px;}
+#list .lis ul li {width:300px;height:40px;line-height:40px;float:left;display:inline-block;}
+#list .lis ul li:last-child{display:none;}
+</style>
+<script>
+window.onload = function () {
+	var oUl = document.getElementById('list');
+	var lis = oUl.getElementsByClassName('lis');
+	var allLi = [];
+	
+	for ( var i = 0; i < lis.length; i++ ) {
+		var aLi = lis[i].getElementsByTagName('li');
+		for ( var j = 0; j < aLi.length; j++ ) {
+			allLi.push(aLi[j]);
+		}
+	}
+	for ( var i = 0; i < allLi.length; i++ ) {
+		allLi[i].index = i;
+		var aA = allLi[i].getElementsByTagName('a');
+		for ( var j = 0; j < aA.length; j ++ ) {
+			aA[j].index = j;
+			aA[j].onclick = function () {
+				var parent = this.parentNode;
+				parent.style.display = 'none';
+				allLi[parent.index % 2 ? parent.index - 1 : parent.index + 1].style.display = 'block';
+				if (this.innerHTML === '编辑') {
+					var input = parent.nextElementSibling.getElementsByTagName('input')[0];
+					var value = parent.getElementsByTagName('span')[0].innerHTML;
+					input.value = value;
+					input.focus();
+				} else if (this.innerHTML === '保存') {
+					var value = parent.getElementsByTagName('input')[0].value;
+					var span = parent.previousElementSibling.getElementsByTagName('span')[0];
+					span.innerHTML = value;
+				}
+			}
+		}
+	}	
+	
+}
+</script>
+</head>
+
+<body>
+<ul id="list">
+	<h2>分类名称</h2>
+	<li class="lis">
+		<ul>
+			<li>
+				<span>类别1</span>
+				<a href="javascript:;">编辑</a>
+			</li>
+			<li>
+				<input/>
+				<a href="javascript:;">保存</a>
+				<a href="javascript:;">取消</a>
+			</li>
+		</ul>
+	</li>
+	<li class="lis">
+		<ul>
+			<li>
+				<span>类别2</span>
+				<a href="javascript:;">编辑</a>
+			</li>
+			<li>
+				<input/>
+				<a href="javascript:;">保存</a>
+				<a href="javascript:;">取消</a>
+			</li>
+		</ul>
+	</li>
+	<li class="lis">
+		<ul>
+			<li>
+				<span>类别3</span>
+				<a href="javascript:;">编辑</a>
+			</li>
+			<li>
+				<input/>
+				<a href="javascript:;">保存</a>
+				<a href="javascript:;">取消</a>
+			</li>
+		</ul>
+	</li>
+	<li class="lis">
+		<ul>
+			<li>
+				<span>类别4</span>
+				<a href="javascript:;">编辑</a>
+			</li>
+			<li>
+				<input/>
+				<a href="javascript:;">保存</a>
+				<a href="javascript:;">取消</a>
+			</li>
+		</ul>
+	</li>
+</ul>
+</body>
+</html>
