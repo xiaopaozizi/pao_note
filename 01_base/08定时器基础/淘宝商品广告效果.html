@@ -1,0 +1,98 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+*{padding:0;margin:0;}
+li{list-style:none;}
+#content{width:360px;height:240px;border:1px solid #ccc;margin:50px auto;position:relative;}
+#content img{position:absolute;width:200px;height:240px;top:0;left:80px;}
+#content li{width:74px;height:24px;line-height:24px;text-align:center;border-radius:5px;margin:2px;position:absolute;border:1px solid #CC3300;}
+#content li.active{background:pink;}
+</style>
+<script>
+window.onload = function () {
+	var content = document.getElementById('content');
+	var aLi = content.getElementsByTagName('li');
+	var img = content.getElementsByTagName('img')[0];
+	var arrText = ['连衣裙','雪纺','T桖','铅笔裤','婚纱','外套','连体裤','包包',
+				'凉鞋','太阳镜','单鞋','丝袜','帆布鞋','情侣装','平板鞋','拖鞋'];
+	var arrPic = [];
+	var number = 0;
+	var step = 1;
+	var timer = null; // 定时器
+	// 分配照片
+	for ( var i = 0; i < arrText.length; i++ ) {
+		arrPic.push('img/tab/' + (i + 1) + '.png');
+	}
+	// 创建16个LI
+	for ( var i = 0; i < arrText.length; i++ ) {
+		var oLi = document.createElement('li');
+		oLi.innerText = arrText[i];
+		content.appendChild(oLi);
+	}
+	// 所有aLi定位
+	for ( var i = 0; i < arrText.length; i++ ) {
+		var middle = arrText.length / 2;
+		if (i < middle) {
+			aLi[i].style.cssText = 'left:0;top:' + i * 30 + 'px';
+		} else {
+			aLi[i].style.cssText = 'right:0;top:' + (i - middle) * 30 + 'px';
+		}
+	}
+	// 初始化第一张图片
+	tab(number);
+	// 动态切换图片
+	for ( var i = 0; i < aLi.length; i++ ) {
+		aLi[i].index = i;
+		aLi[i].onmouseover = function () {
+			tab(this.index);
+		}
+	}
+	autoPlay();
+	// 移入暂停
+	content.onmouseover = function () {
+		clearInterval(timer);
+	}
+	// 移出继续
+	content.onmouseout = function () {
+		// 如果移入的是Li，那么就记录出当前的index,
+		// 定时器就从当前的地方继续进行，但是大致的方向不会变
+		for ( var i = 0; i < aLi.length; i++ ) {
+			if (aLi[i].className === 'active') {
+				number = i;
+				break;
+			}
+		}
+		if (number === aLi.length - 1) step = -1;
+		if (number === 0) step = 1;
+		autoPlay();
+	}
+	// 自动轮播，顺序0-15，然后15-0
+	function autoPlay() {
+		clearInterval(timer);
+		timer = setInterval(function () {
+			number += step;
+			if (number === aLi.length - 1 || number === 0) step = -step;
+			tab(number);
+		}, 1000);
+	}
+	// 选项卡
+	function tab(num) {
+		img.src = arrPic[num];
+		for ( var i = 0; i < aLi.length; i++ ) {
+			aLi[i].className = '';
+		}
+		aLi[num].className = 'active';
+	}
+}
+</script>
+</head>
+
+<body>
+<div id="content">
+	<img/>
+</div>
+</body>
+</html>

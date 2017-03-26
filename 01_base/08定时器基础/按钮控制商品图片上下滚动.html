@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+*{padding:0;margin:0;}
+ul{list-style:none;}
+#content {width:240px;height:500px;margin:40px auto;border:5px solid #CC99FF;position:relative;}
+#content h2{width:240px;height:40px;line-height:40px;text-align:center;background:#0033FF;color:#fff;font-weight:bold;} 
+#main {width:240px;height:460px;position:absolute;top:40px;background:#f1f1f1;overflow:hidden;}
+#main p {width:240px;height:40px;line-height:40px;font-size:25px;position:absolute;text-align:center;background:#ccc;z-index:1000;}
+#up {top:0;}
+#down{bottom:0;}
+#main ul{position:absolute;top:40px;width:240px;min-height:380px;}
+#main ul li{width:240px;height:80px;border-bottom:1px solid #ccc;line-height:80px;text-align:center;}
+#main ul li:hover{background:#d5d5d5;}
+#main ul li:nth-child(event){background:#ccc;}
+#main ul li:nth-child(odd){background:#fff;}
+</style>
+<script>
+window.onload = function (){
+	var main = $('main'), up = $('up'), down = $('down');
+	var oUl = main.getElementsByTagName('ul')[0];
+	var aLi = oUl.getElementsByTagName('li'); 
+	var arr = ['星球大战外传','魔弦传说','情圣','大卫贝肯之倒','青海湖畔','我们的青春不怕疼','一万公里的约定','单身日记：好孕来袭','有家','至暴之年','向阳花开'];
+	var timer = null;
+	var step = 10;// 运动步长
+	var speed = 30; // 运动速度
+	var minTop = 0;
+	var maxTop = parseInt(getStyle(oUl,'top'));
+	
+	// 创建电影列表
+	for ( var i = 0; i < arr.length; i++ ) {
+		var oLi = document.createElement('li');
+		oLi.innerHTML = arr[i];
+		oUl.appendChild(oLi);
+	}
+	// 获取电影列表可以运动的高度范围-470px ~ 40px;
+	var minTop = parseInt(getStyle(oUl,'height')) - (parseInt(getStyle(main,'height'))-parseInt(getStyle(down,'height')));
+	// 向上运动
+	up.onmousedown = function () {
+		clearInterval(timer);
+		timer = setInterval(function () {
+			var top = parseInt(getStyle(oUl,'top')) -step;
+			if(top <= -minTop) top = -minTop;
+			oUl.style.top = top + 'px';
+		}, speed);
+	}
+	up.onmouseup = function () {
+		clearInterval(timer);
+	}
+	// 向下运动
+	down.onmousedown = function () {
+		clearInterval(timer);
+		timer = setInterval(function () {
+			var top = parseInt(getStyle(oUl,'top')) + step;
+			// 当top超出，则top = maxTop
+			if(top >= maxTop) top = maxTop;
+			oUl.style.top = top + 'px';
+		}, speed);
+	}
+	down.onmouseup = function () {
+		clearInterval(timer);
+	}
+	// 获取动态样式
+	function getStyle(ele, attr){
+		return ele.currentStyle ? ele.currentStyle[attr] : getComputedStyle(ele,0)[attr];
+	}
+	// 获取id
+	function $(id){return document.getElementById(id);}
+}
+</script>
+</head>
+
+<body>
+<div id="content">
+	<h2>电影排行榜</h2>
+	<div id="main">
+		<p id="up">向上</p>
+		<ul>
+		</ul>
+		<p id="down">向下</p>
+	</div>
+</div>
+</body>
+
+</html>

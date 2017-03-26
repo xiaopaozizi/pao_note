@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+*{padding:0;margin:0;}
+ul{list-style:none;}
+#content{width:300px;height:200px;margin:150px auto;border:10px solid #ccc;padding:10px;}
+#top{width:300px;height:50px;background:#ccc;}
+#top a{height:50px;line-height:50px;font-size:20px;text-decoration:none;color:#000;display:inline-block;padding:0 10px;}
+#top a.active{background:yellow;}
+#main{width:300px;height:150px;background:#f1f1f1;}
+#main img{width:200px;height:150px;}
+#main ul{width:100px;height:150px;display:inline-block;float:right;}
+#main ul li{width:100px;height:50px;background:#f1f1f1;border-bottom:1px dotted #000;line-height:50px;text-align:center;}
+#main ul li.active{background:blue;}
+</style>
+<script>
+window.onload = function () {
+	var content = document.getElementById('content');
+	var top = document.getElementById('top');
+	var aA = top.getElementsByTagName('a');
+	var main = document.getElementById('main');
+	var img = main.getElementsByTagName('img')[0];
+	var aLi = main.getElementsByTagName('li');
+	var arr = [
+		{ 
+			title : '动漫',
+			subtitle : ['波波鸟','白魔女','小龙女'],
+			pics : ['img/1.png','img/2.png','img/3.png'],
+		},
+		{ 
+			title : '购物',
+			subtitle : ['头盔','雪橇','内衣'],
+			pics : ['img/4.png','img/5.png','img/6.png'],
+		}
+	];
+	var row = 0, col = 0;
+	var timer = null;
+	for ( var i = 0; i < arr.length; i++ ) {
+		aA[i].innerHTML = arr[i].title;
+		aA[i].index = i;
+		aA[i].onmouseover = function () {
+			tab(this.index);
+		}
+	}
+	tab(0);
+	content.onmouseover = function () {
+		for ( var i = 0; i < aA.length; i++ ) {
+			if (aA[i].className === 'active') {
+				row = i;
+				break;
+			}
+		}
+		for ( var i = 0; i < aLi.length; i++ ) {
+			if (aLi[i].className === 'active'){
+				col = i;
+				break;
+			}
+		}
+		clearInterval(timer);
+	}
+	content.onmouseout = autoPlay;
+	// 自动播放
+	function autoPlay() {
+		clearInterval(timer);
+		timer = setInterval(function () {
+			// 子标题++，逢子标题长度，
+			// 并且主标题加1，
+			// 当子标题和主标题当前inded=长度时，归0
+			col++;
+			if(col === aLi.length) row++;
+			row %= aA.length;
+			col %= aLi.length;
+			for ( var i = 0; i < aLi.length; i ++ ) {
+				aLi[i].className = '';
+			}
+			aLi[col].className = 'active';
+			img.src = arr[row].pics[col];
+			for ( var i = 0; i < aLi.length; i++ ) {
+				aLi[i].innerHTML = arr[row].subtitle[i];
+			}
+			for ( var i = 0; i < aA.length; i ++ ) {
+				aA[i].className = '';
+			}
+			aA[row].className = 'active';
+		}, 2000);
+	}
+	autoPlay();
+	function tab(index) {
+		for ( var i = 0; i < aA.length; i++ ){
+			aA[i].className = '';
+		}
+		aA[index].className = 'active';
+		
+		for ( var j = 0; j < arr[index].subtitle.length; j++ ) {
+			aLi[j].innerHTML = arr[index].subtitle[j];
+			aLi[j].index = j;
+			aLi[j].onmouseover = function () {
+				for ( var i = 0; i < aLi.length; i ++ ) {
+					aLi[i].className = '';
+				}
+				this.className = 'active';
+				img.src = arr[index].pics[this.index];
+			}
+		}
+		img.src = arr[index].pics[0];
+		for ( var i = 0; i < aLi.length; i++ ){
+			aLi[i].className = '';
+		}
+		aLi[0].className = 'active';		
+	}
+}
+</script>
+</head>
+
+<body>
+<div id="content">
+	<div id="top">
+		<a href="javascript:;"></a>
+		<a href="javascript:;"></a>
+	</div>
+	<div id="main">
+		<img/>
+		<ul>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+	</div>
+</div>
+</body>
+</html>

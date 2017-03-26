@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+*{padding:0;margin:0;}
+ul{list-style:none;}
+a{text-decoration:none;}
+#menu{height:200px;border:1px solid #ccc;margin:40px auto;position:relative;}
+#title{position:absolute;left:0;top:0;height:50px;border:1px solid yellow;background:blue;}
+#title li{text-align:center;width:80px;height:30px;line-height:30px;float:left;background:#f1f1f1;border-radius:10px;color:#000;font-weight:bold;margin:10px 5px;cursor:pointer;}
+#subtitle{height:30px;;border:1px solid #ccc;border-radius:10px;position:absolute;top:60px;left:10px;}
+#subtitle:before{content:'';position:absolute;border-top:7px solid transparent;border-right:7px solid transparent;border-bottom:9px solid #ccc;border-left:7px solid transparent;top:-16px;left:30px;}
+#subtitle:after{content:'';position:absolute;border-top:7px solid transparent;border-right:7px solid transparent;border-bottom:9px solid #fff;border-left:7px solid transparent;top:-15px;left:30px;}
+#subtitle a{display:inline-block;height:20px;line-height:20px;margin:5px 5px;float:left;}
+#subtitle a:hover{text-decoration:underline;}
+</style>
+<script>
+window.onload = function () {
+	var title = document.getElementById('title');
+	var subtitle = document.getElementById('subtitle');
+	var aA = subtitle.getElementsByTagName('a');
+	var aLi = title.getElementsByTagName('li');
+	var arr = [
+		{ title : '首页', subtitle : ['首页1','首页2','首页3']},
+		{ title : '关于我们', subtitle : ['关于我们1','关于我们2','关于我们3','关于我们4','关于我们5']},
+		{ title : '课程', subtitle : ['课程1','课程2','课程3']},
+		{ title : '新闻', subtitle : ['新闻1','新闻2']},
+	];
+	var timer = null;
+	
+	
+	
+	for ( var i = 0; i < arr.length; i++ ) {
+		var oLi = document.createElement('li');
+		oLi.innerHTML = arr[i].title;
+		oLi.index = i;
+		oLi.onmouseover = function () {
+			var width = parseInt(getStyle(this,'width'));
+			var marginRight = parseInt(getStyle(this,'marginRight'));
+			clearTimeout(timer);
+			subtitle.innerHTML = '';
+			createA(this.index);
+			subtitle.style.left = 10 + (width + marginRight) * this.index + 'px';
+			subtitle.style.display = 'block';
+		}
+		oLi.onmouseout = function () {
+			timer = setTimeout(function () {
+				subtitle.style.display = 'none';
+			}, 100);
+		}
+		title.appendChild(oLi);
+	} 
+	subtitle.onmouseover = function () {
+		clearTimeout(timer);
+		this.style.display = 'block';
+	}
+	subtitle.onmouseout = function () {
+		this.style.display = 'none';
+	}
+	createA(0);
+	
+	function createA(index){
+		for ( var j = 0; j < arr[index].subtitle.length; j++ ){
+			var oA = document.createElement('a');
+			oA.innerHTML = arr[index].subtitle[j];
+			subtitle.appendChild(oA);
+		}
+	}
+	function getStyle(ele, attr) {
+		return ele.currentStyle ? ele.currentStyle[attr] : 
+			getComputedStyle(ele,0)[attr];
+	}
+	
+}
+</script>
+</head>
+
+<body>
+<div id="menu">
+	<ul id="title">
+	</ul>
+	<div id="subtitle">
+	</div>
+</div>
+</body>
+</html>
