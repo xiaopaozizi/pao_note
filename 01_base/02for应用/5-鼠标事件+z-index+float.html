@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+*{margin:0px;padding:0px;}
+ul{list-style:none;}
+#content{width:420px;height:280px;background:#f1f1f1;;margin:150px auto;}
+#content li {width:100px;height:100px;background:red;margin:20px;float:left;position:relative}
+#content li div {width:120px;height:120px;background:#CC66FF;position:absolute;left:40%;top:-110%;z-index:1000;display:none;line-height:140px;text-align:center;}
+</style>
+<script>
+window.onload = function () {
+	var oContent = document.getElementById('content');
+	var aLi = oContent.getElementsByTagName('li');
+	for (var i = 0, len = aLi.length; i < len; i++) {
+		aLi[i].onmouseover = (function (i) {
+			return function () {
+				aLi[i].firstElementChild.style.display = 'block';
+			}
+		})(i);
+		aLi[i].onmouseout = (function (i) {
+			return function () {
+				aLi[i].firstElementChild.style.display = 'none';
+			}
+		})(i);
+	} 
+}
+</script>
+</head>
+
+<body>
+<ul id="content">
+	<li><div>1</div></li>
+	<li><div>2</div></li>
+	<li><div>3</div></li>
+	<li><div>4</div></li>
+	<li><div>5</div></li>
+	<li><div>6</div></li>
+</ul>
+</body>
+</html>

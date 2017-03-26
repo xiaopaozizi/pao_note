@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+*{margin:0;padding:0;}
+div {width:100px;height:100px;line-height:100px;border:1px solid black;position:absolute;left:0;top:0;text-align:center;font-size:30px;}
+</style>
+<script>
+window.onload = function () {
+	var arr = ['red','yellow','blue','green'];
+	var arrLen = arr.length;	
+	for ( var i = 0; i < 10; i++ ) {
+		for ( var j = 0; j < 10; j++ ) {
+			var newDiv = document.createElement('div');
+			newDiv.innerHTML = i * 10 + j;
+			newDiv.style.background = arr[(i * 10 + j) % arrLen];
+			newDiv.style.top = i * 110 + 'px';
+			newDiv.style.left = j * 110 + 'px';
+			document.body.appendChild(newDiv);
+		}
+	}
+}
+</script>
+</head>
+
+<body>
+</body>
+</html>
