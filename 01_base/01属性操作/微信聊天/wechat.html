@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+*{margin:0;padding:0;}
+#content {position:relative;width:300px;height:500px;border:1px solid blue;margin:30px auto;border-radius:10px;}
+#top {position:absolute;margin:10px 20px;padding-right:20px;width:258px;height:428px;word-wrap: break-word;overflow:auto;overflow-x:hidden;}
+#top div {width:258px;margin-top:5px;}
+#top div img {width:23px;}
+#top div span {width:200px;display:inline-block;padding:5px;border-radius:5px;margin-left:5px;}
+.left{float:left;}
+.leftCon{background:#ccc;}
+.right{float:right;}
+.rightCon{background:#99FF66;}
+#bottom {position:absolute;bottom:0;height:40px;width:300px;border-top:1px dotted #999;line-height:40px;text-align:center;}
+</style>
+<script>
+window.onload = function () {
+	var bottom = document.getElementById('bottom');
+	var img = document.getElementById('img1');
+	var input = document.getElementById('inp1');
+	var btn = document.getElementById('btn');
+	var top = document.getElementById('top');
+	var imgSrc = ['img/icon1.png','img/icon2.png'];
+	var imgFlag = true;
+	input.focus();
+	img.src = imgSrc[0];
+	// 点击切换图标
+	img.onclick = function (){
+		imgFlag = !imgFlag;
+		img.src = imgFlag === true ? imgSrc[0] : imgSrc[1];
+		input.focus();
+	}
+	window.onkeydown = function (e) {
+		var e = e || event;
+		if(e.keyCode === 13) {
+			btn.onclick();
+		}
+	}
+	// 点击发送信息
+	btn.onclick = function () {
+		var val = trim(input.value);
+		if (val === '') {
+			alert('请输入内容~~^0^~~');
+			input.focus();
+			return;
+		}
+		var newDiv = document.createElement('div');
+		var img = document.createElement('img');
+		var span = document.createElement('span');
+		span.innerText = val;
+		if (imgFlag) {
+			img.src = imgSrc[0];
+			img.className = 'left';
+			span.className = 'leftCon';
+		} else {
+			img.src = imgSrc[1];
+			img.className = 'right';
+			span.className = 'rightCon';
+		}
+		newDiv.appendChild(img);
+		newDiv.appendChild(span);
+		if (top.children.length > 0) {
+			top.insertBefore(newDiv, top.firstElementChild);
+		} else {
+			top.appendChild(newDiv);
+		}
+		input.value = '';
+		input.focus();
+	}
+	// 去除首尾空格
+	function trim(str) {
+		return str.replace(/(^\s*)|(\s*$)/g, '');
+	}
+}
+</script>
+</head>
+
+<body>
+<div id="content">
+	<div id="top">
+	</div>
+	<div id="bottom">
+		<img id="img1"/>
+		<input type="text" id="inp1"/>
+		<input type="button" id="btn" value="发送"/>
+	</div>
+</div>
+</body>
+</html>
