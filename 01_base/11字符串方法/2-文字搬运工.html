@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>文字搬运工</title>
+<style>
+body{width:800px;height:400px;margin:50px auto;position:relative;}
+#txt{width:300px;height:200px;border:1px solid #000;position:absolute;resize:none;}
+#btn{width:100px;height:100px;position:absolute;left:320px;}
+#btn input{width:100px;height:40px;background:red;}
+#btn span{width:100px;font-size:20px;font-weight:bold;display:inline-block;height:40px;line-height:40px;text-align:center;}
+#right{width:300px;height:200px;border:1px solid #000;background:#FF99FF;position:absolute;left:440px;}
+</style>
+<script>
+window.onload = function () {
+	var txt = document.getElementById('txt');
+	var input = document.querySelector('#btn>input');
+	var span = document.querySelector('#btn>span');
+	var right = document.getElementById('right');
+	var timer = null;
+	var initLen = txt.value.length;
+	
+	// 初始化
+	span.innerHTML = '0/' + initLen;
+	input.onclick = function () {
+		clearInterval(timer);
+		timer = setInterval(function(){
+			right.innerHTML += txt.value.substring(0,1);
+			txt.innerHTML = txt.value.substring(1);
+			span.innerHTML = (initLen - txt.value.length) + '/' + initLen;
+			if (txt.innerHTML === '') clearInterval(timer);
+		},60);
+	}
+}
+</script>
+</head>
+<body>
+<textarea id="txt">妙味课堂是一支独具特色的IT培训团队，妙味反对传统IT教育枯燥乏味的教学模式，妙味提供一种全新的快乐学习方法！2013年底，妙味课堂最新推出"远程培训"服务，受到很多朋友们的喜爱力的帮
+</textarea>
+<div id="btn">
+	<input type="button" value="把文字右移"/>
+	<span>100/200</span>
+</div>
+<div id="right"></div>
+</body>
+</html>
