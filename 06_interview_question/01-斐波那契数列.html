@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>无标题文档</title>
+</head>
+
+<body>
+<script>
+/*
+费波那列数列 1,1,2,3,5,8,13,21
+*/
+// 迭代
+/*function show(n) {
+	if(n<1) return;
+	if(n === 1 || n === 2) return 1;
+	let a = 1;
+	let b = 1;
+	let c = a + b;
+	let num = 2;
+	while(num < n) {
+	
+		c = a + b;
+		a = b;
+		b = c;
+		num++;
+	
+	}
+	return c;
+}*/
+
+// 递归
+function show(n) {
+	// 结束条件
+	if(n<1) return;
+	if(n<=2) return 1;
+	return show(n-1) + show(n-2);
+}
+
+alert(show(8));
+
+
+</script>
+</body>
+</html>
