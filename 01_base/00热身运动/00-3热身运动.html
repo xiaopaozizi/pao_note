@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+* {padding:0;margin:0;}
+#btn {height:30px;width:60px;background:red;}
+#box { width:100px;height:100px;border:2px solid black;}
+/*遮罩*/
+#model {position:fixed;background:black;width:100%;height:100%;opacity:60%;opacity:0.6;z-index:1000;display:none;}
+/*垂直居中width:300px;height:200px;position:absolute;left:50%;top:50%;margin-top:-100px;margin-left:-150px;：*/
+#selector {width:300px;height:200px;background:#ccc;position:absolute;left:50%;top:50%;margin-top:-100px;margin-left:-150px;z-index:1001;list-style:none;border:10px solid #fff;padding:20px;display:none;}
+#selector li {height:30px; margin-top:20px;cursor:pointer;text-align:center;}
+#selector li a { text-decoration:none;color:#000;cursor:default;}
+#selector li span {display:inline-block;width:40px;height:30px;line-height:30px;text-align:center;}
+.red{background:red;}
+.yellow{background:yellow;}
+.blue{background:blue;}
+.spanColor{background:#fff;}
+.spanBtnColor{background:blue;color:#fff;}
+</style>
+</head>
+
+<body>
+<div id="model"></div>
+请为下面的div设置样式：
+<input type="button" id="btn" value="点击设置"/>
+<div id="box"></div>
+<ul id="selector">
+	<li>	
+		<a href="javascript:;">请选择背景色：</a>
+		<span class="red" data-val="red">红</span>
+		<span class="yellow" data-val="yellow">黄</span>
+		<span class="blue" data-val="blue">蓝</span>
+	</li>
+	<li>	
+		<a href="javascript:;">请选择宽(px)：</a>
+		<span class="spanColor" data-val="width&200px">200</span>
+		<span class="spanColor" data-val="width&300px">300</span>
+		<span class="spanColor" data-val="width&400px">400</span>
+	</li>
+	<li>	
+		<a href="javascript:;">请选择高(px)：</a>
+		<span class="spanColor" data-val="height&200px">200</span>
+		<span class="spanColor" data-val="height&300px">300</span>
+		<span class="spanColor" data-val="height&400px">400</span>
+	</li>
+	<li>
+		<span class="spanBtnColor" id="reset">恢复</span>
+		<span id="confirmBtn" class="spanBtnColor">确定</span>
+	</li>
+</ul>
+<script>
+window.onload = function () {
+	var model = $('model');
+	var box = $('box');
+	var selector = $('selector');
+	var spanList = selector.getElementsByTagName('span');
+	// 设置边框颜色、宽度、高度
+	for ( var i = 0, len = spanList.length; i < len; i++ ) {
+		spanList[i].onclick = (function (i) {
+			return function () {
+				var text = spanList[i].getAttribute('data-val').split('&');
+				//alert(text[0]);
+				text.length === 1 ? box.style.background = text : box.style[text[0]] = text[1];
+			}
+		})(i);
+	} 
+	// 重置box按钮
+	$('reset').onclick = function () {
+		box.style.cssText = "width:100px;height:100px;border:2px solid black;";
+	}
+	// 弹出设置面板按钮
+	$('btn').onclick = function () {
+		model.style.display = 'block';
+		selector.style.display = 'block';
+	}
+	// 确定设置完成按钮
+	$('confirmBtn').onclick = function () {
+		model.style.display = 'none';
+		selector.style.display = 'none';
+	}
+	function $(id) {
+		return document.getElementById(id);
+	}
+}
+</script>
+</body>
+</html>
