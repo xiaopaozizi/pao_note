@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+<link href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<style>
+*{padding:0;margin:0;}
+#content{width:700px;height:50px;border:1px solid #ccc;margin:50px auto;line-height:50px;}
+#content span.title{display:line-block;width:100px;height:50px;line-height:50px;font-size:20px;font-weight:bold;color:#FF9933;}
+#content ul.stars {display:inline-block;width:160px;height:50px;line-height:50px;cursor:pointer;}
+#content ul.stars li {font-size:30px;color:#ccc;}
+#content p {display:inline-block;width:80px;height:50px;line-height:50px;font-size:20px;font-weight:bold;color:#ff9933;}
+#content .tip{display:inline-block;height:45px;border:1px #ccc red;background:#FFFFCC; visibility:hidden;}
+#content .tip span {display:inline-block;height:40px;line-height:40px;padding:0px 10px;;}
+#content .tip ul {display:inline-block;position:relative;}
+#content .tip ul i{position:absolute;top:70%;right:18%;}
+.red {color:red;margin-left:10px;}
+.orange{color:orange;}
+</style>
+<script>
+window.onload = function () {
+	var content = document.getElementById('content');
+	var score = document.getElementById('score');
+	var oUl = content.getElementsByClassName('stars')[0];
+	var aLi = oUl.getElementsByTagName('li');
+	var tip = content.getElementsByClassName('tip')[0];
+	
+	var arr = ['较差','较差','还行','推荐','力荐'];
+	
+	oUl.onmouseover = function(){
+		tip.style.visibility = 'visible';
+	}
+	oUl.onmouseout = function(){
+		tip.style.visibility = 'hidden';
+	}
+	
+	for( var i=0;i<aLi.length;i++ ){
+		aLi[i].index = i;
+		aLi[i].onclick = function () {
+			mark(this.index);
+			oUl.index = this.index;
+		}
+		aLi[i].onmouseover = function(){
+			for( var i=0;i<aLi.length;i++ ){
+				aLi[i].style.color = '#ccc';
+			}
+			mark(this.index);
+		}
+		aLi[i].onmouseout = function(){
+			for( var i=0;i<=this.index;i++ ){
+				aLi[i].style.color = '#ccc';
+			}
+			if(oUl.index !== 'undefined'){
+				mark(parseInt(oUl.index));
+			}
+		}
+	}
+	function show() {
+		tip.style.visibility = tip.style.visibility === 'hidden' ? 'visible' : 'hidden';
+	}
+	function mark(index) {
+		for( var i=0;i<=index;i++ ){
+			aLi[i].style.color = index < 2 ? 'gray' : 'orange';
+		}
+		score.innerHTML = arr[index] ? arr[index] : '待评价';
+	}
+}
+</script>
+</head>
+
+<body>
+<div id="content">
+	<span class="title"><i class="red">* </i>总体评价：</span>
+	<ul class="stars">
+		<li class="fa fa-star"></li>
+		<li class="fa fa-star"></li>
+		<li class="fa fa-star"></li>
+		<li class="fa fa-star"></li>
+		<li class="fa fa-star"></li>
+	</ul>
+	<p id="score">待评价</p>
+	<div class="tip">
+		<span>小提示：点击小星星可以打分</span>
+		<ul>
+			<li class="fa fa-star orange"></li>
+			<li class="fa fa-star orange"></li>
+			<li class="fa fa-star orange"></li>
+			<li class="fa fa-star orange"></li>
+			<li class="fa fa-star-o"></li>
+			<i class="fa fa-hand-pointer-o"></i>
+		</ul>
+	</div>
+</div>
+</body>
+</html>

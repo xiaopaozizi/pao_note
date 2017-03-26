@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+*{margin:0;padding:0;}
+ul{list-style:none;}
+#content{width:300px;border:1px solid #ccc;margin:20px auto;}
+#content ul{width:300px;}
+#content ul li,#content div{width:300px;height:50px;line-height:50px;border-bottom:1px dotted #ccc;text-indent:20px;}
+#content ul li:nth-child(odd) {background:#f1f1f1;}
+#content ul li.active,#content ul li:hover{background:#99FFCC;}
+</style>
+<script>
+window.onload = function () {
+	var oDiv = document.getElementById('content');
+	var checkAll = document.getElementById('checkAll');
+	var aLi = oDiv.getElementsByTagName('li');
+	var aInput = oDiv.getElementsByTagName('input');
+	
+	
+	for ( var i = 0; i < aInput.length; i++ ) {
+		aInput[i].index = i;
+		aInput[i].onclick = function () {
+			aLi[this.index].className = this.checked ? 'active' : '';
+		}
+	}
+	
+	checkAll.onclick = function () {
+		for ( var i = 0; i < aInput.length; i++ ) {
+			if(!aInput[i].checked) aInput[i].checked = true;
+			aLi[i].className = 'active';
+		}
+	}
+}
+</script>
+</head>
+
+<body>
+<div id="content">
+	<ul>
+		<li>
+			<input type="checkbox"/>
+			<span>私奔</span>
+			<span>梁博</span>
+		</li>
+		<li>
+			<input type="checkbox"/>
+			<span>北京</span>
+			<span>杜甫</span>
+		</li>
+		<li>
+			<input type="checkbox"/>
+			<span>花人</span>
+			<span>李白</span>
+		</li>
+		<li>
+			<input type="checkbox"/>
+			<span>神话</span>
+			<span>光良</span>
+		</li>
+		<li>
+			<input type="checkbox"/>
+			<span>神话</span>
+			<span>光良</span>
+		</li>
+		<li>
+			<input type="checkbox"/>
+			<span>神话</span>
+			<span>光良</span>
+		</li>
+		<li>
+			<input type="checkbox"/>
+			<span>神话</span>
+			<span>光良</span>
+		</li>
+		<li>
+			<input type="checkbox"/>
+			<span>神话</span>
+			<span>光良</span>
+		</li>
+		<li>
+			<input type="checkbox"/>
+			<span>神话</span>
+			<span>光良</span>
+		</li>
+	</ul>
+	<div>
+		<input id="checkAll" type="checkbox" />全选
+	</div>
+</div>
+</body>
+</html>
