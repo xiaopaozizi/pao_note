@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+#box{width:100px; height:100px; background:red; position:absolute;}
+</style>
+<script>
+/*
+问题描述：用js的键盘事件控制一个div移动，当按下一个方向键不放，div会先停顿一下，然后才开始持续移动。（原因：系统要区分用户是否连续输入，第一个到第二个之间有一个停顿时间）
+	
+解决方案：先开一个定时器，让div一直处于（往4个方向）准备移动的状态（初始4个方向的值都是false，div就保持在原地不动），当按下某个方向键，这个方向的值就改变为true，div就会开始往这个方向移动，松开方向键，这个方向的值就改变为false , div就停止这个方向移动了。
+*/
+window.onload = function () {
+
+	var oBox = document.getElementById('box');
+	var top = false;
+	var right = false;
+	var bottom = false;
+	var left = false;
+	
+	
+	// 设置定时器，使得div准备向四周运动
+	setInterval(function () {
+		if ( left ) {
+			oBox.style.left = oBox.offsetLeft - 10 + 'px';
+		} else if ( top ) {
+			oBox.style.top = oBox.offsetTop - 10 + 'px';
+		} else if ( right ) {
+			oBox.style.left = oBox.offsetLeft + 10 + 'px';
+		} else if ( bottom ) {
+			oBox.style.top = oBox.offsetTop + 10 + 'px';
+		}
+	}, 50);
+	
+	// 鼠标按下
+	document.onkeydown = function (ev) {
+		
+		var ev = ev || event;
+		
+		switch ( ev.keyCode ) {
+			
+			case 37:
+				left = true;
+				break;
+				
+			case 38:
+				top = true;
+				break;
+				
+			case 39:
+				right = true;
+				break;
+				
+			case 40:
+				bottom = true;
+				break;
+			
+		}
+		
+	}
+	
+	// 鼠标抬起
+	document.onkeyup = function (ev) {
+		
+		var ev = ev || event;
+		
+		switch ( ev.keyCode ) {
+			
+			case 37:
+				left = false;
+				break;
+				
+			case 38:
+				top = false;
+				break;
+				
+			case 39:
+				right = false;
+				break;
+				
+			case 40:
+				bottom = false;
+				break;
+			
+		}
+		
+	}
+	
+}
+</script>
+</head>
+<body>
+<div id="box"></div>
+</body>
+</html>

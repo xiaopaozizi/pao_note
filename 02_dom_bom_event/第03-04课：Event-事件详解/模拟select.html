@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+*{padding:0;margin:0;}
+ul{list-style:none;width:170px;border:1px solid #ccc;display:none;}
+ul li{width:170px;height:30px;line-height:30px;text-align:center;}
+ul li:hover, ul li.active{background:#FF3366;}
+</style>
+<script>
+window.onload = function () {
+
+	var oInput = document.querySelector('input');
+	var oUl = document.querySelector('ul');
+	var aLi = oUl.getElementsByTagName('li');
+	
+	oInput.onfocus = function () {
+		
+		oUl.style.display = 'block';
+		
+	}
+	
+	oInput.onblur = function () {
+	
+		setTimeout(function() {
+			
+			oUl.style.display = 'none';
+			
+		}, 300);
+		
+	}
+	
+	oUl.onmousemove = function () {
+		
+		this.style.display = 'block';
+		
+	}
+	
+	for ( var i = 0; i < aLi.length; i++ ) {
+		
+		aLi[i].index = i;
+		aLi[i].onclick = function () {
+			
+			oInput.value = this.innerHTML;
+			for ( var i = 0; i < aLi.length; i++ ) {
+				
+				aLi[i].className = '';
+				
+			}
+			this.className = 'active';
+			
+		}
+		
+	}
+
+}
+</script>
+</head>
+
+<body>
+<input />
+<ul>
+	<li>武炼巅峰</li>
+	<li>大主宰</li>
+	<li>斗破苍穹</li>
+	<li>武动乾坤</li>
+</ul>
+</body>
+</html>

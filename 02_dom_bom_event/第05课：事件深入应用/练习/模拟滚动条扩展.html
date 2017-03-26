@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>无标题文档</title>
+<style>
+#box{width:500px;height:500px;border:1px solid #ccc;margin:50px auto;position:relative;overflow:hidden;}
+#left{width:10%;height:inherit;background:#000;left:0;top:0;float:left;}
+#right{width:90%;position:absolute;right:0;}
+#scroll{width:50px;height:50px;background:red;position:absolute;}
+p{padding:0px 10px;}
+</style>
+<script>
+window.onload = function () {
+	
+	var oScroll = document.getElementById('scroll');
+	var oLeft = document.getElementById('left');
+	var oRight = document.getElementById('right');
+	var oBox = document.getElementById('box');
+	var scale = oBox.offsetHeight / oRight.offsetHeight;
+	if ( scale > 1 ) scale = 1;
+	// 滚动条高度自适应
+	oScroll.style.height = scale * oBox.offsetHeight + 'px';
+	if (scale === 1) return;
+	oScroll.onmousedown = function ( ev ) {
+	
+		var ev = ev || event;
+		var disY = ev.clientY - this.offsetTop;
+		
+		document.onmousemove = function ( ev ) {
+		
+			var ev = ev || event;
+			var T = ev.clientY - disY;
+			// 拖动滚动条
+			if ( T < 0 ) T = 0;
+			if ( T > oLeft.offsetHeight - oScroll.offsetHeight ) T = oLeft.offsetHeight - oScroll.offsetHeight;
+			oScroll.style.top = T + 'px';
+			// 控制oRight的top
+			var scale2 = oScroll.offsetTop / ( oLeft.offsetHeight - oScroll.offsetHeight );
+			oRight.style.top = -scale2 * (oRight.offsetHeight - 500) + 'px';
+		
+		}
+		
+		document.onmouseup = function () {
+		
+			document.onmousemove = document.onmouseup = null;
+		
+		}
+		
+	
+	}
+
+}
+</script>
+</head>
+<body>
+<div id="box">
+	<div id="left">
+		<div id="scroll"></div>
+	</div>
+	<div id="right">
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+		<p>x;height:500px;border:1px solid #ccc;margin:50px aut</p>
+
+	
+	</div>
+</div>
+</body>
+</html>

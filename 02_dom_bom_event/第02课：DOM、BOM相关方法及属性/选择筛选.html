@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+dd{cursor:pointer;height:30px;line-height:30px;}
+#box{list-style:none;}
+#box li{float:left;height:30px;line-height:30px;margin:10px;}
+</style>
+<script>
+window.onload = function () {
+
+	var aDl = document.querySelectorAll('dl');
+	var aLi = document.querySelectorAll('li');
+	var box = document.getElementById('box');
+	var data = [];
+	
+	
+	for ( var i = 0; i < aDl.length; i++ ) {
+	
+		var aDd = aDl[i].getElementsByTagName('dd');
+		
+		for ( var j = 0; j < aDd.length; j++ ) {
+		
+			aDd[j].index = i;
+			
+			aDd[j].onclick = function () {
+				
+				aLi[this.index].innerHTML = this.innerHTML;
+				
+			}
+			
+		}
+		
+	}
+	
+}
+</script>
+</head>
+<body>
+<dl>
+	<dt>地区</dt>
+	<dd>北京</dd>
+	<dd>上海</dd>
+	<dd>杭州</dd>
+</dl>
+<dl>
+	<dt>职位</dt>
+	<dd>美工</dd>
+	<dd>前台</dd>
+	<dd>后台</dd>
+</dl>
+<dl>
+	<dt>薪资</dt>
+	<dd>10k</dd>
+	<dd>15k</dd>
+	<dd>20k</dd>
+</dl>
+<ul id="box">
+	<li></li>
+	<li></li>
+	<li></li>
+</ul>
+</body>
+</html>

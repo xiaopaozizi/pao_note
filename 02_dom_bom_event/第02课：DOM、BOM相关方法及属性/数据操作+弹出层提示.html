@@ -1,0 +1,159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+*{padding:0;margin:0;}
+#box{width:400px;margin:100px auto;border:1px solid red;}
+ul{list-style:none;}
+li{height:30px;line-height:30px;cursor:pointer;}
+#header li{width:50px;float:left;text-align:center;}
+#header li.active{background:#f60;}
+#content{width:200px;}
+#content li{width:200px;border-bottom:1px solid #ccc;float:left;position:relative;}
+.detail {width:600px;height:120px;border:1px solid #FF9933;position:absolute;background:#f1f1f1;padding:10px;top:-60px;left:200px;display:none;}
+.detail:before{border-left:9px solid transparent;border-right:7px solid red;border-top:7px solid transparent;border-bottom:7px solid transparent;content:'';position:absolute;top:50%;left:-16px;}
+.detail dt{font-size:18px;font-weight:bold;text-align:center;}
+.detail dd{width:300px;float:left;}
+</style>
+<script src="data.js"></script>
+<script>
+window.onload = function () {
+
+	var header = document.getElementById('header');
+	var aLi = header.getElementsByTagName('li');
+	var content = document.getElementById('content');
+	var aDl = document.querySelectorAll('dl');
+	
+	// 遍历data.js数据
+	for ( var i = 0; i < data.length; i++ ) {
+		
+		// 创建标题
+		createHeader(i);
+		
+		
+		
+	}
+	
+	
+	
+	// 首个标题高亮
+	highLight(0);
+	// 内容
+	createContent(0);
+		
+	
+	// 创建标题
+	function createHeader (index) {
+	
+		// 标题
+		var oLi = document.createElement('li');
+		
+		oLi.innerHTML = data[index].name;
+		// 为标题添加点击事件
+		oLi.index = index;
+		oLi.onclick = function () {
+			
+			createContent(this.index);
+			
+		}
+		header.appendChild(oLi);
+		
+		
+	}
+	
+	// 创建内容
+	function createContent (index) {
+		
+		highLight(index);
+		// 先清空内容
+		content.innerHTML = '';
+		for ( var i = 0; i < data[index].list.length; i++ ) {
+			
+			var oLi = document.createElement('li');		
+			var oA = document.createElement('a');
+			oA.innerHTML = data[index].list[i].title;
+			oA.href = 'javascript:;';
+			oLi.appendChild(oA);
+			oLi.flag = i;
+			// 创建deital
+			var oDl = document.createElement('dl');
+			var oDt = document.createElement('dt');
+			oDl.className = 'detail';
+			oDt.innerHTML = data[index].list[i].company;
+			oDl.appendChild(oDt);
+			// <dd>职位：php工程师</dd>
+			for ( var attr in data[index].list[i] ) {
+			
+				if (attr !== 'title' && attr !== 'company' && attr !== 'addDate') {  
+				
+					var oDd = document.createElement('dd');
+					
+					oDd.innerHTML = attr + '：' + data[index].list[i][attr];
+					oDl.appendChild(oDd);
+					
+				}
+				
+			}
+			
+			oLi.appendChild(oDl);
+			oLi.onmouseover = function () {
+				
+				this.children[1].style.display = 'block';
+				
+			}
+			oLi.onmouseout = function () {
+				
+				this.children[1].style.display = 'none';
+				
+			}
+			
+			content.appendChild(oLi);
+			
+		}
+		
+	}
+	// 标题高亮
+	function highLight(index) {
+		
+		for ( var i = 0; i < aLi.length; i++ ) {
+		
+			// 遍历清空高亮
+			aLi[i].className = '';
+			
+		}
+		aLi[index].className = 'active';
+		
+	}
+	
+}
+</script>
+</head>
+
+<body>
+<div id="box">
+	<ul id="header">
+		<!--<li>111</li>
+		<li>222</li>-->
+	</ul>
+	<ul id="content">
+		<li>
+			<a href="javascript:;">1111111</a>
+			<!--<dl class="detail">
+				<dt>xxx公司</dt>
+				<dd><span>职位</span>:<span>php工程师</span></dd>
+				<dd><span>职位</span>:<span>php工程师</span></dd>
+				<dd><span>职位</span>:<span>php工程师</span></dd>
+				<dd><span>职位</span>:<span>php工程师</span></dd>
+				<dd><span>职位</span>:<span>php工程师</span></dd>
+				<dd><span>职位</span>:<span>php工程师</span></dd>
+			</dl>-->
+		</li>
+		<!--<li>2222222222</li>
+		<li>3333333333</li>-->
+	</ul>
+	
+</div>
+</body>
+</html>

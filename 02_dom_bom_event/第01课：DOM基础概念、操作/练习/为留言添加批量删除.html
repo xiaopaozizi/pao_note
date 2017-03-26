@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+.active{background:yellow;}
+</style>
+<script>
+window.onload = function () {
+
+	var aInp = document.querySelectorAll('input');
+	var oUl = document.querySelector('ul');
+	
+	// 添加留言
+	aInp[1].onclick = function () {
+		// 留言内容
+		var content = aInp[0].value;
+		if (!content) {
+			alert('亲，留言板空空如也~~');
+			aInp[0].focus();
+			return;
+		}
+		// 添加内容
+		var oLi = document.createElement('li');
+		oLi.innerHTML = content;
+		// 单条oLi添加点击事件---选中背景变黄
+		oLi.selected = true;
+		oLi.onclick = function () {
+			this.className = this.selected ? 'active' : '';
+			this.selected = !this.selected;
+		}
+		// 添加到oUl的顶部
+		if (oUl.innerHTML) {
+			oUl.insertBefore(oLi, oUl.children[0]);
+		} else {
+			oUl.appendChild(oLi);
+		}
+	}
+	// 批量删除
+	aInp[2].onclick = function () {
+		var aLi = document.querySelectorAll('li');
+		// 遍历aLi，删除带active的
+		for ( var i = 0; i < aLi.length; i++ ) {
+			if (aLi[i].className === 'active') {
+				oUl.removeChild(aLi[i]);
+			}
+		}
+	}
+	
+}
+</script>
+</head>
+
+<body>
+<input/>
+<input type="button" value="添加"/>
+<input type="button" value="批量删除"/>
+<ul></ul>
+</body>
+</html>

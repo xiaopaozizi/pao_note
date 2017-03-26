@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+*{padding:0;margin:0;}
+input{width:300px;}
+ul{list-style:none;width:300px;border:1px solid #ccc;display:none;}
+ul li{width:300px;height:30px;line-height:30px;text-align:center;}
+ul li.active{background:#FF3366;}
+</style>
+<script>
+window.onload = function () {
+
+	var oInput = document.querySelector('input');
+	var oUl = document.querySelector('ul');
+	var aLi = oUl.getElementsByTagName('li');
+	var arr = [];
+	var shiftStart, shiftEnd;
+	
+
+	
+	oInput.onfocus = function () {
+		
+		oUl.style.display = 'block';
+		
+	}
+
+	
+	oUl.onmousemove = function () {
+		
+		this.style.display = 'block';
+		
+	}
+	
+	
+	
+	for ( var i = 0; i < aLi.length; i++ ) {
+		
+		aLi[i].index = i;
+		aLi[i].onclick = function (ev) {
+		
+			var ev = ev || event;
+			
+			if ( ev.ctrlKey )  {
+			
+				if ( this.className === 'active' ) {
+					
+					arr.splice( arr.indexOf( this.innerHTML ), 1 );
+					this.className = '';
+					
+				} else {
+					
+					this.className = 'active';
+					arr.push( this.innerHTML );
+						
+				}
+				
+			} else if ( ev.shiftKey ) {
+					
+				if ( shiftStart === undefined ) {
+					
+					aLi[this.index].className = 'active';
+					arr.push( aLi[this.index].innerHTML );
+					shiftStart = shiftEnd = this.index;
+					
+				}
+				
+				aLi[this.index].className = 'active';
+				
+				for ( var i = 0; i < aLi.length; i++ ) {
+					
+					if (aLi[i].className === 'active' ) {
+						
+						shiftStart = shiftStart < i ? shiftStart : i;
+						shiftEnd = shiftEnd > i ? shiftEnd : i;
+						
+					}
+					
+				}
+				
+				arr = [];
+				
+				for ( var i = shiftStart; i <= shiftEnd; i++ ) {
+				
+					if ( aLi[i].className === '' ) {
+						
+						aLi[i].className = 'active';
+						
+					}
+					arr.push(aLi[i].innerHTML);
+					
+				}
+				
+			
+			} else {
+		
+				for ( var i = 0; i < aLi.length; i++ ) {
+					
+					aLi[i].className = '';
+					
+				}
+				this.className = 'active';
+				arr = [];
+				arr.push( this.innerHTML );
+				oUl.style.display = 'none';
+				
+			}
+			oInput.value = arr.join(',');
+			
+		}
+		
+	}
+
+}
+</script>
+</head>
+
+<body>
+<input />
+<ul>
+	<li>武炼巅峰</li>
+	<li>大主宰</li>
+	<li>斗破苍穹</li>
+	<li>武动乾坤</li>
+	<li>凡人修仙传</li>
+	<li>神墓</li>
+	<li>飘渺之旅</li>
+</ul>
+</body>
+</html>

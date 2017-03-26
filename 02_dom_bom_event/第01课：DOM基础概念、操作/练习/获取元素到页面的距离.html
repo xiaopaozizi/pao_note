@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+div{padding:40px 50px;}
+#div1{background:yellow;}
+#div2{background:red;}
+#div3{background:blue;}
+</style>
+<script>
+window.onload = function () {
+	var div3 = document.getElementById('div3');
+	
+	console.log(getPos(div3));
+	// 获取元素到页面的距
+	function getPos(ele) {
+		var obj = { left : 0, top : 0};
+		while(ele) {
+			obj.left += ele.offsetLeft;
+			obj.top += ele.offsetTop;
+			ele = ele.offsetParent;
+		}
+		return obj;
+	}
+}
+</script>
+</head>
+
+<body>
+<div id="div1">
+	<div id="div2">
+		<div id="div3"></div>
+	</div>
+</div>
+</body>
+</html>

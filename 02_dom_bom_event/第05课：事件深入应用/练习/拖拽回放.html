@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>无标题文档</title>
+<style>
+*{padding:0;margin:0;}
+div{width:100px;height:100px;background:red;position:absolute;top:50px;}
+</style>
+</head>
+
+<body>
+<input type="button" value="回放" id="btn"/>
+<div id="box">asdfasdf</div>
+<script>
+
+	var oBox = document.getElementById('box');
+	var oBtn = document.getElementById('btn');
+	var lookArr = [];
+	var timer = null;
+		
+	// 拖拽的时候将坐标添加到数组中，
+	// 点击回放按钮，则读取数组中的数据
+	oBox.onmousedown = function (ev) {
+	
+		var ev = ev || event;
+		// 鼠标点到物体左上角的距离
+		var disX = ev.clientX - this.offsetLeft;
+		var disY = ev.clientY - this.offsetTop;
+		
+		// ie下全局捕获
+		if ( oBox.setCapture ) oBox.setCapture();
+		//鼠标在document上移动
+		document.onmousemove = function (ev) {
+		
+			var ev = ev || event;
+			var L = ev.clientX - disX;
+			var T = ev.clientY - disY;
+			
+			// 将数据扔到回放数组
+			lookArr.push( {
+				left : L,
+				top : T
+			} );
+			
+			oBox.style.left = L + 'px';
+			oBox.style.top = T + 'px';
+			
+		}
+		// 鼠标释放
+		document.onmouseup = function (ev) {
+		
+			document.onmousemove = document.onmouseup = null;
+			if ( oBox.releaseCapture ) oBox.releaseCapture();
+			
+		}
+		// 当选中文字时，阻止默认行为
+		return false;
+				
+		
+	}
+
+	// 点击回放
+	oBtn.onclick = function () {
+	
+		var pos = null;
+		//console.log(lookArr.pop());
+		timer = setInterval ( function () {
+			
+			pos = lookArr.pop();
+			if (pos === undefined) {
+				
+				clearInterval(timer);
+				return;
+				
+			}
+			oBox.style.left = pos.left + 'px';
+			oBox.style.top = pos.top + 'px';
+		
+		}, 100);
+		
+			
+		
+	}
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

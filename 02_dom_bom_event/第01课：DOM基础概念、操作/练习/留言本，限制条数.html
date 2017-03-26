@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+.active{background:yellow;}
+</style>
+<script>
+window.onload = function () {
+
+	var aInp = document.querySelectorAll('input');
+	var oUl = document.querySelector('ul');
+	var arr = [];
+	
+	// 添加留言
+	aInp[1].onclick = function () {
+		// 留言内容
+		var content = aInp[0].value;
+		if (!content) {
+			alert('亲，留言板空空如也~~');
+			aInp[0].focus();
+			return;
+		}
+		// 限制5条，多余自动删除
+		arr.push(content);
+		if (arr.length === 6) {
+			arr.shift();
+		}
+		// 添加内容
+		display();
+	}
+	function display() {
+		oUl.innerHTML = '';
+		for ( var i = 0; i < arr.length; i++ ) {
+			var oLi = document.createElement('li');
+			oLi.innerHTML = arr[i];
+			// 添加到oUl的顶部
+			if (oUl.innerHTML) {
+				oUl.insertBefore(oLi, oUl.children[0]);
+			} else {
+				oUl.appendChild(oLi);
+			}
+		}
+	}
+	
+}
+</script>
+</head>
+
+<body>
+<input/>
+<input type="button" value="添加"/>
+<ul></ul>
+</body>
+</html>

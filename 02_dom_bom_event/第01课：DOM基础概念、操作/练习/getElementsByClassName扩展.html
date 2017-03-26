@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<script>
+window.onload = function () {
+	var aLi = document.querySelectorAll('li');
+	var oInp = document.querySelector('input');
+	
+	
+	oInp.onclick = function () {
+		getElementsByClassName('box,box1');
+	}
+	function getElementsByClassName(className) {
+		// 字符串数组化
+		var arr = className.split(',');
+		// 遍历所有类
+		for ( var i = 0; i < arr.length; i++ ) {
+			var aEle = document.getElementsByClassName(arr[i]);
+			console.log(aEle.length);
+			// 如果为0，则不存在，跳出这次循环
+			if (!aEle.length) continue;
+			for ( var j = 0; j < aEle.length; j++ ) {
+				aEle[j].style.background = 'red';
+			}
+		}
+	}
+}
+</script>
+</head>
+<body>
+<ul>
+	<li>1111</li>
+	<li class="box box2">2222(.box .box2)</li>
+	<li>3333</li>
+	<li class="box1">4444(.box1)</li>
+	<li>5555</li>
+</ul>
+<div class="box">我是一个div(.box)</div>
+<input type="button" value="选择(.box,.box1)的元素"/>
+</body>
+</html>
