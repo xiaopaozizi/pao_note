@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+span{color:red;}
+</style>
+<script>
+window.onload = function (){
+	var aInput = document.getElementsByTagName('input');
+	var oSpan = document.getElementsByTagName('span')[0];
+	
+	
+	
+	
+	aInput[1].onclick = function (){
+		var value = aInput[0].value;
+		if (value === '') {
+			oSpan.innerHTML = '请输入值';
+			return;
+		}
+		if (Number(value) !== Number(value)) {
+			oSpan.innerHTML = '请输入数字';
+			return;
+		}
+		if(test(value)){
+			oSpan.innerHTML = '不能有0在前面';
+			return;
+		}
+		if (value.indexOf('.') > -1) {
+			oSpan.innerHTML = '不能是小数';
+			return;
+		}
+		if ( value.length < 5 || value.length > 10) {
+			oSpan.innerHTML = '输入的数字必须在5位以上、10位以内';
+			return;
+		}
+		oSpan.innerHTML = '';
+	}
+	function test(str){
+		// 0不能放在第一位
+		return /^0+/g.test(str);
+	}
+}
+</script>
+</head>
+<body>
+</body>
+</html>
+
+请输入QQ号码：<input type="text"/>
+<input type="button" value="判断"/>
+<span></span>
+
+<br />
+1、有没有输入<br />
+2、输入的是不是数字<br />
+3、不能有0在前面<br />
+4、不能是小数<br />
+5、输入的数字必须在5位以上、10位以内<br />
