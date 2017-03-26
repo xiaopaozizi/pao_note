@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+div{width:100px;height:100px;background:red;position:absolute;top:50px;left:30px;}
+</style>
+<script>
+window.onload = function () {
+	var oBtn1 = $('btn1');
+	var oBtn2 = $('btn2');
+	var oDiv = $('div1');
+	
+	// 向前运动
+	oBtn1.onclick = function () {
+		move(oDiv, 'left', 10, 30);
+	}
+	// 向后运动
+	oBtn2.onclick = function () {
+		move(oDiv, 'left', 10, 600, function () {
+			move(oDiv, 'width', 5, 200);
+		});
+	}
+}
+// 通过id获取元素
+// 参数：id id值
+function $(id) { return document.getElementById(id); }
+// 获取元素的样式
+// 参数：ele 元素
+// 参数：attr 属性
+function getStyle(ele, attr) {
+	return ele.currentStyle ? ele.currentStyle[attr] : getComputedStyle(ele, 0)[attr];	
+}
+
+// 运动函数
+// 参数：obj 运动的元素
+// 参数：attr 运动元素的属性
+// 参数：step 运动步长，决定运动方向
+// 参数：target 运动的目标值
+// 参数：endFn 回调函数 可选
+function move(obj, attr, step, target, endFn) {
+	// 以向左向右运动为例
+	// 如果当前值<目标值，则向右运动，step为正
+	// 如果当前值>目标值，则左运动，step为负
+	// PS : 方向在一开始就设置，一经设置就不能更改
+	step = parseInt(getStyle(obj, attr)) < target ? step : -step;
+	// 关闭定时器
+	clearInterval(obj.timer);
+	// 设置定时器
+	obj.timer = setInterval(function () {	
+		// 运动物体当前的值
+		var currVal = parseInt(getStyle(obj, attr));
+		// 运动的下一个位置值
+		var nextVal = currVal + step;
+		// 当运动的下一个值超出目标值，则下一个值 = 目标值
+		if (nextVal > target && step > 0 || nextVal < target && step < 0) {
+			nextVal = target;	
+		}
+		// 开始运动
+		obj.style[attr] = nextVal + 'px';
+		// 当下一个值等于目标值，则关闭定时器
+		if (nextVal === target) {
+			clearInterval(obj.timer);	
+			// 相当于 if (endFn) endFn(); 
+			endFn && endFn();
+		}
+	}, 30);	
+}
+</script>
+</head>
+
+<body>
+<input type="button" value="向前运动" id="btn1"/>
+<input type="button" value="向后运动" id="btn2"/>
+<div id="div1"></div>
+</body>
+</html>

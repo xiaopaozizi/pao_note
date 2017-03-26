@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+*{margin:0;padding:0;}
+div{width:50px;height:50px;background:red;position:absolute;top:0px;margin-right:20px;}
+</style>
+<script src="yang.js"></script>
+<script>
+window.onload = function () {
+	var aDiv = document.getElementsByTagName('div');
+	var number = 22;	// div的个数
+	var index = 0;		// 当前第几个div
+	var target = 500;	// 目标值
+	// 创建div
+	for ( var i = 0; i < number; i++ ) {
+		var oDiv = document.createElement('div');
+		oDiv.style.left = 30 + 60 * i + 'px';
+		document.body.appendChild(oDiv);
+	}
+	document.onclick = function () {
+		clearInterval(document.timer);
+		document.timer = setInterval(function () {
+			if (index === aDiv.length) {
+				target = target === 500 ? 0 : 500;
+				index = 0;
+			} 
+			move(aDiv[index], 'top', 10, target);
+			index++;
+			if (index === aDiv.length) {
+				clearInterval(document.timer);
+			}
+		}, 200);
+	}
+}
+
+</script>
+</head>
+
+<body>
+</body>
+</html>

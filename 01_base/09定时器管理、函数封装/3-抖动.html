@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+div{width:200px;height:200px;background:red;position:absolute;left:300px;top:50px;}
+</style>
+<script src="yang.js"></script>
+<script>
+window.onload = function () {
+	var oDiv = $('div');
+	var left = parseInt(getStyle(oDiv, 'left'));
+	var top = parseInt(getStyle(oDiv, 'top'));
+	oDiv.onmouseover = function () {
+		var _this = this;
+		shake(_this, 'left', left, function () {
+			shake(_this, 'top', top);
+		});
+	}
+}
+</script>
+</head>
+
+<body>
+<div id="div"></div>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<style>
+#box{width:200px;height:200px;background:red;margin:100px auto;}
+</style>
+<script src="yang.js"></script>
+<script>
+window.onload = function () {
+	
+	var box = $('box');
+	var i = 0;
+	var opacity = 1;
+	box.onclick = function () {
+		opacity();
+	}
+	function opacity(obj,step,) {
+		clearInterval(obj.timer);
+		obj.timer = setInterval(function () {
+			opacity = (100 - i * 10) / 100;
+			box.style.opacity = opacity;
+			i++
+			if (opacity === 0.3) {
+				clearInterval(obj.timer);
+				i = 0;
+			}
+		}, 100);
+	}
+	
+}
+</script>
+</head>
+
+<body>
+<div id="box"></div>
+</body>
+</html>

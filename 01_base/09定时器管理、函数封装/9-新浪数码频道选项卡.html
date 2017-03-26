@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<style>
+*{padding:0;margin:0;}
+ul{list-style:none;}
+#box{width:600px;height:240px;border:5px solid #ccc;margin:100px auto;position:relative;}
+#top{width: inherit;height:40px;padding-left:50px;}
+#top li{width:80px;height:inherit;float:left;background:#FF99FF;line-height:40px;;text-align:center;cursor:pointer;}
+#top li.active{background:yellow;}
+#top li:first-child{border-right:2px solid #fff;}
+#main{width:inherit;height:200px;}
+#main div{height:inherit;display:inline-block;}
+#main div.left{width:150px;border-right:1px solid #fff;}
+#main .left img{width:inherit;height:inherit;}
+#main div.right{width:440px;position:relative;overflow:hidden;}
+#main .right ul{position:absolute;width:660px;;height:180px;overflow:hidden;}
+#main .right ul img{width:100px;height:160px;margin:10px 5px;}
+#main .right div{position:absolute;top:170px;width:inherit;height:30px;line-height:20px;background:#000;opacity:0.5;text-align:center;line-height:35px;}
+#main .right div span{display:inline-block;width:10px;height:10px;border-radius:10px;color:#fff;margin:0 3px;cursor:pointer;}
+#main .right div span.circle{background:#fff;}
+#main .right div span.active{background:red;}
+
+</style>
+<script src="yang.js"></script>
+<script>
+window.onload = function () {
+	var top = document.getElementById('top');
+	var aLi = top.getElementsByTagName('li');
+	var left = document.getElementsByClassName('left')[0];
+	var oImg = left.getElementsByTagName('img')[0];
+	var right = document.getElementById('right');
+	var oUl = right.getElementsByTagName('ul')[0];
+	var forwardSpan = document.getElementById('forward');
+	var aSpan = right.getElementsByTagName('span');
+	//var list = oUl.getElementsByTagName('li');
+	var leftImgs = ['img/7.jpg', 'img/8.jpg'];
+	var rightImgs = [
+		['img/1.jpg','img/2.jpg','img/3.jpg','img/4.jpg','img/5.jpg','img/6.jpg'],
+		['img/1.png','img/2.png','img/3.png','img/4.png','img/5.png','img/6.png']
+	];
+	var titleIndex = 0;
+	
+	// 初始化
+	aLi[titleIndex].className = 'active';
+	oImg.src = leftImgs[titleIndex];
+	for ( var i = 0; i < rightImgs[0].length; i++ ) {
+		var newImg = document.createElement('img');
+		newImg.src = rightImgs[0][i];
+		oUl.appendChild(newImg);
+	}
+	forwardSpan.nextElementSibling.className = 'active';
+	
+	
+	
+	for ( var i = 0; i < aLi.length; i++ ) {
+		aLi[i].index = i;
+		aLi[i].onclick = function () {
+			for ( var i = 0; i < aLi.length; i++ ) {
+				aLi[i].className = '';
+			}
+			this.className = 'active';
+			oUl.innerHTML = '';
+			//var newImg = document.createElement('img');
+			oImg.src = leftImgs[this.index];
+			aLi[this.index].className = 'active';
+			
+			for ( var i = 0; i < rightImgs[this.index].length; i++ ) {
+				var newImg = document.createElement('img');
+				newImg.src = rightImgs[this.index][i];
+				oUl.appendChild(newImg);
+			}		
+		}
+	}
+	$('behind').onclick = function () {
+		move(oUl, 'left', 5, -220);
+		for ( var i = 1; i < aSpan.length - 1; i++ ) {
+			aSpan[i].className = 'circle';
+		}
+		aSpan[aSpan.length-2].className = 'active';
+	}
+	$('forward').onclick = function () {
+		move(oUl, 'left', 5, 0);
+		for ( var i = 1; i < aSpan.length - 1; i++ ) {
+			aSpan[i].className = 'circle';
+		}
+		aSpan[1].className = 'active';
+	}
+}
+</script>
+</head>
+
+<body>
+<div id="box">
+	<ul id="top">
+		<li>新品</li>
+		<li>极客</li>
+	</ul>
+	<div id="main">
+		<div class="left"><img /></div>
+		<div class="right" id="right">
+			<ul>
+			</ul>
+			<div>
+				<span id="forward">◁</span>
+				<span class="circle"></span>
+				<span class="circle"></span>
+				<span id="behind">▷</span>
+			</div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

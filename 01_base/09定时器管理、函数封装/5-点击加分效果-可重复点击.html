@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>3-点击加分效果-可重复点击</title>
+<style>
+#main{width:500px;height:200px;border:1px solid #000;margin:100px auto;position:relative;z-index:2;overflow:hidden;}
+ul,li{padding:0;margin:0;list-style:none;}
+ul{position:relative;width:500px;margin-top:150px;}
+li{position:absolute;line-height:50px;width:30px;font-size:20px;text-align:center;margin-right:10px;z-index:3;}
+#box{position:absolute;width:500px;height:50px;top:150px;left:-500px;background:#66CCFF;z-index:1;}
+</style>
+<script src="yang.js"></script>
+<script>
+window.onload = function () {
+	var main = $('main');
+	var box = $('box');
+	var oUl = main.getElementsByTagName('ul')[0];
+	var aLi = oUl.getElementsByTagName('li');
+	var number = 12; // li的长度
+	for ( var i = 0; i < number; i++ ) {
+		var oLi = document.createElement('li');
+		oLi.innerHTML = '+1';
+		oLi.style.left = 20 + 40 * i + 'px';
+		oUl.appendChild(oLi);
+	}
+	i = 0;
+	main.onclick = function () {
+		clearInterval(main.timer);
+		main.timer = setInterval(function () {
+			move(aLi[i], 'top', 10, '-100');
+			i++;
+			if (i === number) {
+				clearInterval(main.timer);
+			}
+		}, 100);
+		move(box, 'left', 10, '0');
+	}
+	
+	
+}
+</script>
+</head>
+
+<body>
+<div id="main">
+	<div id="box"></div>
+	<ul>
+	</ul>
+</div>
+</body>
+</html>
