@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>无标题文档</title>
+<script>
+var data = [12,14,233,239,99,100,39,78,-4,0,13];
+var str = data.join(',');
+var re = /\d+/g;
+var result = [];
+str.replace(re, function ($0) {
+	if ($0 >= 13 && $0 <= 99) {
+		result.push($0);
+	} 
+});
+alert(result);
+</script>
+</head>
+
+<body>
+</body>
+</html>

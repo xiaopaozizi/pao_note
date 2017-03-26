@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>无标题文档</title>
+<script>
+/*
+使用组合的形式：
+
+1、纯数字 /\d+/
+2、纯字母小写/[a-z]+/
+3、纯字母大写/[A-Z]+/
+4、纯特殊符号/[~!@#\$%^&*\(\)\{\};,.\?\/'"]/
+假设1-4的权重分别为2，4，8，16；
+则拿1-4分别检测用户的密码，如果有，则或上相应的权重。
+然后看这个数字是处于2-30之间，然后根据这个数算出强度即可
+ 	'0-10':'弱',
+    '10-20':'中',
+    '20-30':'强'
+*/
+
+var data = ['123','abc','ABC','abcABC','abc123ABC','$ABC123abc'];
+var res = [
+	{ reg : /\d+/, weight : 2 },	// 数字，权重为2
+	{ reg : /[a-z]+/, weight : 4 },
+	{ reg : /[A-Z]+/, weight : 8 },
+	{ reg : /[~!@#\$%^&*\(\)\{\};,.\?\/]/, weight : 16 }
+];
+var degree = 0;
+
+
+for ( var i = 0; i < data.length; i++ ) {
+	
+	var score = 0;
+
+	for ( var j = 0; j < res.length; j++ ) {
+	
+		if ( res[j].reg.test(data[i]) ) score += res[j].weight;
+	
+	}
+	
+	if ( score >= 2 && score < 10 ) {
+	
+		degree = '低';
+		
+	}else if( score >= 10 && score < 20 ) {
+	
+		degree = '中';
+		
+	}else if ( score >= 20 && score <= 30 ) {
+	
+		degree = '高';
+		
+	}
+
+	
+	
+	alert( data[i] + '的得分为：' + score + ', 密码强度为：' + degree );
+	
+}
+
+</script>
+</head>
+
+<body>
+</body>
+</html>
