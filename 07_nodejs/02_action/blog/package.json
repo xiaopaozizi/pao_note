@@ -1,0 +1,29 @@
+{
+  "name": "blog",
+  "version": "1.0.0",
+  "description": "一个简易的博客",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xiaopaozizi/pao_note/tree/master/07_nodejs"
+  },
+  "keywords": [
+    "nodejs",
+    "blog",
+    "express",
+    "mongodb"
+  ],
+  "author": "xiaopaozizi",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "cookies": "^0.7.0",
+    "express": "^4.15.2",
+    "markdown": "^0.5.0",
+    "mongoose": "^4.9.2",
+    "swig": "^1.4.2"
+  }
+}
