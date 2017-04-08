@@ -7,6 +7,7 @@ var express = require('express');
 var router = express.Router();
 var User = require('../models/User');
 var Category = require('../models/Category');
+var Article = require('../models/Article');
 
 // 拦截器
 router.use(function (req, res, next){
@@ -116,7 +117,11 @@ router.get('/category', function (req, res){
         page = Math.max(page, 1);
         // 要忽略多少条
         var skip = (page - 1) * size;
-        Category.find().limit(page * size).skip(skip).then(function (categories){
+
+        // sort排序
+        // 升序 1 默认
+        // 降序 -1 id中含有时间戳
+        Category.find().sort({ _id : -1 }).limit(page * size).skip(skip).then(function (categories){
             res.render('admin/category_index',{
                 userInfo : req.userInfo,
                 categories : categories,
@@ -294,5 +299,74 @@ router.get('/category/delete', (req, res) => {
         });
     });
 });
+
+/*
+ * 文章管理
+ *
+ * */
+router.get('/article', function (req, res){
+    // 查询全部用户
+    /*
+     * limit(条数) 限制多少条
+     * skip(条数)  忽略多少条
+     * count() 一共多少条数据
+     *
+     * 以每页2条为例
+     * 页数 limit    skip
+     * 1   1~2      0
+     * 2   3~4      1
+     * 3   5~6      2
+     * ...
+     * n   2n-1~2n  n-1
+     * */
+    // 页数，通过url获取
+    var page = Number(req.query.page) || 1;
+    // 每页多少条
+    var size = 2;
+    // 一共有多少页
+    var pages = 0;
+    Article.find().count().then(function (count){
+        // 一共需要多少页
+        pages = Math.ceil(Number(count) / size);
+        // 最大页数
+        page = Math.min(page, pages);
+        // 最小页数
+        page = Math.max(page, 1);
+        // 要忽略多少条
+        var skip = (page - 1) * size;
+
+        // sort排序
+        // 升序 1 默认
+        // 降序 -1 id中含有时间戳
+        Article.find().sort({ _id : -1 }).limit(page * size).skip(skip).then(function (articles){
+            res.render('admin/article_index',{
+                userInfo : req.userInfo,
+                articles : articles,
+                count : count,
+                size : size,
+                pages : pages,
+                page : page,
+                prev : '/admin/article?page=' + (page - 1),
+                next : '/admin/article?page=' + (page + 1)
+            });
+        });
+    });
+});
+/*
+ * 文章添加
+ *
+ * */
+router.get('/article/add', function (req, res){
+
+    // 查找所以的分类
+    Category.find().sort({ _id : -1 }).then(categories => {
+        res.render('admin/article_add', {
+            userInfo : req.userInfo,
+            categories:categories
+        });
+    });
+
+});
+
 // 导出
 module.exports = router;

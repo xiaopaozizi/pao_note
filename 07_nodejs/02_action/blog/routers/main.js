@@ -5,12 +5,20 @@
 
 var express = require('express');
 var router = express.Router();
+var Category = require('../models/Category');
 
 router.get('/', function (req, res, next){
-    // 如果有cookies,则传人模板中
-    res.render('main/index', {
-        userInfo : req.userInfo
+
+    // 查询分类信息
+    Category.find().then(categories => {
+        // 如果有cookies,则传人模板中
+        res.render('main/index', {
+            userInfo : req.userInfo,
+            categories: categories,
+        });
     });
+
+
 })
 
 // 导出
