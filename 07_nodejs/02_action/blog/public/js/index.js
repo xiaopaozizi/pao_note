@@ -4,18 +4,18 @@
 
 $(function() {
 
-    var aMenu = $('.menu a');
+    //var aMenu = $('.menu a');
     var $loginBox = $('#loginBox');
     var $registerBox = $('#registerBox');
     var $userInfo = $('#userInfo');
 
     // 导航条点击高亮效果
-    aMenu.each(function () {
+    /*aMenu.each(function () {
         $(this).click(function(){
             aMenu.removeClass('focus');
             $(this).addClass('focus');
         })
-    });
+    });*/
 
     // 点击马上登录切换到登录界面
     $registerBox.find('a.colMint').click(function(){

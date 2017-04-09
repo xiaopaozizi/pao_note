@@ -11,13 +11,19 @@
         <td>ID</td>
         <td>分类</td>
         <td>标题</td>
+        <td>作者</td>
+        <td>发布时间</td>
+        <td>点击量</td>
         <td>操作</td>
     </tr>
     {% for article in articles %}
     <tr>
         <td>{{ article._id.toString() }}</td>
-        <td>类别</td>
+        <td>{{ article.category.name }}</td>
         <td>{{ article.title }}</td>
+        <td>{{ article.user.username }}</td>
+        <td>{{ article.addTime | date('Y-m-d H:i:s', -8*60) }}</td>
+        <td>{{ article.views }}</td>
         <td>
             <a href="/admin/article/edit?id={{article._id.toString()}}">修改</a> |
             <a href="/admin/article/delete?id={{article._id.toString()}}">删除</a>

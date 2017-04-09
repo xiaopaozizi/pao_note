@@ -24,8 +24,8 @@
       <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/blog/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.107143">
-              <caret line="20" column="12" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="12" />
+            <state vertical-scroll-proportion="-4.464286">
+              <caret line="74" column="24" selection-start-line="74" selection-start-column="24" selection-end-line="74" selection-end-column="24" />
               <folding />
             </state>
           </provider>
@@ -34,8 +34,8 @@
       <file leaf-file-name="admin.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/blog/routers/admin.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.793103">
-              <caret line="364" column="33" selection-start-line="364" selection-start-column="33" selection-end-line="364" selection-end-column="33" />
+            <state vertical-scroll-proportion="-2.75">
+              <caret line="323" column="21" selection-start-line="323" selection-start-column="21" selection-end-line="323" selection-end-column="21" />
               <folding>
                 <element signature="e#0#40#0" expanded="false" />
                 <element signature="e#280#396#0" expanded="false" />
@@ -111,13 +111,97 @@
                 <element signature="e#6887#7052#0" expanded="false" />
                 <element signature="e#6925#7044#0" expanded="false" />
                 <element signature="e#7060#7079#0" expanded="false" />
-                <element signature="e#7122#8338#0" expanded="false" />
-                <element signature="e#7142#7370#0" expanded="false" />
-                <element signature="e#7545#8334#0" expanded="false" />
-                <element signature="e#7784#7793#0" expanded="false" />
-                <element signature="e#7935#8326#0" expanded="false" />
-                <element signature="e#7982#8314#0" expanded="false" />
+                <element signature="e#7142#7435#0" expanded="false" />
+                <element signature="e#7610#8443#0" expanded="false" />
+                <element signature="e#7849#7858#0" expanded="false" />
+                <element signature="e#8044#8435#0" expanded="false" />
+                <element signature="e#8091#8423#0" expanded="false" />
+                <element signature="e#8450#8469#0" expanded="false" />
+                <element signature="e#8516#8729#0" expanded="false" />
+                <element signature="e#8592#8724#0" expanded="false" />
+                <element signature="e#8634#8716#0" expanded="false" />
+                <element signature="e#8732#8752#0" expanded="false" />
+                <element signature="e#8800#9571#0" expanded="false" />
+                <element signature="e#9023#9166#0" expanded="false" />
+                <element signature="e#9059#9142#0" expanded="false" />
+                <element signature="e#9183#9332#0" expanded="false" />
+                <element signature="e#9357#9566#0" expanded="false" />
+                <element signature="e#9378#9560#0" expanded="false" />
+                <element signature="e#9420#9549#0" expanded="false" />
+                <element signature="e#9574#9593#0" expanded="false" />
+                <element signature="e#9636#10395#0" expanded="false" />
+                <element signature="e#9715#9858#0" expanded="false" />
+                <element signature="e#9751#9834#0" expanded="false" />
+                <element signature="e#9910#10391#0" expanded="false" />
+                <element signature="e#9933#10385#0" expanded="false" />
+                <element signature="e#9986#10024#0" expanded="false" />
+                <element signature="e#10065#10375#0" expanded="false" />
+                <element signature="e#10130#10362#0" expanded="false" />
+                <element signature="e#10184#10343#0" expanded="false" />
+                <element signature="e#10397#10419#0" expanded="false" />
+                <element signature="e#10468#11266#0" expanded="false" />
+                <element signature="e#10724#10867#0" expanded="false" />
+                <element signature="e#10760#10843#0" expanded="false" />
+                <element signature="e#10897#10921#0" expanded="false" />
+                <element signature="e#10922#11042#0" expanded="false" />
+                <element signature="e#11056#11261#0" expanded="false" />
+                <element signature="e#11072#11255#0" expanded="false" />
+                <element signature="e#11114#11243#0" expanded="false" />
+                <element signature="e#11269#11283#0" expanded="false" />
+                <element signature="e#11328#11622#0" expanded="false" />
+                <element signature="e#11376#11400#0" expanded="false" />
+                <element signature="e#11413#11618#0" expanded="false" />
+                <element signature="e#11429#11612#0" expanded="false" />
+                <element signature="e#11471#11600#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="api.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/blog/routers/api.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-5.214286">
+              <caret line="178" column="44" selection-start-line="178" selection-start-column="44" selection-end-line="178" selection-end-column="44" />
+              <folding>
+                <element signature="e#0#40#0" expanded="false" />
+                <element signature="e#298#379#0" expanded="false" />
+                <element signature="e#319#365#0" expanded="false" />
+                <element signature="e#382#450#0" expanded="false" />
+                <element signature="e#506#1980#0" expanded="false" />
+                <element signature="e#668#820#0" expanded="false" />
+                <element signature="e#862#1013#0" expanded="false" />
+                <element signature="e#1066#1220#0" expanded="false" />
+                <element signature="e#1225#1240#0" expanded="false" />
+                <element signature="e#1342#1414#0" expanded="false" />
+                <element signature="e#1432#1467#0" expanded="false" />
+                <element signature="e#1493#1851#0" expanded="false" />
+                <element signature="e#1541#1688#0" expanded="false" />
+                <element signature="e#1739#1815#0" expanded="false" />
+                <element signature="e#1881#1976#0" expanded="false" />
+                <element signature="e#1983#2042#0" expanded="false" />
+                <element signature="e#2095#3293#0" expanded="false" />
+                <element signature="e#2235#2390#0" expanded="false" />
+                <element signature="e#2395#2410#0" expanded="false" />
+                <element signature="e#2512#2588#0" expanded="false" />
+                <element signature="e#2606#2670#0" expanded="false" />
+                <element signature="e#2696#3289#0" expanded="false" />
+                <element signature="e#2746#2895#0" expanded="false" />
+                <element signature="e#2983#3068#0" expanded="false" />
+                <element signature="e#3142#3227#0" expanded="false" />
+                <element signature="e#3296#3312#0" expanded="false" />
+                <element signature="e#3365#3470#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="articles.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/blog/schemas/articles.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-11.214286">
+              <caret line="37" column="16" selection-start-line="37" selection-start-column="16" selection-end-line="37" selection-end-column="16" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -125,29 +209,64 @@
       <file leaf-file-name="main.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/blog/routers/main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.357143">
-              <caret line="12" column="26" selection-start-line="12" selection-start-column="26" selection-end-line="12" selection-end-column="26" />
-              <folding />
+            <state vertical-scroll-proportion="-8.25">
+              <caret line="26" column="35" selection-start-line="26" selection-start-column="35" selection-end-line="26" selection-end-column="35" />
+              <folding>
+                <element signature="e#0#40#0" expanded="false" />
+                <element signature="e#209#232#0" expanded="false" />
+                <element signature="e#234#265#0" expanded="false" />
+                <element signature="e#297#437#0" expanded="false" />
+                <element signature="e#372#433#0" expanded="false" />
+                <element signature="e#440#452#0" expanded="false" />
+                <element signature="e#488#1542#0" expanded="false" />
+                <element signature="e#776#823#0" expanded="false" />
+                <element signature="e#899#1389#0" expanded="false" />
+                <element signature="e#1182#1191#0" expanded="false" />
+                <element signature="e#1408#1449#0" expanded="false" />
+                <element signature="e#1460#1536#0" expanded="false" />
+                <element signature="e#1544#1558#0" expanded="false" />
+                <element signature="e#1595#1862#0" expanded="false" />
+                <element signature="e#1664#1695#0" expanded="false" />
+                <element signature="e#1713#1859#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="article_add.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/blog/views/admin/article_add.html">
+      <file leaf-file-name="detail.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/blog/views/main/detail.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.28455284">
-              <caret line="8" column="25" selection-start-line="8" selection-start-column="25" selection-end-line="8" selection-end-column="25" />
-              <folding />
+            <state vertical-scroll-proportion="-5.6">
+              <caret line="8" column="42" selection-start-line="8" selection-start-column="32" selection-end-line="8" selection-end-column="42" />
+              <folding>
+                <element signature="n#style#0;n#p#2;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="article_index.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/blog/views/admin/article_index.html">
+      <file leaf-file-name="comment.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/blog/public/js/comment.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.5">
-              <caret line="22" column="55" selection-start-line="22" selection-start-column="55" selection-end-line="22" selection-end-column="55" />
-              <folding />
+            <state vertical-scroll-proportion="0.34115523">
+              <caret line="57" column="70" selection-start-line="57" selection-start-column="70" selection-end-line="57" selection-end-column="70" />
+              <folding>
+                <element signature="e#170#318#0" expanded="false" />
+                <element signature="n#!!block;n#formatDate#0" expanded="false" />
+                <element signature="e#1082#1180#0" expanded="false" />
+                <element signature="e#1578#1651#0" expanded="false" />
+                <element signature="e#1657#1722#0" expanded="false" />
+                <element signature="e#1746#1823#0" expanded="false" />
+                <element signature="e#1829#1894#0" expanded="false" />
+                <element signature="e#2458#2465#0" expanded="false" />
+                <element signature="e#2581#2604#0" expanded="false" />
+                <element signature="e#2610#2633#0" expanded="false" />
+                <marker date="1491744498858" expanded="true" signature="2079:2357" placeholder="..." />
+                <marker date="1491744498858" expanded="true" signature="2118:2157" placeholder="..." />
+                <marker date="1491744498858" expanded="true" signature="2118:2230" placeholder="..." />
+                <marker date="1491744498858" expanded="true" signature="2118:2292" placeholder="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -171,9 +290,6 @@
         <option value="$PROJECT_DIR$/blog/package.json" />
         <option value="$PROJECT_DIR$/blog/models/User.js" />
         <option value="$PROJECT_DIR$/blog/schemas/users.js" />
-        <option value="$PROJECT_DIR$/blog/public/js/index.js" />
-        <option value="$PROJECT_DIR$/blog/routers/api.js" />
-        <option value="$PROJECT_DIR$/blog/app.js" />
         <option value="$PROJECT_DIR$/blog/views/admin/index.html" />
         <option value="$PROJECT_DIR$/blog/views/admin/user_index.html" />
         <option value="$PROJECT_DIR$/blog/models/Category.js" />
@@ -184,14 +300,21 @@
         <option value="$PROJECT_DIR$/blog/views/admin/category_index.html" />
         <option value="$PROJECT_DIR$/blog/views/admin/category_edit.html" />
         <option value="$PROJECT_DIR$/blog/views/admin/page.html" />
-        <option value="$PROJECT_DIR$/blog/routers/main.js" />
-        <option value="$PROJECT_DIR$/blog/views/main/index.html" />
         <option value="$PROJECT_DIR$/blog/views/admin/layout.html" />
-        <option value="$PROJECT_DIR$/blog/schemas/articles.js" />
-        <option value="$PROJECT_DIR$/blog/views/admin/article_index.html" />
         <option value="$PROJECT_DIR$/blog/models/Article.js" />
-        <option value="$PROJECT_DIR$/blog/routers/admin.js" />
         <option value="$PROJECT_DIR$/blog/views/admin/article_add.html" />
+        <option value="$PROJECT_DIR$/blog/views/admin/article_edit.html" />
+        <option value="$PROJECT_DIR$/blog/views/admin/article_index.html" />
+        <option value="$PROJECT_DIR$/blog/routers/admin.js" />
+        <option value="$PROJECT_DIR$/blog/public/js/index.js" />
+        <option value="$PROJECT_DIR$/blog/schemas/articles.js" />
+        <option value="$PROJECT_DIR$/blog/app.js" />
+        <option value="$PROJECT_DIR$/blog/routers/main.js" />
+        <option value="$PROJECT_DIR$/blog/views/main/layout.html" />
+        <option value="$PROJECT_DIR$/blog/routers/api.js" />
+        <option value="$PROJECT_DIR$/blog/views/main/detail.html" />
+        <option value="$PROJECT_DIR$/blog/views/main/index.html" />
+        <option value="$PROJECT_DIR$/blog/public/js/comment.js" />
       </list>
     </option>
   </component>
@@ -201,10 +324,10 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1" />
-    <option name="y" value="1" />
-    <option name="width" value="1364" />
-    <option name="height" value="726" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1382" />
+    <option name="height" value="744" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -298,10 +421,6 @@
               <option name="myItemId" value="views" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="admin" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -339,24 +458,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="02_action" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="02_action" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="blog" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="models" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
@@ -377,6 +478,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\program\pao_note\07_nodejs\02_action\blog\views\main" />
       <recent name="F:\program\pao_note\07_nodejs\02_action\blog\views\admin" />
       <recent name="F:\program\pao_note\07_nodejs\02_action\blog\models" />
       <recent name="F:\program\pao_note\07_nodejs\02_action\blog\schemas" />
@@ -463,19 +565,30 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1" y="1" width="1364" height="726" extended-state="0" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20211162" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.19940476" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="版本控制" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="调试" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.34401348" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="运行" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2782462" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="运行" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32405892" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
     </layout>
+    <layout-to-restore>
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19940476" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="版本控制" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="调试" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.34401348" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="运行" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32405892" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+    </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
     <option name="RECENTLY_FILTERED_USER_GROUPS">
@@ -495,39 +608,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/blog/views/admin/layout.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="n#div#0;n#div#0;n#nav#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#li#1;n#ul#0;n#div#1;n#div#0;n#nav#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/blog/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/blog/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="45" column="17" selection-start-line="45" selection-start-column="17" selection-end-line="45" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/blog/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="25" column="25" selection-start-line="25" selection-start-column="25" selection-end-line="25" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/blog/app.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -707,13 +787,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/blog/public/js/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.09589041">
-          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/blog/package.json">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33088234">
@@ -725,7 +798,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="6" column="21" selection-start-line="6" selection-start-column="21" selection-end-line="6" selection-end-column="21" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -733,7 +805,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.39130434">
           <caret line="9" column="11" selection-start-line="9" selection-start-column="11" selection-end-line="9" selection-end-column="11" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -748,7 +819,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-3.6666667">
           <caret line="6" column="5" selection-start-line="6" selection-start-column="5" selection-end-line="6" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -770,9 +840,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="8" column="16" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="16" />
-          <folding>
-            <element signature="n#table#0;n#!!top" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -780,7 +847,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="27" column="15" selection-start-line="27" selection-start-column="15" selection-end-line="27" selection-end-column="15" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -788,45 +854,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="5" column="42" selection-start-line="5" selection-start-column="42" selection-end-line="5" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/blog/routers/api.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.9482758">
-          <caret line="146" column="15" selection-start-line="146" selection-start-column="4" selection-end-line="146" selection-end-column="15" />
-          <folding>
-            <element signature="e#0#40#0" expanded="false" />
-            <element signature="e#254#335#0" expanded="false" />
-            <element signature="e#275#321#0" expanded="false" />
-            <element signature="e#338#406#0" expanded="false" />
-            <element signature="e#462#1969#0" expanded="false" />
-            <element signature="e#624#776#0" expanded="false" />
-            <element signature="e#818#969#0" expanded="false" />
-            <element signature="e#1022#1176#0" expanded="false" />
-            <element signature="e#1181#1196#0" expanded="false" />
-            <element signature="e#1298#1370#0" expanded="false" />
-            <element signature="e#1388#1423#0" expanded="false" />
-            <element signature="e#1449#1807#0" expanded="false" />
-            <element signature="e#1497#1644#0" expanded="false" />
-            <element signature="e#1695#1771#0" expanded="false" />
-            <element signature="e#1837#1965#0" expanded="false" />
-            <element signature="e#1974#2033#0" expanded="false" />
-            <element signature="e#2597#2661#0" expanded="false" />
-            <element signature="e#2737#2886#0" expanded="false" />
-            <element signature="e#2974#3059#0" expanded="false" />
-            <element signature="e#3133#3218#0" expanded="false" />
-            <element signature="e#3288#3304#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/blog/app.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.107143">
-          <caret line="20" column="12" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="12" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -834,10 +861,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.7154471">
           <caret line="31" column="64" selection-start-line="31" selection-start-column="64" selection-end-line="31" selection-end-column="64" />
-          <folding>
-            <element signature="n#div#0;n#div#0;n#nav#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#li#1;n#ul#0;n#div#1;n#div#0;n#nav#0;n#body#0;n#html#0;n#!!top" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -845,54 +868,69 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.34146342">
           <caret line="6" column="10" selection-start-line="6" selection-start-column="10" selection-end-line="6" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/blog/views/admin/article_edit.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.7">
+          <caret line="8" column="28" selection-start-line="8" selection-start-column="28" selection-end-line="8" selection-end-column="28" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/blog/views/main/index.html">
+    <entry file="file://$PROJECT_DIR$/blog/views/admin/article_add.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.11382114">
-          <caret line="4" column="22" selection-start-line="4" selection-start-column="22" selection-end-line="4" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/blog/schemas/articles.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.0">
-          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/blog/views/admin/article_index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.5">
-          <caret line="22" column="55" selection-start-line="22" selection-start-column="55" selection-end-line="22" selection-end-column="55" />
+        <state vertical-scroll-proportion="-4.6">
+          <caret line="21" column="46" selection-start-line="21" selection-start-column="46" selection-end-line="21" selection-end-column="46" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/blog/models/Article.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.75">
-          <caret line="9" column="50" selection-start-line="9" selection-start-column="50" selection-end-line="9" selection-end-column="50" />
+        <state vertical-scroll-proportion="-4.5">
+          <caret line="6" column="50" selection-start-line="6" selection-start-column="50" selection-end-line="6" selection-end-column="50" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/blog/routers/main.js">
+    <entry file="file://$PROJECT_DIR$/blog/views/admin/article_index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.357143">
-          <caret line="12" column="26" selection-start-line="12" selection-start-column="26" selection-end-line="12" selection-end-column="26" />
+        <state vertical-scroll-proportion="0.7723577">
+          <caret line="23" column="23" selection-start-line="23" selection-start-column="23" selection-end-line="23" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/blog/public/js/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.21832883">
+          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/blog/views/main/layout.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7033898">
+          <caret line="28" column="23" selection-start-line="28" selection-start-column="23" selection-end-line="28" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/blog/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.464286">
+          <caret line="74" column="24" selection-start-line="74" selection-start-column="24" selection-end-line="74" selection-end-column="24" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/blog/routers/admin.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.793103">
-          <caret line="364" column="33" selection-start-line="364" selection-start-column="33" selection-end-line="364" selection-end-column="33" />
+        <state vertical-scroll-proportion="-2.75">
+          <caret line="323" column="21" selection-start-line="323" selection-start-column="21" selection-end-line="323" selection-end-column="21" />
           <folding>
             <element signature="e#0#40#0" expanded="false" />
             <element signature="e#280#396#0" expanded="false" />
@@ -968,21 +1006,160 @@
             <element signature="e#6887#7052#0" expanded="false" />
             <element signature="e#6925#7044#0" expanded="false" />
             <element signature="e#7060#7079#0" expanded="false" />
-            <element signature="e#7122#8338#0" expanded="false" />
-            <element signature="e#7142#7370#0" expanded="false" />
-            <element signature="e#7545#8334#0" expanded="false" />
-            <element signature="e#7784#7793#0" expanded="false" />
-            <element signature="e#7935#8326#0" expanded="false" />
-            <element signature="e#7982#8314#0" expanded="false" />
+            <element signature="e#7142#7435#0" expanded="false" />
+            <element signature="e#7610#8443#0" expanded="false" />
+            <element signature="e#7849#7858#0" expanded="false" />
+            <element signature="e#8044#8435#0" expanded="false" />
+            <element signature="e#8091#8423#0" expanded="false" />
+            <element signature="e#8450#8469#0" expanded="false" />
+            <element signature="e#8516#8729#0" expanded="false" />
+            <element signature="e#8592#8724#0" expanded="false" />
+            <element signature="e#8634#8716#0" expanded="false" />
+            <element signature="e#8732#8752#0" expanded="false" />
+            <element signature="e#8800#9571#0" expanded="false" />
+            <element signature="e#9023#9166#0" expanded="false" />
+            <element signature="e#9059#9142#0" expanded="false" />
+            <element signature="e#9183#9332#0" expanded="false" />
+            <element signature="e#9357#9566#0" expanded="false" />
+            <element signature="e#9378#9560#0" expanded="false" />
+            <element signature="e#9420#9549#0" expanded="false" />
+            <element signature="e#9574#9593#0" expanded="false" />
+            <element signature="e#9636#10395#0" expanded="false" />
+            <element signature="e#9715#9858#0" expanded="false" />
+            <element signature="e#9751#9834#0" expanded="false" />
+            <element signature="e#9910#10391#0" expanded="false" />
+            <element signature="e#9933#10385#0" expanded="false" />
+            <element signature="e#9986#10024#0" expanded="false" />
+            <element signature="e#10065#10375#0" expanded="false" />
+            <element signature="e#10130#10362#0" expanded="false" />
+            <element signature="e#10184#10343#0" expanded="false" />
+            <element signature="e#10397#10419#0" expanded="false" />
+            <element signature="e#10468#11266#0" expanded="false" />
+            <element signature="e#10724#10867#0" expanded="false" />
+            <element signature="e#10760#10843#0" expanded="false" />
+            <element signature="e#10897#10921#0" expanded="false" />
+            <element signature="e#10922#11042#0" expanded="false" />
+            <element signature="e#11056#11261#0" expanded="false" />
+            <element signature="e#11072#11255#0" expanded="false" />
+            <element signature="e#11114#11243#0" expanded="false" />
+            <element signature="e#11269#11283#0" expanded="false" />
+            <element signature="e#11328#11622#0" expanded="false" />
+            <element signature="e#11376#11400#0" expanded="false" />
+            <element signature="e#11413#11618#0" expanded="false" />
+            <element signature="e#11429#11612#0" expanded="false" />
+            <element signature="e#11471#11600#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/blog/views/admin/article_add.html">
+    <entry file="file://$PROJECT_DIR$/blog/routers/main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.28455284">
-          <caret line="8" column="25" selection-start-line="8" selection-start-column="25" selection-end-line="8" selection-end-column="25" />
+        <state vertical-scroll-proportion="-8.25">
+          <caret line="26" column="35" selection-start-line="26" selection-start-column="35" selection-end-line="26" selection-end-column="35" />
+          <folding>
+            <element signature="e#0#40#0" expanded="false" />
+            <element signature="e#209#232#0" expanded="false" />
+            <element signature="e#234#265#0" expanded="false" />
+            <element signature="e#297#437#0" expanded="false" />
+            <element signature="e#372#433#0" expanded="false" />
+            <element signature="e#440#452#0" expanded="false" />
+            <element signature="e#488#1542#0" expanded="false" />
+            <element signature="e#776#823#0" expanded="false" />
+            <element signature="e#899#1389#0" expanded="false" />
+            <element signature="e#1182#1191#0" expanded="false" />
+            <element signature="e#1408#1449#0" expanded="false" />
+            <element signature="e#1460#1536#0" expanded="false" />
+            <element signature="e#1544#1558#0" expanded="false" />
+            <element signature="e#1595#1862#0" expanded="false" />
+            <element signature="e#1664#1695#0" expanded="false" />
+            <element signature="e#1713#1859#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/blog/schemas/articles.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-11.214286">
+          <caret line="37" column="16" selection-start-line="37" selection-start-column="16" selection-end-line="37" selection-end-column="16" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/blog/routers/api.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.214286">
+          <caret line="178" column="44" selection-start-line="178" selection-start-column="44" selection-end-line="178" selection-end-column="44" />
+          <folding>
+            <element signature="e#0#40#0" expanded="false" />
+            <element signature="e#298#379#0" expanded="false" />
+            <element signature="e#319#365#0" expanded="false" />
+            <element signature="e#382#450#0" expanded="false" />
+            <element signature="e#506#1980#0" expanded="false" />
+            <element signature="e#668#820#0" expanded="false" />
+            <element signature="e#862#1013#0" expanded="false" />
+            <element signature="e#1066#1220#0" expanded="false" />
+            <element signature="e#1225#1240#0" expanded="false" />
+            <element signature="e#1342#1414#0" expanded="false" />
+            <element signature="e#1432#1467#0" expanded="false" />
+            <element signature="e#1493#1851#0" expanded="false" />
+            <element signature="e#1541#1688#0" expanded="false" />
+            <element signature="e#1739#1815#0" expanded="false" />
+            <element signature="e#1881#1976#0" expanded="false" />
+            <element signature="e#1983#2042#0" expanded="false" />
+            <element signature="e#2095#3293#0" expanded="false" />
+            <element signature="e#2235#2390#0" expanded="false" />
+            <element signature="e#2395#2410#0" expanded="false" />
+            <element signature="e#2512#2588#0" expanded="false" />
+            <element signature="e#2606#2670#0" expanded="false" />
+            <element signature="e#2696#3289#0" expanded="false" />
+            <element signature="e#2746#2895#0" expanded="false" />
+            <element signature="e#2983#3068#0" expanded="false" />
+            <element signature="e#3142#3227#0" expanded="false" />
+            <element signature="e#3296#3312#0" expanded="false" />
+            <element signature="e#3365#3470#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/blog/views/main/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.3">
+          <caret line="9" column="58" selection-start-line="9" selection-start-column="58" selection-end-line="9" selection-end-column="58" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/blog/views/main/detail.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.6">
+          <caret line="8" column="42" selection-start-line="8" selection-start-column="32" selection-end-line="8" selection-end-column="42" />
+          <folding>
+            <element signature="n#style#0;n#p#2;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#1;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/blog/public/js/comment.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.34115523">
+          <caret line="57" column="70" selection-start-line="57" selection-start-column="70" selection-end-line="57" selection-end-column="70" />
+          <folding>
+            <element signature="e#170#318#0" expanded="false" />
+            <element signature="n#!!block;n#formatDate#0" expanded="false" />
+            <element signature="e#1082#1180#0" expanded="false" />
+            <element signature="e#1578#1651#0" expanded="false" />
+            <element signature="e#1657#1722#0" expanded="false" />
+            <element signature="e#1746#1823#0" expanded="false" />
+            <element signature="e#1829#1894#0" expanded="false" />
+            <element signature="e#2458#2465#0" expanded="false" />
+            <element signature="e#2581#2604#0" expanded="false" />
+            <element signature="e#2610#2633#0" expanded="false" />
+            <marker date="1491744498858" expanded="true" signature="2079:2357" placeholder="..." />
+            <marker date="1491744498858" expanded="true" signature="2118:2157" placeholder="..." />
+            <marker date="1491744498858" expanded="true" signature="2118:2230" placeholder="..." />
+            <marker date="1491744498858" expanded="true" signature="2118:2292" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>

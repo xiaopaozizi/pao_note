@@ -72,7 +72,7 @@ swig.setDefaults({
 * 根据不同功能划分模块
 * /     前台
 * admin 后台
-* api   api
+* api   api---ajax交互的api
 * */
 app.use('/', require('./routers/main'));
 app.use('/admin', require('./routers/admin'));

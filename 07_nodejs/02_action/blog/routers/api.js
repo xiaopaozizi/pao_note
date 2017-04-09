@@ -7,6 +7,7 @@ var express = require('express');
 var router = express.Router();
 // 引入models/User.js来操作数据，从而映射到数据库中去
 var User = require('../models/User');
+var Article = require('../models/Article');
 // 数据统一返回格式
 var responseData = null;
 router.use(function(req, res, next){
@@ -78,13 +79,11 @@ router.post('/user/register', function (req, res, next){
         return user.save();
     }).then(function (newUserInfo) {
         // 注册成功
-        console.log(newUserInfo);
+
         responseData.message = '注册成功';
         res.json(responseData);
     });
 });
-
-
 /*
  * 用户登录
  * 1.用户名不能为空
@@ -138,7 +137,6 @@ router.post('/user/login', function (req, res, next){
 
     });
 });
-
 /*
 * 用户退出
 *
@@ -147,6 +145,46 @@ router.get('/user/logout', function (req, res, next){
     req.cookies.set('userInfo', null);
     responseData.message = '退出成功';
     res.json(responseData);
-})
+});
+/*
+* 通过ID查找某篇文章
+* */
+router.post('/article', (req, res) => {
+    let id = req.body.articleId || '';
+    Article.findOne({
+        _id : id
+    }).then(article => {
+        responseData.article = article;
+        //console.log(article)
+        res.json(responseData);
+    });
+});
+/*
+* 评论提交
+* */
+router.post('/article/comment', (req, res) => {
+    let postData = {
+        // 评论人
+        user : req.userInfo,
+        // 评论时间
+        postTime : new Date(),
+        // 评论内容
+        comment : req.body.comment || ''
+    }
+    // 查找文章
+    Article.findOne({
+        _id : req.body.articleId
+    }).then(article => {
+        if(article) {
+            article.comments.push(postData);
+            return article.save();
+        }
+    }).then(newArticle => {
+        responseData.article = newArticle;
+        responseData.message = '评论成功';
+        res.json(responseData);
+    });
+
+});
 // 导出
 module.exports = router;

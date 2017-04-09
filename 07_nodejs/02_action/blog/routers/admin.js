@@ -310,7 +310,8 @@ router.get('/article', function (req, res){
      * limit(条数) 限制多少条
      * skip(条数)  忽略多少条
      * count() 一共多少条数据
-     *
+     * sort({ _id : 1}) 排序
+     * populate(['cateogry', 'user']) 获取关联数据
      * 以每页2条为例
      * 页数 limit    skip
      * 1   1~2      0
@@ -338,7 +339,8 @@ router.get('/article', function (req, res){
         // sort排序
         // 升序 1 默认
         // 降序 -1 id中含有时间戳
-        Article.find().sort({ _id : -1 }).limit(page * size).skip(skip).then(function (articles){
+        Article.find().sort({ _id : -1 }).populate(['category', 'user'])
+            .limit(page * size).skip(skip).then(function (articles){
             res.render('admin/article_index',{
                 userInfo : req.userInfo,
                 articles : articles,
@@ -367,6 +369,128 @@ router.get('/article/add', function (req, res){
     });
 
 });
+/*
+* 添加文章--post
+* */
+router.post('/article/add', function (req, res){
 
+    // 用req.body获取post数据
+    let category = req.body.category || '';
+    let title = req.body.title || '';
+    let description = req.body.description || '';
+    let content = req.body.content || '';
+
+    if(title === ''){
+        res.render('admin/error', {
+            userInfo : req.userInfo,
+            message : '文章标题不得为空！！'
+        });
+        return;
+    }
+    new Article({
+        category : category,
+        user : req.userInfo,
+        title : title,
+        description : description,
+        content : content
+    }).save().then(article => {
+        if(article){
+            res.render('admin/success', {
+                userInfo : req.userInfo,
+                message : '添加成功',
+                url : '/admin/article'
+            })
+        }
+    });
+
+});
+/*
+* 修改文章--get
+* */
+router.get('/article/edit', (req, res) => {
+    // 通过req.query获取文章的id
+    let id = req.query.id || '';
+    if(id === '') {
+        res.render('admin/error', {
+            userInfo : req.userInfo,
+            message : '文章ID不得为空！！'
+        });
+        return;
+    }
+    // 分类信息
+    Category.find().then(categories => {
+       if(categories){
+           // 查找对应ID的文章
+           Article.findOne({
+               _id : id
+           }).populate(['category']).then(article => {
+               console.log(article);
+               if(article){
+                   res.render('admin/article_edit', {
+                       userInfo : req.userInfo,
+                       article : article,
+                       categories : categories
+                   });
+               }
+           })
+       }
+    })
+
+})
+/*
+ * 修改文章--post
+ * */
+router.post('/article/edit', function (req, res){
+
+    // 用req.body获取post数据
+    let id = req.query.id || '';
+    let category = req.body.category || '';
+    let title = req.body.title || '';
+    let description = req.body.description || '';
+    let content = req.body.content || '';
+
+    if(title === ''){
+        res.render('admin/error', {
+            userInfo : req.userInfo,
+            message : '文章标题不得为空！！'
+        });
+        return;
+    }
+    // 更新
+    Article.update({
+        _id : id
+    },{
+        category : category,
+        title : title,
+        description : description,
+        content : content
+    }).then( rs => {
+        if(rs){
+            res.render('admin/success', {
+                userInfo : req.userInfo,
+                message : '更新成功',
+                url : '/admin/article'
+            });
+        }
+    });
+
+});
+/*
+* 删除文章
+* */
+router.get('/article/delete', (req, res) => {
+    let id = req.query.id;
+    Article.remove({
+        _id : id
+    }).then(rs => {
+        if(rs){
+            res.render('admin/success', {
+                userInfo : req.userInfo,
+                message : '删除成功',
+                url : '/admin/article'
+            });
+        }
+    });
+});
 // 导出
 module.exports = router;
