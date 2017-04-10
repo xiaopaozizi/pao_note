@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{margin:0;padding:0;}
+        li{list-style: none;}
+        /*居中显示，绘制左边和上边框*/
+        #ul1{
+            height:auto;
+            margin:20px auto;
+            overflow: hidden;
+            border:1px solid black;
+            border-right:none;
+            border-bottom:none;
+        }
+        /*浮动布局，绘制下边和右边框*/
+        #ul1 li{
+            border:1px solid black;
+            border-top:none;
+            border-left:none;
+            float:left;
+        }
+        /*出发点--红色*/
+        .sty1{
+            background : red;
+        }
+        /*终点--蓝色*/
+        .sty2{
+            background : blue;
+        }
+        /*障碍物--绿色*/
+        .sty3{
+            background : green;
+        }
+        /*居中显示*/
+        #input1 {
+            width:100px;
+            position:absolute;
+            left:50%;
+            margin-left: -50px;
+        }
+    </style>
+</head>
+<body>
+<script>
+/*
+ * 1.布局
+ * 2.估计函数 f(n) = g(n) + h(n);
+ * 3.open队列和close队列
+ * */
+window.onload = function () {
+    var oUl1 = document.getElementById('ul1');
+    var aLi = oUl1.getElementsByTagName('li');
+    var oInput1 = document.getElementById('input1');
+    // 起点
+    var startLi = document.getElementsByClassName('sty1')[0];
+    // 终点
+    var endLi = document.getElementsByClassName('sty3')[0];
+    // open队列，里面存放的是可以走的值
+    var openArr = [];
+    // close队列，里面存放的是不可以走的值，走过的 + 障碍物
+    var closeArr = [];
+    // 定义地图
+    // 1 代表出发点
+    // 2 代表终点
+    // 3 代表障碍物
+    var map = [
+        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,1,0,0,0,0,0,3,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,3,0,0,2,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+        0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+    ];
+    // 开方求正方形的边长
+    var length = Math.sqrt(map.length);
+    // 设置格子的宽高
+    var wide = 20;
+
+    init();
+    // 初始化
+    function init() {
+        createGrid();
+        // 当点击按钮时，开始寻路
+        oInput1.onclick = function () {
+            openFn();
+        }
+    }
+    // 创建格子
+    function createGrid() {
+
+        // 设置oUl1的width
+        // 20个格子 * （格子的边长 + 右侧1px的边框） + oUl1左侧1px的边框
+        oUl1.style.width = 20 * ( wide + 1 ) + 1 + 'px';
+        // 设置格子的样式
+        for ( var i = 0; i < map.length; i++ ) {
+            var oGrid = document.createElement('li');
+            oGrid.style.width = wide + 'px';
+            oGrid.style.height = wide + 'px';
+            if(map[i] === 1){
+                oGrid.className = 'sty1';
+                // 把起始点放入open队列中
+                openArr.push(oGrid);
+            } else if ( map[i] === 2 ) {
+                oGrid.className = 'sty2';
+            } else if ( map[i] === 3 ) {
+                oGrid.className = 'sty3';
+                // 把障碍物放入close队列中
+                closeArr.push(oGrid);
+            }
+            oUl1.appendChild(oGrid);
+        }
+    }
+    // 估价函数
+    function f(nodeLi){
+        return g(nodeLi) + h(nodeLi);
+    }
+    // 起始点到n节点的距离
+    function g(nodeLi) {
+        var a = startLi.offsetLeft - nodeLi.offsetLeft;
+        var b = startLi.offsetTop - nodeLi.offsetTop;
+        return Math.sqrt( a*a + b*b );
+    }
+    // n节点到终点的距离
+    function h(nodeLi) {
+        var a = endLi.offsetLeft - nodeLi.offsetLeft;
+        var b = endLi.offsetTop - nodeLi.offsetTop;
+        return Math.sqrt( a*a + b*b );
+    }
+    // open队列函数
+    function openFn(){
+        // 剔除open队列数组中的第一个值，将它添加到close队列数组中去
+        var nowLi = openArr.shift();
+        closeFn(nowLi);
+        // 找到当前元素，周围可以走的路
+        findLi(nowLi);
+
+    }
+    // close队列函数
+    function closeFn(nowLi){
+        closeArr.push(nowLi);
+    }
+    // 找到当前元素，周围可以走的路，然后添加到open队列数组中去
+    /*
+    * 过滤条件
+    * 1.不能是close队列数组中的元素（障碍物+走过的路）
+    * 2.不能是open队列数组中已经存在的值
+    * 3.只能是当前元素邻居（只相差一个单元格）
+    * */
+    function findLi(nowLi){
+        var result = [];
+        // 1.不能是close队列数组中的元素（障碍物+走过的路）
+        // 2.不能是open队列数组中已经存在的值
+        for ( var i = 0; i < aLi.length; i++ ) {
+            if( filter(closeArr, aLi[i]) && filter(openArr, aLi[i]) ) {
+                result.push(aLi[i]);
+            }
+        }
+        function filter(arr, li){
+            // 剔除open队列数组或者close队列数组有的值
+            for ( var i = 0; i < arr.length; i++ ) {
+                if ( arr[i] === li ){
+                    return false;
+                }
+            }
+            return true;
+        }
+        // 3.只能是当前元素邻居（只相差一个单元格）
+        for ( var i = 0; i < result.length; i++ ) {
+            if(Math.abs(nowLi.offsetLeft - result[i].offsetLeft) <= (wide + 1)
+            && Math.abs(nowLi.offsetTop - result[i].offsetTop) <= (wide + 1)){
+                openArr.push(result[i]);
+                //result[i].style.background = 'yellow';
+            }
+        }
+    }
+}
+</script>
+<ul id="ul1"></ul>
+<input type="button" value="开始寻路" id="input1">
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{margin:0;padding:0;}
+        li{list-style: none;}
+        /*居中显示，绘制左边和上边框*/
+        #ul1{
+            height:auto;
+            margin:20px auto;
+            overflow: hidden;
+            border:1px solid black;
+            border-right:none;
+            border-bottom:none;
+        }
+        /*浮动布局，绘制下边和右边框*/
+        #ul1 li{
+            border:1px solid black;
+            border-top:none;
+            border-left:none;
+            float:left;
+        }
+        /*出发点--红色*/
+        .sty1{
+            background : red;
+        }
+        /*终点--蓝色*/
+        .sty2{
+            background : blue;
+        }
+        /*障碍物--绿色*/
+        .sty3{
+            background : green;
+        }
+        /*居中显示*/
+        #input1 {
+            width:100px;
+            position:absolute;
+            left:50%;
+            margin-left: -50px;
+        }
+    </style>
+</head>
+<body>
+<script>
+/*
+* 布局
+* */
+window.onload = function () {
+    var oUl1 = document.getElementById('ul1');
+    var oInput1 = document.getElementById('input1');
+
+    init();
+    // 初始化
+    function init() {
+        createGrid();
+    }
+    // 创建格子
+    function createGrid() {
+        // 定义地图
+        // 1 代表出发点
+        // 2 代表终点
+        // 3 代表障碍物
+        var map = [
+            0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,1,0,0,0,0,0,3,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,0,3,0,0,2,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+            0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+        ];
+        // 开方求正方形的边长
+        var length = Math.sqrt(map.length);
+        // 设置格子的宽高
+        var wide = 20;
+
+        // 设置oUl1的width
+        // 20个格子 * （格子的边长 + 右侧1px的边框） + oUl1左侧1px的边框
+        oUl1.style.width = 20 * ( wide + 1 ) + 1 + 'px';
+        // 设置格子的样式
+        for ( var i = 0; i < map.length; i++ ) {
+            var oGrid = document.createElement('li');
+            oGrid.style.width = wide + 'px';
+            oGrid.style.height = wide + 'px';
+            if(map[i] === 1){
+                oGrid.className = 'sty1';
+            } else if ( map[i] === 2 ) {
+                oGrid.className = 'sty2';
+            } else if ( map[i] === 3 ) {
+                oGrid.className = 'sty3';
+            }
+            oUl1.appendChild(oGrid);
+        }
+    }
+}
+</script>
+<ul id="ul1"></ul>
+<input type="button" value="开始寻路" id="input1">
+</body>
+</html>
