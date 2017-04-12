@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta charset="UTF-8">
+    <title>八皇后</title>
+    <link href="https://cdn.bootcss.com/bootstrap/4.0.0-alpha.6/css/bootstrap-grid.css" rel="stylesheet">
+    <style>
+        *{margin:0;padding:0;}
+        li{list-style: none;}
+        #ul1{
+            height:auto;
+            margin:20px auto;
+            overflow: hidden;
+            border:1px solid #fff;
+            border-right:none;
+            border-bottom:none;
+            background-image: url(img/bg.jpg);
+            background-repeat:no-repeat;
+            background-size: cover;
+            -webkit-background-size:cover;
+
+        }
+        #ul1 li{
+            float : left;
+            border:1px solid #fff;
+            border-left:none;
+            border-top:none;
+            -webkit-background-size:cover;
+            background-size:cover;
+        }
+        .active{
+            -webkit-animation:5s infinite linear flash;
+            -o-animation:5s infinite linear flash;
+            animation:5s infinite linear flash;
+        }
+        @keyframes flash {
+            0% { opacity : 0.1; }
+            50% { opacity : 1; }
+            100% { opacity : 0.1; }
+        }
+    </style>
+</head>
+<body>
+<ul id="ul1"></ul>
+<script>
+    /*
+    * 游戏：规则
+    * 如果把棋盘的每个空格写成坐标的话，那么
+    * ①这个格子没有被占用过
+    * ②每个皇后的横（一）竖（丨）撇（丿）捺（\）都不能有其他棋子
+    *   横排：y轴值相等
+    *   竖排：x轴值相等
+    *   撇排：x + y 恒等
+    *   捺排：x -y 恒等
+    *  $624YCdns
+    *
+    * */
+    var oUl1 = document.querySelector('#ul1');
+    var aLi = oUl1.getElementsByTagName('li');
+    var clientWidth = document.documentElement.clientWidth;
+    var clientHeight = document.documentElement.clientHeight;
+    // 8个皇后
+    var num = 8;
+    // 格子大小
+    var sizeGrid = Math.floor(clientWidth / num);
+    // 记录一组位置
+    var posArr = [];
+    // 记录所有组的位置
+    var posAllArr = [];
+    // 记录一共有多少种可能性
+    var count = 0;
+    init();
+
+
+    function init(){
+        createGrid();
+        // 给第一个皇后安排座位
+        setQueen(0);
+        //console.log(posAllArr);
+        // 展示
+        show();
+    }
+    // 创建棋盘
+    function createGrid(){
+        oUl1.style.width = (num * sizeGrid + 1) + 'px';
+        for ( var i = 0; i < num; i++ ) {
+            for ( var j = 0; j < num; j++ ) {
+                var oLi = document.createElement('li');
+                oLi.style.width = sizeGrid + 'px';
+                oLi.style.height = sizeGrid + 'px';
+                // 坐标系
+                oLi.x = j;
+                oLi.y = i;
+                oLi.index = -1;
+                //oLi.innerHTML = oLi.x + ',' + oLi.y;
+                //oLi.innerHTML = oLi.index;
+                oUl1.appendChild(oLi);
+            }
+        }
+    }
+    // 下子
+    function setQueen(iQueen){
+
+        // 当第8个皇后有自己的位置了，就可以把这一组值给记录下来，结束递归
+        if( iQueen === num) {
+            posAllArr.push(posArr.concat());
+            count++;
+            return;
+        }
+
+        // 第一个皇后有四个座位可以选择
+        for ( var i = 0; i < num; i++ ) {
+            // ①这个位置没有其他皇后占领
+            if ( aLi[ iQueen*num + i].index === -1){
+                // 这个皇后开始坐下
+                aLi[iQueen*num + i].index = iQueen;
+                //aLi[iQueen*num + i].innerHTML = aLi[iQueen*num + i].index;
+                // 把这个皇后放入posArr中
+                posArr.push(aLi[iQueen*num + i]);
+                // 获取当前格子的坐标
+                var x = aLi[ iQueen*num + i].x;
+                var y = aLi[ iQueen*num + i].y;
+                /*
+                 * 然后这个皇后，要以自己为中心占领地盘（空格&&横竖撇捺）
+                 * 如果把棋盘的每个空格写成坐标的话，那么
+                 * ①这个格子没有被占用过
+                 * ②每个皇后的横（一）竖（丨）撇（丿）捺（\）都不能有其他棋子
+                 *   横排：y轴值相等
+                 *   竖排：x轴值相等
+                 *   撇排：x + y 恒等
+                 *   捺排：x -y 恒等
+                 * */
+                for ( var j = 0; j < aLi.length; j++ ) {
+                    if( aLi[j].index === -1 && (aLi[j].x === x || aLi[j].y === y
+                            || aLi[j].x - aLi[j].y === x - y
+                            || aLi[j].x + aLi[j].y === x + y) ){
+                        aLi[j].index = iQueen;
+                        //aLi[j].innerHTML = aLi[j].index;
+                    }
+                }
+                // 递归，开始给第二个皇后安排位置
+                arguments.callee(iQueen+1);
+
+                // 如果这个皇后没有位置了，即这个递归函数不能递归了
+                // ，就开始回溯，上一个皇后要重新占位置
+                // 皇后退位
+                posArr.pop();
+                // 撤兵
+                for ( var j = 0; j < aLi.length; j++ ) {
+                    if ( aLi[j].index === iQueen ) {
+                        aLi[j].index = -1;
+                    }
+                }
+
+            }
+        }
+    }
+    // 展示成果
+    function show(){
+        change();
+        setInterval(function () {
+            change();
+        }, 2000);
+        function change() {
+            for ( var i = 0; i < aLi.length; i++ ) {
+                aLi[i].style.backgroundImage = '';
+                aLi[i].className = '';
+            }
+            // 随机从结果数组posAllArr中找出一种效果展示
+            var random = posAllArr[Math.floor(Math.random()*posAllArr.length)];
+            for ( var i = 0; i < random.length; i++ ) {
+                random[i].style.backgroundImage = 'url(img/' + (Math.ceil(Math.random()*11) + 1) + '.jpg)';
+                random[i].className = 'active';
+                // 延迟动画
+                random[i].style.animationDelay = Math.random()*2 + 's';
+                random[i].style.webkitAnimationDelay = Math.random()*2 + 's';
+            }
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>八皇后</title>
+    <style>
+        *{margin:0;padding:0;}
+        li{list-style: none;}
+        #ul1{
+            height:auto;
+            margin:20px auto;
+            overflow: hidden;
+            border:1px solid #000;
+            border-right:none;
+            border-bottom:none;
+        }
+        #ul1 li{
+            float : left;
+            border:1px solid #000;
+            border-left:none;
+            border-top:none;
+        }
+    </style>
+</head>
+<body>
+<ul id="ul1"></ul>
+<script>
+    var oUl1 = document.querySelector('#ul1');
+    var aLi = oUl1.querySelector('li');
+    // 格子大小
+    var sizeGrid = 50;
+    // 8个皇后
+    var num = 4;
+
+    init();
+
+    function init(){
+        createGrid();
+    }
+    // 创建棋盘
+    function createGrid(){
+        oUl1.style.width = num * ( sizeGrid + 1) + 'px';
+        for ( var i = 0; i < num; i++ ) {
+            for ( var j = 0; j < num; j++ ) {
+                var oLi = document.createElement('li');
+                oLi.style.width = sizeGrid + 'px';
+                oLi.style.height = sizeGrid + 'px';
+                // 坐标系
+                oLi.x = j;
+                oLi.y = i;
+                oLi.index = -1;
+                oLi.innerHTML = oLi.x + ',' + oLi.y;
+                //oLi.innerHTML = oLi.index;
+                oUl1.appendChild(oLi);
+            }
+        }
+
+    }
+</script>
+</body>
+</html>
