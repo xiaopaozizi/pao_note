@@ -64,7 +64,14 @@
     // 8个皇后
     var num = 8;
     // 格子大小
-    var sizeGrid = Math.floor(clientWidth / num);
+    // 手机，竖屏>横屏
+    if(clientHeight > clientWidth){
+        var sizeGrid = Math.floor(clientWidth / 10);
+    } else {
+        // 电脑，横屏>竖屏
+        var sizeGrid = Math.floor(clientWidth * 0.43 / 10);
+    }
+    //var sizeGrid = Math.floor(clientWidth / num);
     // 记录一组位置
     var posArr = [];
     // 记录所有组的位置

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        *{margin:0;padding:0;}
+        li{list-style: none;}
+        #ul1{
+            height:auto;
+            margin:20px auto;
+            overflow: hidden;
+            border:1px solid #fff;
+            border-right:none;
+            border-bottom:none;
+            background-image: url(img/bg.jpg);
+            -webkit-background-size:cover;
+            background-size:cover;
+        }
+        #ul1 li{
+            float:left;
+            border:1px solid #fff;
+            border-top:none;
+            border-left:none;
+            -webkit-background-size:cover;
+            background-size:cover;
+        }
+        .active{
+            -webkit-animation:0.5s infinite linear flash;
+            -o-animation:0.5s infinite linear flash;
+            animation:0.5s infinite linear flash;
+        }
+        @keyframes flash {
+            0% { opacity : 0.1; }
+            50% { opacity : 1; }
+            100% { opacity : 0.1; }
+        }
+    </style>
+</head>
+<body>
+<ul id="ul1"></ul>
+<script>
+    var oUl = document.getElementById('ul1');
+    var aLi = oUl.getElementsByTagName('li');
+    var sizeGrid = 50;
+    var num = 10;
+    var len = num * num;
+    // 行列，每行每列最小最大值
+    var row = 0;
+    var col = 0;
+    var min = 0;
+    var max = num - 1;
+    // 存储构成螺旋矩阵的LI
+    var arr = [];
+
+    // 布局
+    oUl.style.width = num * (sizeGrid + 1) + 'px';
+    for ( var i = 0; i < len; i++ ) {
+        var oLi = document.createElement('li');
+        oLi.style.width = sizeGrid + 'px';
+        oLi.style.height = sizeGrid + 'px';
+        oUl.appendChild(oLi);
+    }
+
+    // 螺旋数组
+    for ( var i = 0; i < len; i++ ) {
+        /*
+        * row = col = min = 0
+        * max = 4
+        * 四个拐点
+        *   00 row === min && col < max
+        *   04 row === min &&　col === max
+        *   08 row === max && col === max
+        *   12 row === max && col === min
+        *
+        * 00 01 02 03 04
+        * 15 16 17 18 05
+        * 14 23 24 19 06
+        * 13 22 21 20 07
+        * 12 11 10 09 08
+        * */
+        //aLi[row * num + col].innerHTML = i;
+        arr.push( aLi[row * num + col] );
+        if ( row === min && col < max ) {
+            col = col + 1;
+        } else if ( col === max && row < max ) {
+            row = row + 1;
+        } else if ( row === max && col > min ) {
+            col = col - 1;
+        } else if ( col === min && row > min ) {
+            row = row - 1;
+        }
+        /*
+        * 减小环数
+        * */
+        if ( row === min + 1 && col === min ) {
+            min = min + 1;
+            max = max - 1;
+        }
+    }
+
+    // 让棋盘上有一张图片做螺旋运动
+   /* var iNow = 0;
+    var timer1 = null;
+    var timer2 = null;
+    clearInterval(timer1);
+    timer1 = setInterval(function () {
+        if ( iNow === len - 1 ) {
+            clearTimeout(timer2);
+            timer2 = setTimeout(function () {
+                iNow = 0;
+            }, 100);
+            //clearInterval(timer);
+        }
+        for ( var i = 0; i < len; i++ ) {
+            aLi[i].style.backgroundImage = '';
+        }
+        arr[iNow].style.backgroundImage = 'url(img/1.jpg)';
+        iNow++;
+    }, 200)*/
+
+    /*
+    * 多张图片做螺旋运动，五五相隔
+    *
+    * */
+    // 存储背景图片
+    var bgArr = [];
+    for ( var i = 0; i < len; i++ ) {
+        if ( i % 6 === 0) {
+            var random = Math.floor(Math.random()*11) + 1;
+            var bgImg = 'url(img/' + random + '.jpg)';
+            arr[i].style.backgroundImage = bgImg;
+            // 存储位置和背景图片
+            bgArr.push( [i, bgImg] );
+        }
+    }
+
+    // 开始运动
+    run();
+    setInterval(run, 1000);
+    function run() {
+        // 情况所以样式
+        for ( var i = 0; i < len; i++ ) {
+            aLi[i].style.background = '';
+            aLi[i].className = '';
+        }
+        for ( var i = 0; i < bgArr.length; i++ ) {
+            // 图片向下一个位置运动
+            bgArr[i][0] = bgArr[i][0] + 1;
+            // 如果下一个位置有图片的话，就把当前位置的背景图片给它
+            if(arr[bgArr[i][0]]){
+                arr[bgArr[i][0]].style.backgroundImage = bgArr[i][1];
+                arr[bgArr[i][0]].className = 'active';
+                // 动画延迟
+                arr[bgArr[i][0]].style.animationDelay = -Math.random()*2 + 's';
+                arr[bgArr[i][0]].style.webkitAnimationDelay = -Math.random()*2 + 's';
+            } else {
+                // 如果没有，也就是运动到末尾了，就把这个图片从bgArr中剔除
+                bgArr.pop();
+                // 重新在最开始处生成新的图片
+                var random = Math.floor(Math.random()*11) + 1;
+                var bgImg = 'url(img/' + random + '.jpg)';
+                arr[0].style.backgroundImage = bgImg;
+                bgArr.unshift( [0, bgImg] );
+            }
+        }
+    }
+</script>
+</body>
+</html>

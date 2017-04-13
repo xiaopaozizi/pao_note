@@ -21,13 +21,13 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="03-加特效.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/02_八皇后/03-加特效.html">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/03_螺旋矩阵/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-17.0">
-              <caret line="158" column="11" selection-start-line="158" selection-start-column="11" selection-end-line="158" selection-end-column="11" />
+            <state vertical-scroll-proportion="-9.3">
+              <caret line="48" column="4" selection-start-line="48" selection-start-column="4" selection-end-line="54" selection-end-column="5" />
               <folding>
-                <element signature="e#2809#4704#0" expanded="false" />
+                <element signature="n#style#0;n#audio#0;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -36,8 +36,8 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/02_八皇后/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.54347825">
-              <caret line="79" column="22" selection-start-line="79" selection-start-column="22" selection-end-line="79" selection-end-column="22" />
+            <state vertical-scroll-proportion="0.3043478">
+              <caret line="64" column="16" selection-start-line="64" selection-start-column="16" selection-end-line="64" selection-end-column="16" />
               <folding>
                 <element signature="n#style#0;n#audio#0;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
@@ -64,7 +64,12 @@
         <option value="$PROJECT_DIR$/02_八皇后/index2.html" />
         <option value="$PROJECT_DIR$/02_八皇后/02-遍历回溯.html" />
         <option value="$PROJECT_DIR$/02_八皇后/02-遍历回溯记录位置.html" />
+        <option value="$PROJECT_DIR$/03_螺旋矩阵/01_布局.html" />
+        <option value="$PROJECT_DIR$/03_螺旋矩阵/02_螺旋矩阵数组.html" />
+        <option value="$PROJECT_DIR$/03_螺旋矩阵/03_图片螺旋运动.html" />
         <option value="$PROJECT_DIR$/02_八皇后/03-加特效.html" />
+        <option value="$PROJECT_DIR$/03_螺旋矩阵/04_多张图片同时运动.html" />
+        <option value="$PROJECT_DIR$/03_螺旋矩阵/index.html" />
         <option value="$PROJECT_DIR$/02_八皇后/index.html" />
       </list>
     </option>
@@ -131,6 +136,20 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="03_螺旋矩阵" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="08_algorithm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="08_algorithm" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="02_八皇后" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -180,10 +199,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\program\pao_note\08_algorithm\03_螺旋矩阵\img" />
+      <recent name="F:\program\pao_note\08_algorithm\03_螺旋矩阵" />
+      <recent name="F:\program\pao_note\08_algorithm\02_八皇后" />
       <recent name="F:\program\pao_note\08_algorithm\02_八皇后\img" />
       <recent name="F:\program\pao_note\08_algorithm\02_八皇后\img2" />
-      <recent name="F:\program\pao_note\08_algorithm\02_八皇后" />
-      <recent name="F:\program\pao_note\08_algorithm\01_A星寻路" />
     </key>
   </component>
   <component name="RunManager">
@@ -207,14 +227,6 @@
       <option name="cucumberJsArguments" value="" />
       <option name="executablePath" />
       <option name="filePath" />
-      <method />
-    </configuration>
-    <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
-      <node-options />
-      <gulpfile />
-      <tasks />
-      <arguments />
-      <envs />
       <method />
     </configuration>
     <configuration default="true" type="js.build_tools.npm" factoryName="npm">
@@ -251,7 +263,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32886904" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -280,11 +292,20 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/02_八皇后/03-加特效.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="158" column="11" selection-start-line="158" selection-start-column="11" selection-end-line="158" selection-end-column="11" />
+          <folding>
+            <element signature="e#2809#4704#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/01_A星寻路/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="110" column="1" selection-start-line="110" selection-start-column="1" selection-end-line="110" selection-end-column="1" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -292,9 +313,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="187" column="40" selection-start-line="187" selection-start-column="22" selection-end-line="187" selection-end-column="40" />
-          <folding>
-            <element signature="n#style#0;n#head#0;n#html#0;n#!!top" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -302,29 +320,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="n#head#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#head#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="e#203#398#0" expanded="false" />
-            <element signature="e#440#570#0" expanded="false" />
-            <element signature="e#604#645#0" expanded="false" />
-            <element signature="e#678#720#0" expanded="false" />
-            <element signature="e#754#797#0" expanded="false" />
-            <element signature="e#831#952#0" expanded="false" />
-            <element signature="e#1437#1444#0" expanded="false" />
-            <element signature="e#2805#2929#0" expanded="false" />
-            <element signature="e#2890#2923#0" expanded="false" />
-            <element signature="e#2968#3764#0" expanded="false" />
-            <element signature="e#2979#2994#0" expanded="false" />
-            <element signature="e#3171#3758#0" expanded="false" />
-            <element signature="e#3346#3473#0" expanded="false" />
-            <element signature="e#3499#3556#0" expanded="false" />
-            <element signature="e#3582#3711#0" expanded="false" />
-            <element signature="e#3799#3844#0" expanded="false" />
-            <element signature="e#3886#4042#0" expanded="false" />
-            <element signature="e#4083#4235#0" expanded="false" />
-            <element signature="e#4885#5002#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -332,7 +327,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="48" column="4" selection-start-line="0" selection-start-column="0" selection-end-line="115" selection-end-column="7" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -340,9 +334,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="188" column="18" selection-start-line="188" selection-start-column="18" selection-end-line="188" selection-end-column="18" />
-          <folding>
-            <element signature="n#style#0;n#head#0;n#html#0;n#!!top" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -350,29 +341,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="n#head#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#head#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="e#203#398#0" expanded="false" />
-            <element signature="e#440#570#0" expanded="false" />
-            <element signature="e#604#645#0" expanded="false" />
-            <element signature="e#678#720#0" expanded="false" />
-            <element signature="e#754#797#0" expanded="false" />
-            <element signature="e#831#952#0" expanded="false" />
-            <element signature="e#1437#1444#0" expanded="false" />
-            <element signature="e#2805#2929#0" expanded="false" />
-            <element signature="e#2890#2923#0" expanded="false" />
-            <element signature="e#2968#3764#0" expanded="false" />
-            <element signature="e#2979#2994#0" expanded="false" />
-            <element signature="e#3171#3758#0" expanded="false" />
-            <element signature="e#3346#3473#0" expanded="false" />
-            <element signature="e#3499#3556#0" expanded="false" />
-            <element signature="e#3582#3711#0" expanded="false" />
-            <element signature="e#3799#3844#0" expanded="false" />
-            <element signature="e#3886#4042#0" expanded="false" />
-            <element signature="e#4083#4235#0" expanded="false" />
-            <element signature="e#4885#5002#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -387,7 +355,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="110" column="1" selection-start-line="110" selection-start-column="1" selection-end-line="110" selection-end-column="1" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -395,9 +362,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="187" column="40" selection-start-line="187" selection-start-column="22" selection-end-line="187" selection-end-column="40" />
-          <folding>
-            <element signature="n#style#0;n#head#0;n#html#0;n#!!top" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -405,29 +369,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5960145">
           <caret line="224" column="17" selection-start-line="224" selection-start-column="17" selection-end-line="224" selection-end-column="17" />
-          <folding>
-            <element signature="n#head#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="n#style#0;n#head#0;n#html#0;n#!!top" expanded="false" />
-            <element signature="e#203#398#0" expanded="false" />
-            <element signature="e#440#570#0" expanded="false" />
-            <element signature="e#604#645#0" expanded="false" />
-            <element signature="e#678#720#0" expanded="false" />
-            <element signature="e#754#797#0" expanded="false" />
-            <element signature="e#831#952#0" expanded="false" />
-            <element signature="e#1437#1444#0" expanded="false" />
-            <element signature="e#2805#2929#0" expanded="false" />
-            <element signature="e#2890#2923#0" expanded="false" />
-            <element signature="e#2968#3764#0" expanded="false" />
-            <element signature="e#2979#2994#0" expanded="false" />
-            <element signature="e#3171#3758#0" expanded="false" />
-            <element signature="e#3346#3473#0" expanded="false" />
-            <element signature="e#3499#3556#0" expanded="false" />
-            <element signature="e#3582#3711#0" expanded="false" />
-            <element signature="e#3799#3844#0" expanded="false" />
-            <element signature="e#3886#4042#0" expanded="false" />
-            <element signature="e#4083#4235#0" expanded="false" />
-            <element signature="e#4885#5002#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -435,7 +376,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-16.3">
           <caret line="51" column="52" selection-start-line="51" selection-start-column="52" selection-end-line="51" selection-end-column="52" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -443,24 +383,69 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-1.6">
           <caret line="84" column="42" selection-start-line="84" selection-start-column="42" selection-end-line="84" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/03_螺旋矩阵/01_布局.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.2">
+          <caret line="24" column="6" selection-start-line="24" selection-start-column="6" selection-end-line="24" selection-end-column="6" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/03_螺旋矩阵/02_螺旋矩阵数组.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-12.1">
+          <caret line="78" column="34" selection-start-line="78" selection-start-column="34" selection-end-line="78" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/03_螺旋矩阵/03_图片螺旋运动.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.0">
+          <caret line="100" column="25" selection-start-line="100" selection-start-column="25" selection-end-line="100" selection-end-column="25" />
+          <folding>
+            <element signature="e#1162#1334#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/02_八皇后/03-加特效.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-17.0">
-          <caret line="158" column="11" selection-start-line="158" selection-start-column="11" selection-end-line="158" selection-end-column="11" />
+        <state vertical-scroll-proportion="-14.9">
+          <caret line="40" column="9" selection-start-line="31" selection-start-column="8" selection-end-line="40" selection-end-column="9" />
           <folding>
             <element signature="e#2809#4704#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/03_螺旋矩阵/04_多张图片同时运动.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-12.1">
+          <caret line="128" column="18" selection-start-line="128" selection-start-column="18" selection-end-line="128" selection-end-column="18" />
+          <folding>
+            <element signature="e#1713#2654#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/03_螺旋矩阵/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.3">
+          <caret line="48" column="4" selection-start-line="48" selection-start-column="4" selection-end-line="54" selection-end-column="5" />
+          <folding>
+            <element signature="n#style#0;n#audio#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/02_八皇后/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.54347825">
-          <caret line="79" column="22" selection-start-line="79" selection-start-column="22" selection-end-line="79" selection-end-column="22" />
+        <state vertical-scroll-proportion="0.3043478">
+          <caret line="64" column="16" selection-start-line="64" selection-start-column="16" selection-end-line="64" selection-end-column="16" />
           <folding>
             <element signature="n#style#0;n#audio#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>

@@ -1,0 +1,4 @@
+D:\mongodb\bin
+
+
+mongod --dbpath=F:\program\pao_note\07_nodejs\02_action\blog\db --port=27017
