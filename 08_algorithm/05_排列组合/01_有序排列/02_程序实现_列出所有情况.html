@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    var arr = ['A', 'B', 'C'];
+    // 所以情况的数组
+    var resultAll = [];
+    /*
+    * 从arr中选择num个，当然 num >= 1 && num <= arr.length
+    * */
+    function show(arr, num){
+        // 如果只选一个，那就是arr的个数了
+        if(num === 1){
+            arr.push(arr.length);
+            return arr;
+        }
+        let resultNum = 0;
+        // 递归的第几层，也是选择的第几个数
+        let iNow = 1;
+        /*
+        * 遍历+递归
+        *
+        * */
+        function change(arr, iNow, str){
+            // 第一层有3个 ==> A B C
+            for ( let i = 0; i < arr.length; i++ ){
+                // 复制，防止引用
+                let result = arr.concat();
+                // 复用字符串，拼接，也放在出错
+                let strClone = str;
+                // 剔除当前值，还剩result.length - 1个
+                strClone += result.splice(i, 1); // A
+                // 是否停止递归,这里以两层为例
+                if(iNow === num){
+                    // 停止
+                    resultNum += result.length;
+                    // 这时候result中有 B/C
+                    for ( let j = 0; j < result.length; j++ ){
+                        // 依次拼接 AB AC
+                        resultAll.push( strClone + result[j] );
+                    }
+                } else {
+                    // 注意这里的result传入之后，下次递归中的arr就变成result了
+                    change(result, iNow + 1, strClone);
+                }
+            }
+        }
+        change(arr, iNow + 1, '');
+        // 把个数添加到结果末尾
+        resultAll.push(resultNum);
+        return resultAll;
+    }
+    console.log(show(arr, 2)); // 3中2
+</script>
+</body>
+</html>

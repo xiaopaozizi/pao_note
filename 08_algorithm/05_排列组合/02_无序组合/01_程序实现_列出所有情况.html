@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /*
+    * 组合即没有顺序，以 A B C中取出任意两个为例
+    * 结果为 AB AC BC 三种情况
+    * 实现：在有序排列的基础上排序去重
+    * 有序排列的时候为：
+    *   AB AC BA BC CA CB
+    * 先对每个进行排序：
+    *   AB AC AB BC CA BC
+    * 在进行去重：
+      * AB AC BC
+    *
+    *
+    *
+    * */
+    var arr = ['A', 'B', 'C'];
+    // 所以情况的数组
+    var resultAll = [];
+    /*
+    * 从arr中选择num个，当然 num >= 1 && num <= arr.length
+    *
+    *
+    * */
+    function show(arr, num){
+        // 如果只选一个，那就是arr的个数了
+        if(num === 1){
+            arr.push(arr.length);
+            return arr;
+        }
+        if(num > arr.length || num <= 0){
+            alert(arr + '中只能取出1~' + arr.length + '个，而你想取出' + num + '个');
+            return;
+        }
+
+        // 递归的第几层，也是选择的第几个数
+        let iNow = 1;
+        /*
+        * 遍历+递归
+        *
+        * */
+        function change(arr, iNow, str){
+            // 第一层有3个 ==> A B C
+            for ( let i = 0; i < arr.length; i++ ){
+                // 复制，防止引用
+                let result = arr.concat();
+                // 复用字符串，拼接，也放在出错
+                let strClone = str;
+                // 剔除当前值，还剩result.length - 1个
+                strClone += result.splice(i, 1); // A
+                // 是否停止递归,这里以两层为例
+                if(iNow === num){
+                    // 停止
+
+                    // 这时候result中有 B/C
+                    for ( let j = 0; j < result.length; j++ ){
+                        // 依次拼接 AB AC
+                        resultAll.push( strClone + result[j] );
+                    }
+                } else {
+                    // 注意这里的result传入之后，下次递归中的arr就变成result了
+                    change(result, iNow + 1, strClone);
+                }
+            }
+        }
+        change(arr, iNow + 1, '');
+        // 把个数添加到结果末尾
+        //console.log(resultAll);
+        // 排序去重--将有序排列的给传递进去
+        function unique(arr){
+            let result = [];
+            for ( let i = 0; i < arr.length; i++ ) {
+                result.push(arr[i].split('').sort().join(''));
+            }
+            // 得到排序结果
+            //console.log(result)
+            // 开始去重
+            var obj = {};
+            for ( let i = 0; i < result.length; i++ ) {
+                if(!obj[result[i]]){
+                    obj[result[i]] = 1;
+                }
+            }
+            // 得到去重后的对象
+            // console.log(obj);
+            // 将对象中的值依次赋给新数组
+            let newArr = [];
+            for ( let attr in obj ) {
+                newArr.push(attr);
+            }
+            // 得到不重复的数组
+            //console.log(newArr);
+            return newArr;
+
+        }
+        resultAll = unique(resultAll);
+        // 再把个数添加进去
+        resultAll.push(resultAll.length);
+        return resultAll;
+    }
+    console.log(show(arr, 3)); // 3中2
+</script>
+</body>
+</html>

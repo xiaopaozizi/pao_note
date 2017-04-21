@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    var arr = ['A', 'B', 'C'];
+    /*
+    * A(m,n) 从m中取出n个有多少种情况
+    * m!/(m-n)!
+    * */
+    function show(arr, num){
+        var len = arr.length;
+        if(num > len || num <= 0){
+            alert(arr + '中只能取出1~' + len + '个，而你想取出' + num + '个');
+            return;
+        }
+        return f(len) / f(len-num);
+    }
+    // 递归
+    function f(num){
+        if(num <= 1) return 1;
+        return num * f(num - 1);
+    }
+    console.log(show(arr, 2));
+
+</script>
+</body>
+</html>
