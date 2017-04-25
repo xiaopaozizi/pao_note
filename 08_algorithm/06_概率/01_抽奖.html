@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input type="button" id="input1" value="10000">
+<h1>一等奖:5‰,二等奖:3%,三等奖:80%,纪念奖(谢谢惠顾)</h1>
+<ul id="ul1">
+    <li>一等奖 : <span></span></li>
+    <li>二等奖 : <span></span></li>
+    <li>三等奖 : <span></span></li>
+    <li>纪念奖 : <span></span></li>
+</ul>
+<script>
+
+    /*
+    * 算法：
+    * 1.规划中间区间 [5, 30, 800]
+    *   一等奖 0~4
+    *   二等奖 5~29
+    *   三等奖 30~799
+    *   纪念奖 800~1000
+    * 2.随机产生n个数，与中奖区间的值比较，并且映射到中奖区间中
+    * 3.打印出结果
+    *
+    * */
+
+    let oInput1 = document.getElementById('input1');
+    let oUl = document.getElementById('ul1');
+    let aSpan = oUl.getElementsByTagName('span');
+    let size = 1000;
+    // 中奖区间
+    let arr1 = [size*0.005, size*0.03, size*0.8];
+    let arr2 = [];
+    oInput1.onclick = function () {
+        let num = 0;
+        let arr2 = [];
+        // 初始化中奖区间以及个数
+        /*
+        * 一等奖 { iNow : 0, val : 5 }
+        * 二等奖 { iNow : 0, val : 35 }
+        * 三等奖 { iNow : 0, val : 835 }
+        * */
+        for ( let i = 0; i < arr1.length; i++ ) {
+            num += arr1[i];
+            arr2.push({
+                iNow : 0,
+                val : num
+            });
+        }
+        // 要随机产生多少个随机数
+        // 开始抽奖
+        let randomNumTotal = parseInt(oInput1.value);
+        for ( let i = 0; i < randomNumTotal; i++ ) {
+            // 0~999
+            var random = Math.floor(Math.random() * size);
+            // 映射奖项
+            distributeZoom(random);
+        }
+        // 打印结果
+        var sum = 0;
+        for ( let i = 0; i <= arr2.length; i++ ) {
+            // 纪念奖
+            if ( i === arr2.length) {
+                aSpan[i].innerHTML = randomNumTotal - sum;
+            }
+            // 1~3等奖
+            else {
+                aSpan[i].innerHTML = arr2[i].iNow;
+                // 将一、二、三等奖累计
+                sum += arr2[i].iNow;
+            }
+        }
+
+
+        function distributeZoom(num){
+            /*
+            * 一等奖 0~4
+            * 二等奖 5~34
+            * 三等奖 35~799
+            * */
+            for ( var i = 0; i < arr2.length; i++ ) {
+                if ( arr2[i].val > num ) {
+                    arr2[i].iNow++;
+                    break;
+                }
+            }
+        }
+    }
+</script>
+</body>
+</html>
