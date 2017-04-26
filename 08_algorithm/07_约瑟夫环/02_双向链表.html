@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script type="text/javascript">
+    /*
+    * 双向链表：在链表的基础上进行改进
+    * 特征：首尾相连，即最后一个节点指向第一个节点
+    * 另外：添加一个length属性
+    *
+    * */
+
+
+    /*
+    * 定义一个node节点
+    * element 节点名称
+    * next 指向下个节点的指针
+    * */
+    function Node(element){
+        this.element = element;
+        this.next = null;
+    }
+
+    /*
+    * 创建节点
+    * */
+    function LList(){
+        this.head = new Node('head');
+        // 自己指向自己，形成一个环
+        this.head.next = this.head;
+        this.length = 0;
+    }
+    /*
+    * 根据节点名称item查找节点
+    *   item 要查找的节点的名称
+    *
+    * 实现过程：
+    * 先找到首个节点（不为空），然后比较这个节点和名称和要查找的节点名称是否一致
+    * 如果不一致，就将这个首个节点的下一个节点（不能为空）赋值给它，
+    * 直到找到为止
+    * */
+    LList.prototype.find = function (item) {
+        // 找到第一个节点，也就是当前的节点
+        let curNode = this.head;
+        // 如果当前节点不为空 && 名称与查找节点名称不相同
+        // 那么指向下一个节点，并且迭代
+        while( curNode !== null && curNode.element !== item ) {
+            curNode = curNode.next;
+        }
+        // 返回找到的节点
+        return curNode;
+    }
+    /*
+    * 在已有节点item后面添加一个新节点newElement
+    *   newElement 新节点的名称
+    *   item 要插入到节点后的节点名称
+    *
+    * 实现过程：
+    * 1.创建新节点newElement
+    * 2.找到item的节点
+    * 3.将item.next 赋值给新节点 newElement.next
+    *       即 newElement.next = item.next
+    * 4.item.next 指向新节点 newElement
+    *       即 item.next = newElement
+    * */
+    LList.prototype.insertAfter = function (newElement, item) {
+        // 1.创建新节点newElement
+        newElement = new Node(newElement);
+        // 2.找到item的节点
+        item = this.find(item);
+        // 3.将item.next 赋值给新节点 newElement.next
+        newElement.next = item.next;
+        // 4.item.next 指向新节点 newElement
+        item.next = newElement;
+        this.length++;
+    }
+    /*
+    * 找到当前节点的前一个节点
+    *   item 当前节点的名称
+    *
+    * 实现过程：
+    * 1.找到首个节点（不为空）
+    * 2.这个节点的下一个节点的名称和要查找的节点相同，就返回
+    *   否则，继续迭代
+    *
+    * */
+    LList.prototype.findPrevious = function (item) {
+        let curNode = this.head;
+        while(curNode !== null && curNode.next.element !== item) {
+            curNode = curNode.next;
+        }
+        return curNode;
+    }
+    /*
+    * 删除链表中的某个节点
+    *   item : 要删除的节点的名称
+    * 实现过程：
+    * 1.找到要删除节点的前一个节点
+    * 2.将前一个节点的下一个节点指向当前节点的下一个节点
+    * */
+    LList.prototype.remove = function (item) {
+        // 1.找到要删除节点的前一个节点
+        let previousNode = this.findPrevious(item);
+        previousNode.next = this.find(item).next;
+        this.length--;
+    }
+    /*
+    * 打印出整个链表中的所有节点
+    *
+    *
+    * */
+    LList.prototype.display = function () {
+        let result = [];
+        if(this.length === 0) return [this.head.element];
+        let curNode = this.head;
+        while( curNode !== null && curNode.next.element !== 'head'){
+            result.push( curNode.element );
+            curNode = curNode.next;
+        }
+        result.push(curNode.element);
+        return result;
+    }
+
+    // 实例化
+    let obj = new LList();      // head -> head
+    obj.insertAfter('a1', 'head');   // head -> a1 -> head
+    obj.insertAfter('b', 'a1');      // head -> a1 -> b -> head
+    obj.insertAfter('a2', 'a1');     // head -> a1 -> a2 -> b -> head
+    obj.remove('a1');           // head -> a2 -> b -> head
+
+    console.log(obj.display());
+
+
+</script>
+</body>
+</html>
