@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /*
+    * 实现过程：
+    *   1.将arr_str的每一项按照长度升序排列
+    *   2.找到最短的一项，然后将它的所以子项全部罗列出来，形成一个arrAll数组
+    *   3.用正则与arr_str剩下的三项进行匹配，形成一个二维数组，类似[[a,a,a], [b,b,b]]
+    *   4.遍历这个二维数组，如果其中的子项（数组）的长度 = arr_str.length，
+    *     那么找出子项中第一个最长的那个字符串
+    *
+    * */
+
+    var arr_str = ['asdshow','helloshow','showhi','hahashowhehe'];  //show
+
+    function find(arr) {
+        //  1.将arr_str的每一项按照长度升序排列
+        arr.sort(function (a, b) {
+            return a.length - b.length;
+        });
+        //console.log(arr);
+        // 2.找到最短的一项，然后将它的所以子项全部罗列出来，形成一个arrAll数组
+        let strArr = [];
+        let firstStr = arr.shift(); // showhi
+        //console.log(firstStr);
+        for ( let i = 0; i < firstStr.length; i++ ) {
+            for ( let j = i + 1; j <= firstStr.length; j++ ) {
+                strArr.push( firstStr.substring(i, j) );
+            }
+        }
+        //console.log(strArr);  // s,sh,sho,show,showh,showhi,h,ho....
+        // 3.用正则与arr_str剩下的三项进行匹配，形成一个二维数组，类似[[a,a,a], [b,b,b]]\
+        var count = 0; // 最长的字符串的长度
+        var result = ''; // 最长的字符串
+        for ( var i = 0; i < strArr.length; i++ ) {
+            var wholeArr = [];
+            var re = new RegExp(strArr[i]);
+            for ( var j = 0; j < arr.length; j++ ) {
+                var reArr = arr[j].match(re);
+                if (reArr) {
+                    wholeArr = wholeArr.concat(reArr);
+                }
+            }
+            // 遍历新数组,如果其中的子项（数组）的长度 = arr_str.length，
+            // 找出子项中第一个最长的那个字符串
+            if ( wholeArr.length === arr.length ) {
+                //console.log(wholeArr);
+                if ( wholeArr[0].length > count ) {
+                    count = wholeArr[0].length;
+                    result = wholeArr[0];
+                }
+            }
+        }
+        return result;
+    }
+    console.log(find(arr_str));
+</script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    var arr_str = ['asdshowccccc','ddshoweeasd'];    // dshow
+    function find(arr) {
+        // 第一数组
+        let arr0 = arr_str[0];
+        // 第二个数组
+        let arr1 = arr_str[1];
+        // 最长字符串的长度
+        let length = 0;
+        // 最长字符串的在arr0中的索引
+        let index = 0;
+        // 遍历
+        for ( let i = 0; i < arr0.length; i++ ) {
+            for ( let j = 0; j < arr1.length; j++ ) {
+                // 如果第一个字符串的某一项 === 第二个字符串的某一项
+                if ( arr0.charAt(i) === arr1.charAt(j) ){
+                    let k = 1;
+                    // 继续比较下面的
+                    while( arr0.charAt(i + k) === arr1.charAt(j + k)) {
+                        k++;
+                        // 找到最长的子字符串
+                        if ( k > length ) {
+                            // 长度
+                            length = k;
+                            // 开始索引
+                            index = i;
+                        }
+                    }
+                }
+            }
+        }
+        return arr0.substr(index, length);
+    }
+    console.log(find(arr_str));
+</script>
+</body>
+</html>

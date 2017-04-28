@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+
+    var arr_arr = [[3,8,5,3],[1,9,4,3,6,7,5,2],[3,4,5],[5,6,7,3]];  //公共子项 3 , 5
+    /*
+    * 算法：
+    *   1.先去重，然后将数组合并为一个数组
+    *   2.将合并的数组进行遍历，把单个数字形成一个数组，例如[3,3,3,3]
+    *   3、然后取出 数字数组的长度 === arr_arr.length的头一项
+    * */
+    function find(arr){
+        // 存储公共子项
+        let result = [];
+        // 合并为大数组
+        let bigArr = [];
+        // 遍历最外围数组, 合并为大数组
+        arr.forEach(function (ele) {
+            // 这时的ele依然是个数组，例如[3,8,5]
+            // 1.去重,合并为一个大数组
+            unique(ele).forEach(function (num) {
+                bigArr.push(num);
+            });
+        });
+        // 2.将合并的数组进行遍历，把单个数字形成一个数组，例如[3,3,3,3]
+        // 从大数组中取出每一个值，形成数组
+        let obj = {};
+        bigArr.forEach(function (num) {
+           if ( !obj[num] ) {
+               obj[num] = [num];
+           } else {
+               obj[num].push(num);
+           }
+        });
+        //console.log(obj);
+        //  3、然后取出 数字数组的长度 === arr_arr.length的头一项
+        for ( let attr in obj ) {
+            if ( obj[attr].length === arr.length ) {
+                result.push(Number(attr));
+            }
+        }
+        //console.log(result);
+        return result;
+    }
+    /*
+    * 数组去重
+    * */
+    function unique(arr){
+        // 去重后的数组
+        let result = [];
+        let obj = {};
+        // 遍历数组
+        arr.forEach(function (ele) {
+            if ( !obj[ele] ) {
+                obj[ele] = 1;
+                result.push(ele);
+            }
+        });
+        return result;
+    }
+    console.log(find(arr_arr));
+</script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    var arr_arr = [[3,8,5],[1,9,4,3,6,7,5,2]];  //公共子项 3 , 5
+    function find(arr){
+        // 存储公共子项
+        let result = [];
+        // 第一个数组
+        let arr0 = unique(arr[0]);
+        // 第二个数组
+        let arr1 = unique(arr[1]);
+        // 遍历
+        for ( let i = 0; i < arr0.length; i++ ) {
+            for ( let j = 0; j < arr1.length; j++ ) {
+                if ( arr0[i] === arr1[j] ) {
+                    result.push( arr0[i] );
+                    break;
+                }
+            }
+        }
+        return result;
+    }
+    /*
+    * 数组去重
+    * */
+    function unique(arr){
+        // 去重后的数组
+        let result = [];
+        let obj = {};
+        // 遍历数组
+        arr.forEach(function (ele) {
+            if ( !obj[ele] ) {
+                obj[ele] = 1;
+                result.push(ele);
+            }
+        });
+        return result;
+    }
+    console.log(find(arr_arr));
+</script>
+</body>
+</html>
