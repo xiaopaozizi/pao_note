@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    // 最大随机数
+    let num = 1000;
+    // 生成随机数 1~1000
+    let random = Math.ceil(Math.random() * num);
+    // 打印在浏览器标题上
+    document.title = random;
+    function find() {
+        // 0~1000的数组
+        let arr = [];
+        for ( let i = 1; i <= num; i++ ) {
+            arr.push(i);
+        }
+        // 遍历查找
+        for ( let i = 0, len = arr.length; i < len; i++ ) {
+            if ( arr[i] === random ){
+                return arr[i];
+            }
+        }
+    }
+    console.log(find());
+</script>
+</body>
+</html>

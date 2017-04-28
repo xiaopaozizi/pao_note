@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    // 最大随机数
+    let num = 1000;
+    // 生成随机数 1~1000
+    let random = Math.ceil(Math.random() * num);
+    // 打印在浏览器标题上
+    document.title = random;
+    // 0~1000的数组
+    let arr = [];
+    for ( let i = 1; i <= num; i++ ) {
+        arr.push(i);
+    }
+    /*
+    * 通过二分法，在数组中查找某个数
+    *   arr --- 数组
+    *   num --- 要查找的数
+    * */
+    function find(arr, num) {
+        // 二分法查找
+        // 头索引
+        let firstIndex = 0;
+        // 尾索引
+        let lastIndex = arr.length - 1;
+        // 中间索引
+        let mIndex = Math.floor((firstIndex + lastIndex)/2);
+        // 开始查找
+        while( arr[mIndex] != num ) {
+            // 大了--尾索引 = 中间索引 - 1
+            if ( arr[mIndex] > num ) {
+                lastIndex =  mIndex - 1;
+            }
+            // 小了--头索引 = 中间索引 + 1
+            else if ( arr[mIndex] < num ) {
+                firstIndex =  mIndex + 1;
+            }
+            mIndex = Math.floor((firstIndex + lastIndex)/2);
+        }
+        return arr[mIndex];
+
+    }
+    console.log(find(arr, random));
+</script>
+</body>
+</html>
