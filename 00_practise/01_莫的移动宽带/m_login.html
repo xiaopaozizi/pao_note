@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        * {
+            padding : 0;
+            margin : 0;
+            list-style: none;
+            font-size : 14px;
+        }
+        body {
+            background : #eef0ef;;
+        }
+        #pao-box{
+            display : flex;
+            width : 100%;
+            min-height: 100vh;
+            flex-direction: column;
+            align-content: flex-start;
+        }
+        #pao-box .main{
+            flex-grow: 1;
+        }
+        #pao-box .line{
+            min-height : 60px;
+            background : #fff;
+            margin-bottom : 2px;
+            display: flex;
+        }
+        #pao-box .line label {
+            width : 25%;
+            height : 60px;
+            line-height:60px;
+            text-align: left;
+            padding-left : 10px;
+        }
+        #pao-box .line .item {
+            width : 75%;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        #pao-box .line .item li {
+            margin : 15px 10px 15px 0;
+            padding : 5px 10px;
+            min-height : 30px;
+            border : 1px solid #ccc;
+            border-radius: 20px;
+            float : left;
+        }
+        #pao-box .line .item li.active {
+            background : #57c1df;
+            color : #fff;
+        }
+        #pao-box .line .item input[type=number]{
+            margin : 15px 10px 15px 0;
+            height : 30px;
+            line-height:30px;
+            padding-left : 0px;
+            border : none;
+        }
+        #pao-box .line .item input[type=number]:focus{
+            outline : none;
+        }
+        #pao-box .bottom{
+            width : 100%;
+        }
+        #pao-box .bottom button {
+            width : 100%;
+            background : #57c1df;
+            border :none;
+        }
+        #pao-box .bottom button:focus{
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+<div id="pao-box">
+    <div class="main">
+        <div class="line">
+            <label for="">业务类型</label>
+            <div class="item type-list">
+                <li>升级4G卡业务</li>
+                <li class="active">家看来是的肌肤庭宽带业务</li>
+                <li class="">家庭宽带业务</li>
+                <li class="">家庭宽带业务</li>
+                <li class="">家庭宽带业务</li>
+            </div>
+        </div>
+        <div class="line">
+            <label for="">活动号码</label>
+            <div class="item">
+                <input type="number" placeholder="请输入活动号码">
+            </div>
+        </div>
+    </div>
+    <div class="bottom">
+        <button class="btn btn-primary">获取邀请码</button>
+    </div>
+</div>
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script>
+    (function () {
+        var aLi = document.querySelectorAll('#pao-box .type-list li');
+
+        for ( var i = 0; i < aLi.length; i++ ) {
+            aLi[i].index = i;
+            aLi[i].addEventListener('click', function () {
+                // 所有高亮隐藏
+                show(this.index);
+            }, false);
+        }
+        function show(index) {
+            for ( var i = 0; i < aLi.length; i++ ) {
+                aLi[i].className = '';
+            }
+            aLi[index].className = 'active';
+        }
+    })();
+</script>
+</body>
+</html>
