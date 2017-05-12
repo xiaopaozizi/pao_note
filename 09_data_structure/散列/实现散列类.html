@@ -1,0 +1,104 @@
+<meta charset="utf-8"><style>* {font-size: 20px;}</style>
+<h3><a href='散列.html'>【返回】</a></h3>
+<dl>
+	<dt>1.散列表：
+		<ul>
+			<li>数组的长度是预先设定的，最好为一个质数(137)</li>
+			<li>散列函数先计算字符串中各字符的 ASCII 码值，不过求和时每次要乘以一个质数(31)。</li>
+			<li>使用散列函数在将两个键映射成同一个值的可能， 这种现象称为碰撞</li>
+			<li>处理碰撞：开链法与线性探索法。<br/>
+			如果数组的大小是待存储数据个数的 1.5 倍，那么使用开链法；<br/>
+			如果数组的大小是待存储数据的两倍及两倍以上时， 那么使用线性探测法。</li>
+			<li>实现开链法的方法是： 在创建存储散列过的键值的数组时， 通过调用一个函数创建一个新的空数组， 然后将该数组赋给散列表里的每个数组元素。</li>
+			<li>实现线性探测法的方法是：当发生碰撞时， 线性探测法检查散列表中的下一个位置是否为空。 <br/>如果为空，
+就将数据存入该位置； 如果不为空， 则继续检查下一个位置， 直到找到一个空的位置为止。</li>
+			
+		</ul>
+	</dt>
+	<dd>
+		<code>
+			function HashTable() {
+			&nbsp;&nbsp;this.table = new Array(137);<br/>
+			&nbsp;&nbsp;this.buildChains = buildChains;<br/>
+			&nbsp;&nbsp;this.simpleHash = simpleHash;<br/>
+			&nbsp;&nbsp;this.showDistro = showDistro;<br/>
+			&nbsp;&nbsp;this.put = put;<br/>
+			&nbsp;&nbsp;this.get = get;<br/>
+			}
+			// 开链法<br/>
+			function buildChains () {<br/>
+			&nbsp;&nbsp;for ( var i = 0; i < this.table.length; i++ ) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;this.table[i] = [];<br/>
+			&nbsp;&nbsp;}<br/>
+			}<br/>
+			// 计算散列位置<br/>
+			function simpleHash (data) {<br/>
+			&nbsp;&nbsp;var total = 0;<br/>
+			&nbsp;&nbsp;for ( var i = 0; i < data.length; i++ ) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;total = total * 31 + data.charCodeAt(i);<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;total = total % this.table.length;<br/>
+			&nbsp;&nbsp;if (total < 0) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;total += this.table.length - 1;<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;console.log(total);<br/>
+			&nbsp;&nbsp;return parseInt(total);<br/>
+			}<br/>
+			// 存放散列值<br/>
+			function put (key, data) {<br/>
+			&nbsp;&nbsp;var pos = this.simpleHash(key);<br/>
+			&nbsp;&nbsp;var index = 0;<br/>
+			&nbsp;&nbsp;if (this.table[pos][index] == undefined) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;this.table[pos][index] = key;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;this.table[pos][index + 1] = data;<br/>
+			&nbsp;&nbsp;} else {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;index++;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;while(this.table[pos][index] != undefined){<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;index++;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;this.table[pos][index] = key;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;this.table[pos][index + 1] = data;<br/>
+			&nbsp;&nbsp;}<br/>
+
+			}<br/>
+
+			// 获取散列值<br/>
+			function get(key) {<br/>
+			&nbsp;&nbsp;var pos = this.simpleHash(key);<br/>
+			&nbsp;&nbsp;var index = 0;<br/>
+			&nbsp;&nbsp;if (this.table[pos][index] == key) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;return this.table[pos][index + 1];<br/>
+			&nbsp;&nbsp;} else {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;index += 2;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;while(this.table[pos][index] != key) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;index += 2;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;return this.table[pos][index + 1];<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;return undefined;<br/>
+			}<br/>
+			// 遍历散列值<br/>
+			function showDistro() {<br/>
+			&nbsp;&nbsp;for ( var i = 0; i < this.table.length; i++ ) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;if (this.table[i] != undefined) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (this.table[i][0] != undefined) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.log(i + ': ' + this.table[i]);<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;}<br/>
+			}
+		</code>
+	</dd>
+</dl>
+<script type="text/javascript" src='HashTable.js'></script>
+<script type="text/javascript">
+var hash = new HashTable();
+hash.buildChains();
+var someNames = ["David", "Jennifer", "Donnie", "Raymond",
+"Cynthia", "Mike", "Clayton", "Danny", "Jonathan"];
+for (var i = 0; i < someNames.length; ++i) {
+	hash.put(someNames[i], someNames[i]);
+}
+hash.showDistro();
+
+</script>

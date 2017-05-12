@@ -1,0 +1,41 @@
+<meta charset="utf-8">
+<style>* {font-size: 20px;}</style>
+<h3><a href='数组.html'>【返回】</a></h3>
+<dl>
+	<dt>1.concat 方法可以合并多个数组创建一个新数组</dt>
+	<dd>
+		<code>
+			var arr1 = ["one", "two", 'three'];<br/>
+			var arr2 = ['three', 'four'];<br/>
+			var arr3 = ['five'];<br/>
+			var arr4 = arr1.concat(arr2, arr3);<br/>
+			console.log(arr4);	// ["one", "two", "three", "three", "four", "five"]
+		</code>
+	</dd>
+</dl>
+<dl>
+	<dt>2.splice() 方法截取一个数组的子集创建一个新数组<br/>该方法的第一个参数是截取的起始索引， 第
+二个参数是截取的长度</dt>
+	<dd>
+		<code>
+			var arr5 = ["one", "two", "three", "three", "four", "five"];<br/>
+			var arr6 = arr5.splice(3, 1);<br/>
+			console.log(arr6);	//  ["three"]
+		</code>
+	</dd>
+</dl>
+
+
+<script type="text/javascript">
+// 合并多个数组
+var arr1 = ["one", "two", 'three'];
+var arr2 = ['three', 'four']
+var arr3 = ['five'];
+var arr4 = arr1.concat(arr2, arr3);
+console.log(arr4);	// ["one", "two", "three", "three", "four", "five"];
+
+
+var arr5 = ["one", "two", "three", "three", "four", "five"];
+var arr6 = arr5.splice(3, 1);
+console.log(arr6);	//  ["three"]
+</script>

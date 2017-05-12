@@ -1,0 +1,182 @@
+<meta charset="utf-8"><style>* {font-size: 20px;}</style>
+<h3><a href='队列.html'>【返回】</a></h3>
+<dl>
+	<dt>1.定义队列的构造函数</dt>
+	<dd>
+		<code>
+			function Queue() {<br/>
+			&nbsp;&nbsp;this.dataStrore = [];				// 保存队列中的数据<br/>
+			&nbsp;&nbsp;this.enqueue = enqueue;				// 入队<br/>
+			&nbsp;&nbsp;this.dequeue = dequeue;				// 出队<br/>
+			&nbsp;&nbsp;this.front = front;					// 读取队首元素，并非删除<br/>
+			&nbsp;&nbsp;this.back = back;					// 读取队尾元素，并非删除<br/>
+			&nbsp;&nbsp;this.toString = toString;			// 队中数据字符串化<br/>
+			&nbsp;&nbsp;this.length = length;				// 返回队的长度<br/>
+			&nbsp;&nbsp;this.clear = clear;					// 清空队<br/>
+			&nbsp;&nbsp;this.empty = empty;					// 判断队列是否为空<br/>
+			}
+		</code>
+	</dd>
+</dl>
+<dl>
+	<dt>2.enqueue： 入队，向队尾添加一个元素</dt>
+	<dd>
+		<code>			
+			function enqueue (element) {<br/>
+			&nbsp;&nbsp;this.dataStrore.push(element);<br/>
+			}
+		</code>
+	</dd>
+</dl>
+<dl>
+	<dt>3.dequeue： 出队，删除队首的元素</dt>
+	<dd>
+		<code>			
+			function dequeue () {<br/>
+			&nbsp;&nbsp;return this.dataStrore.shift();<br/>
+			}
+		</code>
+	</dd>
+</dl>
+<dl>
+	<dt>4.front： 读取队首元素，并非删除</dt>
+	<dd>
+		<code>			
+			function front () {<br/>
+			&nbsp;&nbsp;return this.dataStrore[0];<br/>
+			}
+		</code>
+	</dd>
+</dl>
+<dl>
+	<dt>5.back： 读取队尾元素，并非删除</dt>
+	<dd>
+		<code>			
+			function back() {<br/>
+			&nbsp;&nbsp;return this.dataStrore[this.dataStrore.length - 1];<br/>
+			}
+		</code>
+	</dd>
+</dl>
+<dl>
+	<dt>6.toString： 队中数据字符串化</dt>
+	<dd>
+		<code>			
+			function toString () {<br/>
+			&nbsp;&nbsp;var str = '';<br/>
+			&nbsp;&nbsp;for ( var i = 0; i < this.dataStrore.length; i++ ) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;str += this.dataStrore[i];<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;return str;<br/>
+			}
+		</code>
+	</dd>
+</dl>
+<dl>
+	<dt>7.length： 返回队的长度</dt>
+	<dd>
+		<code>
+			function length () {<br/>
+			&nbsp;&nbsp;return this.dataStrore.length;<br/>
+			}
+		</code>
+	</dd>
+</dl>
+<dl>
+	<dt>8.clear： 清空队</dt>
+	<dd>
+		<code>		 
+			function clear () {<br/>
+			&nbsp;&nbsp;delete this.dataStrore;<br/>
+			&nbsp;&nbsp;this.dataStrore = [];<br/>
+			}
+		</code>
+	</dd>
+</dl>
+<dl>
+	<dt>9.empty： 判断队列是否为空</dt>
+	<dd>
+		<code>		
+			function empty () {<br/>
+			&nbsp;&nbsp;if (this.length() == 0) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;return true;<br/>
+			&nbsp;&nbsp;} else {<br/>
+			&nbsp;&nbsp;return false;<br/>
+			&nbsp;&nbsp;}<br/>
+			}
+		</code>
+	</dd>
+</dl>
+
+
+
+
+<script type="text/javascript">
+function Queue() {
+	this.dataStrore = [];				// 保存队列中的数据
+	this.enqueue = enqueue;				// 入队
+	this.dequeue = dequeue;				// 出队
+	this.front = front;					// 读取队首元素，并非删除
+	this.back = back;					// 读取队尾元素，并非删除
+	this.toString = toString;			// 队中数据字符串化
+	this.length = length;				// 返回队的长度
+	this.clear = clear;					// 清空队
+	this.empty = empty;					// 判断队列是否为空
+}
+// 入队，向队尾添加一个元素
+function enqueue (element) {
+	this.dataStrore.push(element);
+}
+// 出队，删除队首的元素
+function dequeue () {
+	return this.dataStrore.shift();
+}
+// 读取队首元素，并非删除
+function front () {
+	return this.dataStrore[0];
+}
+// 读取队尾元素，并非删除
+function back() {
+	return this.dataStrore[this.dataStrore.length - 1];
+}
+// 队中数据字符串化
+function toString () {
+	var str = '';
+	for ( var i = 0; i < this.dataStrore.length; i++ ) {
+		str += this.dataStrore[i];
+	}
+	return str;
+}
+// 返回队的长度
+function length () {
+	return this.dataStrore.length;
+}
+// 清空队 
+function clear () {
+	delete this.dataStrore;
+	this.dataStrore = [];
+}
+// 判断队列是否为空
+function empty () {
+	if (this.length() == 0) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+var q = new Queue();
+q.enqueue('张山');
+q.enqueue('李四');
+q.enqueue('王五');
+console.log(q.front());
+console.log(q.back());
+console.log(q.length());
+console.log(q.empty());
+console.log(q.toString());
+q.dequeue();
+console.log(q.toString());
+q.clear();
+console.log(q.toString());
+console.log(q.empty());
+</script>

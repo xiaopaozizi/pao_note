@@ -1,0 +1,95 @@
+<meta charset="utf-8"><style>* {font-size: 20px;}</style>
+<h3><a href='队列.html'>【返回】</a></h3>
+<dl>
+	<dt>1.使用队列来模拟跳方块舞的人：
+		<ul>
+			<li>当男男女女来到舞池， 他们按照自己的性别排成两队。</li>
+			<li>当舞池中有地方空出来时， 选两个队列中的第一个人组成舞伴。</li>
+			<li>他们身后的人各自向前移动一位， 变成新的队首。 </li>
+			<li>当一对舞伴迈入舞池时， 主持人会大声喊出他们的名字。 </li>
+			<li>当一对舞伴走出舞池， 且两排队伍中有任意一队没人时， 主持人也会把这个情况告诉大家。 </li>
+		</ul>
+	</dt>
+	<dd>
+		<code>
+			// 舞者对象<br/>
+			function Dancer (name, sex) {<br/>
+			&nbsp;&nbsp;this.name = name;<br/>
+			&nbsp;&nbsp;this.sex = sex;<br/>
+			}<br/>
+			// 获取男女舞者的清单<br/>
+			function getDancers(males, females) {<br/>
+			&nbsp;&nbsp;var namesStr = '男 张维&男 李大柱&女 王红&男 赵居然&女 默可儿&女 韩心&女 刘静';<br/>
+			&nbsp;&nbsp;var names = namesStr.split('&');<br/>
+			&nbsp;&nbsp;for ( var i = 0; i < names.length; i++ ) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;var dancer = names[i].split(' ');<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;var sex = dancer[0];<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;var name = dancer[1];<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;if (sex == '男') {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;males.enqueue(new Dancer(name, sex));<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;} else if (sex == '女') {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;females.enqueue(new Dancer(name, sex));<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;}<br/>
+			}<br/>
+			// 匹配舞者<br/>
+			function dance(males, females) {<br/>
+			&nbsp;&nbsp;console.log('舞伴清单：');<br/>
+			&nbsp;&nbsp;while(!males.empty() && !females.empty()) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;console.log(males.dequeue().name + ' 先生和 ' + females.dequeue().name + '小姐 结为舞伴');<br/>
+			&nbsp;&nbsp;}<br/>
+			}<br/>
+			var maleDancers = new Queue();<br/>
+			var femaleDancers = new Queue();<br/>
+			getDancers(maleDancers, femaleDancers);<br/>
+			dance(maleDancers, femaleDancers);<br/>
+			if (!maleDancers.empty()) {<br/>
+			&nbsp;&nbsp;console.log(maleDancers.front().name + ' 先生暂时没有女舞伴');<br/>
+			}<br/>
+			if (!femaleDancers.empty()) {<br/>
+			&nbsp;&nbsp;console.log(femaleDancers.front().name + ' 小姐暂时没有男舞伴');<br/>
+			}
+		</code>
+	</dd>
+</dl>
+
+<script type="text/javascript" src="queue.js"></script>
+<script type="text/javascript">
+function Dancer (name, sex) {
+	this.name = name;
+	this.sex = sex;
+}
+function getDancers(males, females) {
+	var namesStr = '男 张维&男 李大柱&女 王红&男 赵居然&女 默可儿&女 韩心&女 刘静';
+	var names = namesStr.split('&');
+	for ( var i = 0; i < names.length; i++ ) {
+		var dancer = names[i].split(' ');
+		var sex = dancer[0];
+		var name = dancer[1];
+		// console.log(sex + ' ' + name);
+		if (sex == '男') {
+			males.enqueue(new Dancer(name, sex));
+		} else if (sex == '女') {
+			females.enqueue(new Dancer(name, sex));
+		}
+	}
+}
+function dance(males, females) {
+	console.log('舞伴清单：');
+	while(!males.empty() && !females.empty()) {
+		console.log(males.dequeue().name + ' 先生和 ' + females.dequeue().name + '小姐 结为舞伴');
+	}
+}
+var maleDancers = new Queue();
+var femaleDancers = new Queue();
+getDancers(maleDancers, femaleDancers);
+dance(maleDancers, femaleDancers);
+if (!maleDancers.empty()) {
+	console.log(maleDancers.front().name + ' 先生暂时没有女舞伴');
+}
+if (!femaleDancers.empty()) {
+	console.log(femaleDancers.front().name + ' 小姐暂时没有男舞伴');
+}
+
+
+</script>

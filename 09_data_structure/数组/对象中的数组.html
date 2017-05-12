@@ -1,0 +1,60 @@
+<meta charset="utf-8">
+<style>* {font-size: 20px;}</style>
+<h3><a href='数组.html'>【返回】</a></h3>
+<dl>
+	<dt>数组对象：即对象中的数据使用数组来表示</dt>
+	<dd>
+		<code>
+			function WeekTemps() {<br/>
+			&nbsp;&nbsp;this.data = [];<br/>
+			&nbsp;&nbsp;this.add = add;<br/>
+			&nbsp;&nbsp;this.average = average;<br/>
+			}<br/>
+			function add(temp) {<br/>
+			&nbsp;&nbsp;this.data.push(temp);<br/>
+			}<br/>
+			function average() {<br/>
+			&nbsp;&nbsp;var total = 0;<br/>
+			&nbsp;&nbsp;for ( var i = 0; i < this.data.length; i++ ) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;total += this.data[i];<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;return total / this.data.length;<br/>
+			}<br/>
+			var week = new WeekTemps();<br/>
+			week.add(31);<br/>
+			week.add(32);<br/>
+			week.add(33);<br/>
+			week.add(34);<br/>
+			week.add(35);<br/>
+			console.log(week.average()); // 33
+		</code>
+	</dd>
+</dl>
+
+
+
+
+<script type="text/javascript">
+function WeekTemps() {
+	this.data = [];
+	this.add = add;
+	this.average = average;
+}
+function add(temp) {
+	this.data.push(temp);
+}
+function average() {
+	var total = 0;
+	for ( var i = 0; i < this.data.length; i++ ) {
+		total += this.data[i];
+	}
+	return total / this.data.length;
+}
+var week = new WeekTemps();
+week.add(31);
+week.add(32);
+week.add(33);
+week.add(34);
+week.add(35);
+console.log(week.average());
+</script>

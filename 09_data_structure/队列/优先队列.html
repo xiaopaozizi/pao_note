@@ -1,0 +1,87 @@
+<meta charset="utf-8"><style>* {font-size: 20px;}</style>
+<h3><a href='队列.html'>【返回】</a></h3>
+<dl>
+	<dt>1.优先队列：
+		<ul>
+			<li>在删除元素时不必遵守先进先出的约定</li>
+			<li>从优先队列中删除元素时， 需要考虑优先权的限制</li>
+		</ul>
+	</dt>
+	<dd>
+		<code>
+			// 在队列中添加优先出列<br/>
+			function dequeue_priority () {<br/>
+			&nbsp;&nbsp;var priority = this.dataStrore[0].code;<br/>
+			&nbsp;&nbsp;for ( var i = 0; i < this.dataStrore.length; i++ ) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;if (this.dataStrore[i].code < priority) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;priority = i;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;return this.dataStrore.splice(priority, 1);<br/>
+			}<br/>
+			// 在队列中添加优先队列字符串化<br/>
+			function toString_priority () {<br/>
+			&nbsp;&nbsp;var str = '';<br/>
+			&nbsp;&nbsp;for ( var i = 0; i < this.dataStrore.length; i++ ) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;str += this.dataStrore[i].name + ' code: ' <br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;+ this.dataStrore[i].code + '\r\n';<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;return str;<br/>
+			}<br/>
+			// 下面是测试：<br/>
+			function Paint(name, code) {<br/>
+			&nbsp;&nbsp;this.name = name;<br/>
+			&nbsp;&nbsp;this.code = code;<br/>
+			}<br/>
+			var queue = new Queue();<br/>
+			p = new Paint('李四', 6);<br/>
+			queue.enqueue(p);<br/>
+			p = new Paint('王五', 1);<br/>
+			queue.enqueue(p);<br/>
+			p = new Paint('赵柳', 2);<br/>
+			queue.enqueue(p);<br/>
+			p = new Paint('钱七', 1);<br/>
+			queue.enqueue(p);<br/>
+			console.log(queue.toString_priority());<br/>
+
+			var seen = queue.dequeue_priority();<br/>
+			console.log(seen[0].name + ' 正在被治疗...');<br/>
+			console.log(queue.toString_priority());<br/>
+
+			seen = queue.dequeue_priority();<br/>
+			console.log(seen[0].name + ' 正在被治疗...');<br/>
+			console.log(queue.toString_priority());
+			
+		</code>
+	</dd>
+</dl>
+
+<script type="text/javascript" src="queue.js"></script>
+<script type="text/javascript">
+function Paint(name, code) {
+	this.name = name;
+	this.code = code;
+}
+var queue = new Queue();
+p = new Paint('李四', 6);
+queue.enqueue(p);
+p = new Paint('王五', 1);
+queue.enqueue(p);
+p = new Paint('赵柳', 2);
+queue.enqueue(p);
+p = new Paint('钱七', 1);
+queue.enqueue(p);
+console.log(queue.toString_priority());
+
+var seen = queue.dequeue_priority();
+console.log(seen[0].name + ' 正在被治疗...');
+console.log(queue.toString_priority());
+
+seen = queue.dequeue_priority();
+console.log(seen[0].name + ' 正在被治疗...');
+console.log(queue.toString_priority());
+
+
+
+
+</script>

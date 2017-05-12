@@ -1,0 +1,65 @@
+<meta charset="utf-8">
+<style>* {font-size: 20px;}</style>
+<h3><a href='数组.html'>【返回】</a></h3>
+<dl>
+	<dt>1.浅复制：将一个数组赋值给另一个数组，但是只是给数组添加一个新的引用</dt>
+	<dd>
+		<code>
+			var nums = [];<br/>
+			for ( var i = 0; i < 10; i++ ) {<br/>
+			&nbsp;&nbsp;nums[i] = i + 1;<br/>
+			}<br/>
+			var anotherNums = nums;<br/>
+			anotherNums[0] = 100;<br/>
+			console.log(nums[0]);	// 100
+		</code>
+	</dd>
+</dl>
+<dl>
+	<dt>2.深复制：将原数组中的每一个元素都复制一份到新数组中</dt>
+	<dd>
+		<code>
+			function copy (arr1, arr2) {<br/>
+			&nbsp;&nbsp;for ( var i = 0; i < arr1.length; i++ ) {<br/>
+				&nbsp;&nbsp;&nbsp;&nbsp;arr2[i] = arr1[i];<br/>
+				&nbsp;&nbsp;}<br/>
+			}<br/>
+			var firstNums = [];<br/>
+			for ( var i = 0; i < 10; i++ ) {<br/>
+			&nbsp;&nbsp;firstNums[i] = i + 1;<br/>
+			}<br/>
+			var secondNums = [];<br/>
+			copy(firstNums, secondNums);<br/>
+			secondNums[0] = 100;<br/>
+			console.log(firstNums);	//  [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]<br/>
+			console.log(secondNums);	//  [100, 2, 3, 4, 5, 6, 7, 8, 9, 10]<br/>
+		</code>
+	</dd>
+</dl>
+
+<script type="text/javascript">
+// 浅复制
+var nums = [];
+for ( var i = 0; i < 10; i++ ) {
+	nums[i] = i + 1;
+}
+var anotherNums = nums;
+anotherNums[0] = 100;
+console.log(nums[0]);	// 100
+
+// 深复制
+function copy (arr1, arr2) {
+	for ( var i = 0; i < arr1.length; i++ ) {
+		arr2[i] = arr1[i];
+	}
+}
+var firstNums = [];
+for ( var i = 0; i < 10; i++ ) {
+	firstNums[i] = i + 1;
+}
+var secondNums = [];
+copy(firstNums, secondNums);
+secondNums[0] = 100;
+console.log(firstNums);	//  [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+console.log(secondNums);	//  [100, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+</script>

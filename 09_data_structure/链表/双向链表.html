@@ -1,0 +1,94 @@
+<meta charset="utf-8"><style>* {font-size: 20px;}</style>
+<h3><a href='链表.html'>【返回】</a></h3>
+<dl>
+	<dt>1.双向链表：
+		<ul>
+			<li>Node 类用来表示节点，并添加一个前驱属性 previous</li>
+			<li>TwoWayList 类为双向链表类</li>
+		</ul>
+	</dt>
+	<dd>
+		<code>
+			function Node (element) {<br/>
+			&nbsp;&nbsp;this.element = element;<br/>
+			&nbsp;&nbsp;this.previous = null;<br/>
+			&nbsp;&nbsp;this.next = null;<br/>
+			}<br/>
+			function TwoWayList() {<br/>
+			&nbsp;&nbsp;this.head = new Node('head');<br/>
+			&nbsp;&nbsp;this.find = find;<br/>
+			&nbsp;&nbsp;this.findLast = findLast;<br/>
+			&nbsp;&nbsp;this.insert = insert;<br/>
+			&nbsp;&nbsp;this.remove = remove;<br/>
+			&nbsp;&nbsp;this.display = display;<br/>
+			&nbsp;&nbsp;this.dispReverse = dispReverse;<br/>
+			}<br/>
+			// 查找节点<br/>
+			function find (item) {<br/>
+			&nbsp;&nbsp;var currNode = this.head;<br/>
+			&nbsp;&nbsp;while(currNode.element != item) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;currNode = currNode.next;<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;return currNode;<br/>
+			}<br/>
+			// 查找尾节点<br/>
+			function findLast() {<br/>
+			&nbsp;&nbsp;var currNode = this.head;<br/>
+			&nbsp;&nbsp;while(currNode.next != null) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;currNode = currNode.next;<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;return currNode;<br/>
+			}<br/>
+			// 在指定节点后添加节点<br/>
+			function insert (newElement, item) {<br/>
+			&nbsp;&nbsp;var currNode = this.find(item);<br/>
+			&nbsp;&nbsp;var newNode = new Node(newElement);<br/>
+			&nbsp;&nbsp;newNode.next = currNode.next;<br/>
+			&nbsp;&nbsp;currNode.next = newNode;<br/>
+			&nbsp;&nbsp;newNode.previous = currNode;<br/>
+			}<br/>
+			// 删除指定节点<br/>
+			function remove(item) {<br/>
+			&nbsp;&nbsp;var currNode = this.find(item);<br/>
+			&nbsp;&nbsp;if (currNode.next != null) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;currNode.previous.next = currNode.next;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;currNode.next.previous = currNode.previous;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;currNode.next = null;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;currNode.previous = null;<br/>
+			&nbsp;&nbsp;}<br/>
+			}<br/>
+			// 遍历链表<br/>
+			function display () {<br/>
+			&nbsp;&nbsp;var currNode = this.head;<br/>
+			&nbsp;&nbsp;var str = '';<br/>
+			&nbsp;&nbsp;while(currNode.next != null) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;currNode = currNode.next;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;str += currNode.element + ' ';<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;return str;<br/>
+			}<br/>
+			// 反向遍历链表<br/>
+			function dispReverse() {<br/>
+			&nbsp;&nbsp;var currNode = this.findLast();<br/>
+			&nbsp;&nbsp;var str = '';<br/>
+			&nbsp;&nbsp;while (currNode.previous != null) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;str += currNode.element + ' ';<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;currNode = currNode.previous;<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;return str;<br/>
+			}
+		</code>
+	</dd>
+</dl>
+<script type="text/javascript" src='twoWayList.js'></script>
+<script type="text/javascript">
+var list = new TwoWayList();
+list.insert('one', 'head');
+list.insert('two', 'one');
+list.insert('four', 'two');
+list.insert('three', 'two');
+console.log(list.display());
+list.remove('three');
+console.log(list.display());
+console.log(list.dispReverse());
+</script>

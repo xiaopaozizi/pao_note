@@ -1,0 +1,164 @@
+<meta charset="utf-8"><style>* {font-size: 20px;}</style>
+<h3><a href='二叉树.html'>【返回】</a></h3>
+<dl>
+	<dt>1.二叉树的实现</dt>
+	<dd>
+		<code>
+			function Node (data, left, right) {<br/>
+			&nbsp;&nbsp;this.data = data;<br/>
+			&nbsp;&nbsp;this.left = left;<br/>
+			&nbsp;&nbsp;this.right = right;<br/>
+			&nbsp;&nbsp;this.show = show;<br/>
+			}<br/>
+			function show () {<br/>
+			&nbsp;&nbsp;return this.data;<br/>
+			}<br/>
+			function BST() {<br/>
+			&nbsp;&nbsp;this.root = null;<br/>
+			&nbsp;&nbsp;this.insert = insert;<br/>
+			&nbsp;&nbsp;this.inOrder = inOrder;<br/>
+			&nbsp;&nbsp;this.preOrder = preOrder;<br/>
+			&nbsp;&nbsp;this.postOrder = postOrder;<br/>
+			&nbsp;&nbsp;this.getMin = getMin;<br/>
+			&nbsp;&nbsp;this.getMax = getMax;<br/>
+			&nbsp;&nbsp;this.find = find;<br/>
+			&nbsp;&nbsp;this.remove = remove;<br/>
+			&nbsp;&nbsp;this.removeNode = removeNode;<br/>
+			&nbsp;&nbsp;this.getSmallRight = getSmallRight;<br/>
+			}<br/>
+			function insert (data) {<br/>
+			&nbsp;&nbsp;var n = new Node(data, null, null);<br/>
+			&nbsp;&nbsp;if (this.root == null) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;this.root = n;<br/>
+			&nbsp;&nbsp;} else {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;var current = this.root;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;var parent = null;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;while(true) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;parent = current;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (data < current.data) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;current = current.left;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (current == null) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;parent.left = n;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;current = current.right;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (current == null) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;parent.right = n;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;}<br/>
+			}<br/>
+			// 中序 升序访问节点
+			function inOrder(node) {<br/>
+			&nbsp;&nbsp;if (node != null) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;inOrder(node.left);<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;console.log(node.data);<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;inOrder(node.right);<br/>
+			&nbsp;&nbsp;}<br/>
+			}<br/>
+			// 先序，根节点 -> 左节点 -> 右节点<br/>
+			function preOrder (node) {<br/>
+			&nbsp;&nbsp;if (node != null) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;console.log(node.data);<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;preOrder(node.left);<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;preOrder(node.right);<br/>
+			&nbsp;&nbsp;}<br/>
+			}<br/>
+			// 后序，左节点 -> 右节点 -> 根节点<br/>
+			function postOrder (node) {<br/>
+			&nbsp;&nbsp;if (node != null) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;postOrder(node.left);<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;postOrder(node.right);<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;console.log(node.data);<br/>
+			&nbsp;&nbsp;}<br/>
+			}<br/>
+			// 获取最小值<br/>
+			function getMin() {<br/>
+			&nbsp;&nbsp;var current = this.root;<br/>
+			&nbsp;&nbsp;while(current.left != null) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;current = current.left;<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;return current.data;<br/>
+			}<br/>
+			// 获取最大值<br/>
+			function getMax() {<br/>
+			&nbsp;&nbsp;var current = this.root;<br/>
+			&nbsp;&nbsp;while(current.right != null) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;current = current.right;<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;return current.data;<br/>
+			}<br/>
+			// 查找给定值<br/>
+			function find(data) {<br/>
+			&nbsp;&nbsp;var current = this.root;<br/>
+			&nbsp;&nbsp;while(current != null) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;if (current.data == data) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return current;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;} else if (current.data < data) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;current = current.right;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;} else {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;current = current.left;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;return null;<br/>
+			}<br/>
+			// 删除指定值<br/>
+			function remove(data) {<br/>
+			&nbsp;&nbsp;this.root = removeNode(this.root, data);<br/>
+			}<br/>
+			function removeNode(node, data) {<br/>
+			&nbsp;&nbsp;if (node == null) return null;<br/>
+			&nbsp;&nbsp;if (data == node.data) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;// 只有根节点，没有左右节点<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;if (node.left == null && node.right == null) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return null;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;// 只有根节点,右节点<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;if (node.left == null) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return node.right;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;// 只有根节点,左节点<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;if (node.right == null) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return node.left;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;// 两个节点<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;var temNode = getSmallRight(node.right);<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;node.data = temNode.data;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;node.right = removeNode(node.right, temNode.data);<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;return node;<br/>
+			&nbsp;&nbsp;} else if (data < node.data) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;node.left = removeNode(node.left, data);<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;return node;<br/>
+			&nbsp;&nbsp;} else {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;node.right = removeNode(node.right, data);<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;return node;<br/>
+			&nbsp;&nbsp;}<br/>
+			}<br/>
+			// 获取节点所有右子节点中的最小值<br/>
+			function getSmallRight(node) {<br/>
+			&nbsp;&nbsp;while(node.left != null) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;node = node.left;<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;return node;<br/>
+			}
+		</code>
+	</dd>
+</dl>
+<script type="text/javascript" src='BST.js'></script>
+<script type="text/javascript">
+
+
+var nums = new BST();
+nums.insert(10);
+nums.insert(2);
+nums.insert(1);
+nums.insert(5);
+nums.insert(8);
+nums.remove(8);
+console.log(inOrder(nums.root));	// 1, 2, 5, 10
+
+
+</script>

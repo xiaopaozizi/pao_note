@@ -1,0 +1,162 @@
+<meta charset="utf-8"><style>* {font-size: 20px;}</style>
+<h3><a href='图.html'>【返回】</a></h3>
+<dl>
+	<dt>1.图的实现</dt>
+	<dd>
+		<code>
+			// 表示顶点<br/>
+			function Vertex (label) {<br/>
+			&nbsp;&nbsp;this.label = label;		// 顶点<br/>
+			}<br/>
+			// 构建图<br/>
+			function Graph(v) {<br/>
+			&nbsp;&nbsp;this.vertices = v;		// 顶点的个数<br/>
+			&nbsp;&nbsp;this.edges = 0;			// 边的个数<br/>
+			&nbsp;&nbsp;this.adj = [];			// 数量与顶点数量相等的来保存相邻顶点的数组<br/>
+			&nbsp;&nbsp;this.edgeTo = [];<br/>
+			&nbsp;&nbsp;this.marked = [];		// 用来储蓄已经访问过的顶点，默认全部为false<br/>
+			&nbsp;&nbsp;for ( var i = 0; i < this.vertices; i++ ) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;this.adj[i] = [];<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;// this.adj[i].push('');<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;this.marked[i] = false;<br/>
+			&nbsp;&nbsp;} <br/>
+			&nbsp;&nbsp;this.addEdge = addEdge;<br/>
+			&nbsp;&nbsp;this.showGraph = showGraph;<br/>
+			&nbsp;&nbsp;this.dfs = dfs;<br/>
+			&nbsp;&nbsp;this.bfs = bfs;<br/>
+			&nbsp;&nbsp;this.pathTo = pathTo;<br/>
+			&nbsp;&nbsp;this.hasPathTo = hasPathTo;<br/>
+			&nbsp;&nbsp;this.topSort = topSort;<br/>
+			&nbsp;&nbsp;this.topSortHelper = topSortHelper;<br/>
+			}<br/>
+			// 添加边<br/>
+			// 传入两个顶点 v和w<br/>
+			// 相邻表：就是保存与当前顶点有相邻关系的顶点的集合<br/>
+			function addEdge(v, w) {<br/>
+			&nbsp;&nbsp;this.adj[v].push(w);	// 将 顶点 w 添加到 顶点 v 的相邻表中<br/>
+			&nbsp;&nbsp;this.adj[w].push(v);	// 将 顶点 v 添加到 顶点 w 的相邻表中<br/>
+			&nbsp;&nbsp;this.edges++;<br/>
+			}<br/>
+			// 深度优先算法：访问一个没有访问过的顶点，将其标记为已经访问过了<br/>
+			// 然后在递归去访问原始顶点的相邻表中的顶点集合中的每个顶点<br/>
+			function dfs(v) {<br/>
+			&nbsp;&nbsp;var subVertex;<br/>
+			&nbsp;&nbsp;this.marked[v] = true;		// 当前顶点已经访问<br/>
+			&nbsp;&nbsp;if (this.adj[v] != undefined) {		<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;console.log('访问顶点：' + v);	<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;for(var w in this.adj[v]) { // 遍历 顶点v 的相邻表中的顶点 <br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;subVertex = this.adj[v][w];<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (!this.marked[subVertex]) {	// 如果该顶点没有被访问，则递归访问<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.dfs(subVertex);<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;}<br/><br/>
+			}<br/>
+			// 广度优先：将原始节点的相邻表中的未访问的节点放入队列中，<br/>
+			// 然后在队列中取出队首的节点，之后再重复前面的方法<br/>
+			function bfs(s) {<br/>
+			&nbsp;&nbsp;var queue = [];<br/>
+			&nbsp;&nbsp;var subVertex;<br/>
+			&nbsp;&nbsp;this.marked[s] = true;<br/>
+			&nbsp;&nbsp;queue.push(s);<br/>
+			&nbsp;&nbsp;while(queue.length > 0) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;var v = queue.shift();<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;if (v != undefined) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.log('访问顶点：' + v);<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;for (var w in this.adj[v]) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// console.log(this.adj[v][w]);<br/><br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;subVertex = this.adj[v][w];<br/><br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (!this.marked[subVertex]){<br/><br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.edgeTo[subVertex] = v;<br/><br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.marked[subVertex] = true;<br/><br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;queue.push(subVertex);<br/><br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/><br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;}<br/><br/>
+			&nbsp;&nbsp;}<br/><br/>
+			}<br/><br/>
+			// 最短路径<br/>
+			function pathTo(v) {<br/>
+			&nbsp;&nbsp;var source = 0;<br/>
+			&nbsp;&nbsp;var path = [];<br/>
+			&nbsp;&nbsp;if (!this.hasPathTo(v)) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;return undefined;<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;for ( var i = v; i != source; i = this.edgeTo[i] ) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;path.push(i);<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;path.push(source);<br/>
+			&nbsp;&nbsp;var str = '';<br/>
+			&nbsp;&nbsp;while(path.length > 0) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;if (path.length > 1) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;str += path.pop() + ' - ';<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;} else {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;str += path.pop();<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;return str;<br/>
+			}<br/>
+			// 是否还有路径<br/>
+			function hasPathTo(v) {<br/>
+			&nbsp;&nbsp;return this.marked[v];<br/>
+			}<br/>
+			// 拓扑排序<br/>
+			function topSort() {<br/>
+			&nbsp;&nbsp;var stack = [];<br/>
+			&nbsp;&nbsp;var visited = [];<br/>
+			&nbsp;&nbsp;for ( var i = 0; i < this.vertices; i++ ) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;visited[i] = false;<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;for ( var i = 0; i < this.vertices; i++ ) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;if ( visited[i] == false ) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.topSortHelper(i, visited, stack);<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;for ( var i = 0; i < stack.length; i++ ) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;if (stack[i] !== undefined && stack[i] !== false) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console.log(this.vertexList[stack[i]]);<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;}<br/>
+				
+			}<br/>
+			function topSortHelper(v, visited, stack) {<br/>
+			&nbsp;&nbsp;visited[v] = true;<br/>
+			&nbsp;&nbsp;for (var w in this.adj[v]) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;if ( !visited[this.adj[v][w]]) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.topSortHelper(visited[this.adj[v][w]], visited, stack);<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;stack.push(v);<br/>
+			}<br/>
+			// 显示图<br/>
+			function showGraph() {<br/>
+			&nbsp;&nbsp;var str = '';<br/>
+			&nbsp;&nbsp;for ( var i = 0; i < this.vertices; i++ ) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;str = i + ' -> ';<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;for ( var j = 0; j < this.vertices; j++ ) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (this.adj[i][j] != undefined) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;str += this.adj[i][j] + ' ';<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;console.log(str);<br/>
+			&nbsp;&nbsp;}<br/>
+			}
+		</code>
+	</dd>
+</dl>
+<script type="text/javascript" src='Graph.js'></script>
+<script type="text/javascript">
+
+g = new Graph(6);
+g.addEdge(1, 2);
+g.addEdge(2, 5);
+g.addEdge(1, 3);
+g.addEdge(1, 4);
+g.addEdge(0, 1);
+g.vertexList = ["CS1", "CS2", "Data Structures","Assembly Language", "Operating Systems","Algorithms"];
+g.showGraph();
+g.topSort();
+
+
+
+</script>

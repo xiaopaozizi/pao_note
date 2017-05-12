@@ -1,0 +1,39 @@
+<meta charset="utf-8"><style>* {font-size: 20px;}</style>
+<h3><a href='数组.html'>【返回】</a></h3>
+<dl>
+	<dt>使用 splice() 方法为数组添加元素， 需提供如下参数:
+		<ul>
+			<li>起始索引（ 也就是你希望开始添加元素的地方）</li>
+			<li>需要删除的元素个数（ 添加元素时该参数设为 0）</li>
+			<li>想要添加进数组的元素。</li>
+		</ul>
+	</dt>
+	<dd>
+		<code>
+			var arr1 = [1, 2, 3, 4, 9];<br/>
+			// 删除第三、四元素<br/>
+			arr1.splice(2, 2);<br/>
+			console.log(arr1);	//  [1, 2, 9]<br/><br/>
+
+			// 在第三个位置添加数据<br/>
+			arr1.splice(2, 0, 3, 4, 5);	<br/>
+			console.log(arr1);	//  [1, 2, 3, 4, 5, 9]
+		</code>
+	</dd>
+</dl>
+
+
+
+<script type="text/javascript">
+
+var arr1 = [1, 2, 3, 4, 9];
+// 删除第三、四元素
+arr1.splice(2, 2);
+console.log(arr1);	//  [1, 2, 9]
+
+// 在第三个位置添加数据
+arr1.splice(2, 0, 3, 4, 5);	
+console.log(arr1);	//  [1, 2, 3, 4, 5, 9]
+
+
+</script>

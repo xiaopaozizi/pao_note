@@ -1,0 +1,116 @@
+<meta charset="utf-8"><style>* {font-size: 20px;}</style>
+<h3><a href='队列.html'>【返回】</a></h3>
+<dl>
+	<dt>1.使用队列对数据进行排序：
+		<ul>
+			<li>第一次按个位上的数字进行排序。</li>
+			<li>第二次按十位上的数字进行排序。</li>
+		</ul>
+	</dt>
+	<dd>
+		<code>
+			// 排序<br/>
+			function distribute (nums, queues, n, digit) {<br/>
+			&nbsp;&nbsp;for ( var i = 0; i < n; i++ ) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;// 当 digit = 1, 进行个位排序<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;// 当 digit = 10, 进行十位排序<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;if (digit == 1) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;queues[nums[i] % 10].enqueue(nums[i]);<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;} else if (digit == 10) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;queues[Math.floor(nums[i] / 10)].enqueue(nums[i]);<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;}<br/>
+			}<br/>
+			// 将排序之后的队列进行集合<br/>
+			function collect(nums, queues) {<br/>
+			&nbsp;&nbsp;var i = 0;<br/>
+			&nbsp;&nbsp;for ( var j = 0; j < 10; j++ ) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;// console.log(queues[j].dequeue());<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;while(!queues[j].empty()) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nums[i++] = queues[j].dequeue();<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;}<br/>
+			}<br/>
+			// 显示数组<br/>
+			function dispArray (arr) {<br/>
+			&nbsp;&nbsp;var str = '';<br/>
+			&nbsp;&nbsp;for ( var i = 0; i < arr.length; i++ ) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;str += arr[i] + ' ';<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;return str;<br/>
+			}<br/>
+			var queues = [];<br/>
+			for ( var i = 0; i < 10; ++i ) {<br/>
+			&nbsp;&nbsp;queues[i] = new Queue();<br/>
+			}<br/>
+			var nums = [];<br/>
+			for ( var i = 0; i < 10; ++i ) {<br/>
+			&nbsp;&nbsp;nums[i] = Math.floor(Math.random() * 100);<br/>
+			}<br/>
+			console.log('没有排序之前：');<br/>
+			console.log(dispArray(nums));<br/>
+			console.log('第一轮排序（个位）之后：');<br/>
+			distribute(nums, queues, 10, 1);<br/>
+			collect(nums, queues);<br/>
+			console.log(dispArray(nums));<br/>
+			console.log('第二轮排序（十位）之后：');<br/>
+			distribute(nums, queues, 10, 10);<br/>
+			collect(nums, queues);<br/>
+			console.log(dispArray(nums));
+		</code>
+	</dd>
+</dl>
+
+<script type="text/javascript" src="queue.js"></script>
+<script type="text/javascript">
+// 排序
+function distribute (nums, queues, n, digit) {
+	for ( var i = 0; i < n; i++ ) {
+		// 当 digit = 1, 进行个位排序
+		// 当 digit = 10, 进行十位排序
+		if (digit == 1) {
+			queues[nums[i] % 10].enqueue(nums[i]);
+		} else if (digit == 10) {
+			queues[Math.floor(nums[i] / 10)].enqueue(nums[i]);
+		}
+	}
+}
+// 将排序之后的队列进行集合
+function collect(nums, queues) {
+	var i = 0;
+	for ( var j = 0; j < 10; j++ ) {
+		// console.log(queues[j].dequeue());
+		while(!queues[j].empty()) {
+			nums[i++] = queues[j].dequeue();
+		}
+	}
+	// console.log(nums); 
+}
+// 显示数组
+function dispArray (arr) {
+	var str = '';
+	for ( var i = 0; i < arr.length; i++ ) {
+		str += arr[i] + ' ';
+	}
+	return str;
+}
+var queues = [];
+for ( var i = 0; i < 10; ++i ) {
+	queues[i] = new Queue();
+}
+var nums = [];
+for ( var i = 0; i < 10; ++i ) {
+	nums[i] = Math.floor(Math.random() * 100);
+}
+console.log('没有排序之前：');
+console.log(dispArray(nums));
+console.log('第一轮排序（个位）之后：');
+distribute(nums, queues, 10, 1);
+collect(nums, queues);
+console.log(dispArray(nums));
+console.log('第二轮排序（十位）之后：');
+distribute(nums, queues, 10, 10);
+collect(nums, queues);
+console.log(dispArray(nums));
+
+</script>

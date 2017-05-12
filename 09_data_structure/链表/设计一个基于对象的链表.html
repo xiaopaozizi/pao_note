@@ -1,0 +1,92 @@
+<meta charset="utf-8"><style>* {font-size: 20px;}</style>
+<h3><a href='链表.html'>【返回】</a></h3>
+<dl>
+	<dt>1.设计一个基于对象的链表：
+		<ul>
+			<li>Node 类用来表示节点</li>
+			<li>LinkedList 类提供了插入节点、 删除节点、 显示列表元素的方法</li>
+		</ul>
+	</dt>
+	<dd>
+		<code>
+			function Node (element) {<br/>
+			&nbsp;&nbsp;this.element = element;<br/>
+			&nbsp;&nbsp;this.next = null;<br/>
+			}<br/>
+			function LinkedList () {<br/>
+			&nbsp;&nbsp;this.head = new Node('head');					// 头节点<br/>
+			&nbsp;&nbsp;this.find = find;								// 查找节点<br/>
+			&nbsp;&nbsp;this.findPrevious = findPrevious;				// 查找前节点<br/>
+			&nbsp;&nbsp;this.insert = insert;							// 添加节点<br/>
+			&nbsp;&nbsp;this.remove = remove;							// 删除节点<br/>
+			&nbsp;&nbsp;this.display = display;							// 显示节点<br/>
+			}<br/>
+			// 查找节点<br/>
+			function find (item) {<br/>
+			&nbsp;&nbsp;var currNode = this.head;<br/>
+			&nbsp;&nbsp;while(currNode.element != item) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;currNode = currNode.next;<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;return currNode;<br/>
+			}<br/>
+			// 查找前节点<br/>
+			function findPrevious(item) {<br/>
+			&nbsp;&nbsp;var currNode = this.head;<br/>
+			&nbsp;&nbsp;while(currNode.next != null && currNode.next.element != item) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;currNode = currNode.next;<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;return currNode;<br/>
+			}<br/>
+			// 添加节点, 在 item 所在节点之后添加 newElement节点<br/>
+			function insert(newElement, item) {<br/>
+			&nbsp;&nbsp;var newNode = new Node(newElement);<br/>
+			&nbsp;&nbsp;var current = this.find(item);<br/>
+			&nbsp;&nbsp;// 1 -> 2 -> 4   要在 2 后添加一个 3<br/>
+			&nbsp;&nbsp;// 首先，将 2.next 赋值给 3： 3.next = 2.next = 4;<br/>
+			&nbsp;&nbsp;// 然后，将 3 赋值给 2.next：	2.next = 3;<br/>
+			&nbsp;&nbsp;// 最后 1 -> 2 -> 3 -> 4<br/>
+			&nbsp;&nbsp;newNode.next = current.next;<br/>
+			&nbsp;&nbsp;current.next= newNode;<br/>
+			}<br/>
+			// 删除节点<br/>
+			function remove(item) {<br/>
+			&nbsp;&nbsp;var prevNode = this.findPrevious(item);<br/>
+			&nbsp;&nbsp;if (prevNode.next != null) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;prevNode.next = prevNode.next.next;<br/>
+			&nbsp;&nbsp;}<br/>
+			}<br/>
+			// 显示节点<br/>
+			function display() {<br/>
+			&nbsp;&nbsp;var currNode = this.head;<br/>
+			&nbsp;&nbsp;var str = '';<br/>
+			&nbsp;&nbsp;while(currNode.next != null) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;currNode = currNode.next;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;str += currNode.element + ' ';<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;return str;<br/>
+			}<br/>
+
+			var list = new LinkedList();<br/>
+			list.insert('first', 'head');<br/>
+			list.insert('second', 'first');<br/>
+			list.insert('third', 'second');<br/>
+			console.log(list.display());	// first second third <br/>
+			list.remove('second');<br/>
+			console.log(list.display());	// first third <br/>
+			list.insert('fourth', 'third');<br/>
+			console.log(list.display());	// first third fourth <br/>
+		</code>
+	</dd>
+</dl>
+<script type="text/javascript" src='linkedList.js'></script>
+<script type="text/javascript">
+var list = new LinkedList();
+list.insert('first', 'head');
+list.insert('second', 'first');
+list.insert('third', 'second');
+console.log(list.display());	// first second third 
+list.remove('second');
+console.log(list.display());	// first third 
+list.insert('fourth', 'third');
+console.log(list.display());	// first third fourth 
+</script>

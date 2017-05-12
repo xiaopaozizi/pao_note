@@ -1,0 +1,387 @@
+<meta charset="utf-8">
+<style>* {font-size: 20px;}</style>
+<h3><a href='../index.html'>【返回】</a></h3>
+<dl>
+	<dt>1.动态规划：计算斐波那契数列</dt>
+	<dd>
+		<code>
+			// [0, 1, 1, 2, 3, 5, 8, 13]<br/>
+			function dynFib(n) {<br/>
+			&nbsp;&nbsp;if (n == 1 || n == 2) return 1;<br/>
+			&nbsp;&nbsp;var first = second = result = 1;<br/>
+			&nbsp;&nbsp;for ( var i = 3; i <= n; i++ ) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;result = first + second;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;first = second;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;second = result;<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;return result;<br/>
+			}	<br/>	
+		</code>
+	</dd>
+</dl>
+<dl>
+	<dt>2.动态规划：寻找最长公共子串</dt>
+	<dd>
+		<code>
+			function lcs(word1, word2) {<br/>
+			&nbsp;&nbsp;var max = index = 0;<br/>
+			&nbsp;&nbsp;var lcsArr = new Array(word1.length);<br/>
+			&nbsp;&nbsp;for ( var i = 0; i <= word1.length; i++ ) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;lcsArr[i] = new Array(word2.length);<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;for ( var j = 0; j <= word2.length; j++ ) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lcsArr[i][j] = 0;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;// console.log(lcsArr);<br/>
+			&nbsp;&nbsp;for ( var i = 0; i <= word1.length; i++ ) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;for ( var j = 0; j <= word2.length; j++ ) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (i === 0 || j === 0) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lcsArr[i][j] = 0;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (word1[i - 1] == word2[j - 1]) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// console.log(word1[i - 1] + ' == ' + word2[j - 1]);<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lcsArr[i][j] = lcsArr[i - 1][j - 1] + 1;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lcsArr[i][j] = 0;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (max < lcsArr[i][j]) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;max = lcsArr[i][j];<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;index = i;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;// 案例图：	<br/>
+			&nbsp;&nbsp;//&nbsp;&nbsp; abbcc  dbbcc<br/>
+			&nbsp;&nbsp;//&nbsp;&nbsp; 0 1 2 3 4 5<br/>
+			&nbsp;&nbsp;//&nbsp;&nbsp; d b b c c<br/>
+			&nbsp;&nbsp;// 0   0 0 0 0 0 0<br/>
+			&nbsp;&nbsp;// 1 a 0 0 0 0 0 0<br/>
+			&nbsp;&nbsp;// 2 b 0 0 1 1 0 0<br/>
+			&nbsp;&nbsp;// 3 b 0 0 1 2 0 0<br/>
+			&nbsp;&nbsp;// 4 c 0 0 0 0 3 1<br/>
+			&nbsp;&nbsp;// 5 c 0 0 0 0 0 4<br/>
+			&nbsp;&nbsp;// console.log(max);<br/>
+			&nbsp;&nbsp;// 显示二维数组--记录字符匹配<br/>
+			&nbsp;&nbsp;// for ( var i = 0; i <= word1.length; i++ ) {<br/>
+			&nbsp;&nbsp;//&nbsp;&nbsp;for ( var j = 0; j <= word2.length; j++ ) {<br/>
+			&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp;&nbsp;document.write(lcsArr[i][j] + ' ');<br/>
+			&nbsp;&nbsp;//&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;//&nbsp;&nbsp;document.write('\r\n');<br/>
+			&nbsp;&nbsp;// }<br/>
+			&nbsp;&nbsp;// console.log(index + ', ' + max);<br/>
+			&nbsp;&nbsp;var str = '';<br/>
+			&nbsp;&nbsp;if (max === 0) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;return '';<br/>
+			&nbsp;&nbsp;} else {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;for (var i = index - max; i <= max; i++ ) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;str += word2[i];<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;return str;<br/>
+			}<br/>
+		</code>
+	</dd>
+</dl>
+<dl>
+	<dt>3.递归：背包问题——在背包有限的空间中放入物品使得价值最大</dt>
+	<dd>
+		<code>
+			// 取两个值中的最大值<br/>
+			function max(a, b) {<br/>
+			&nbsp;&nbsp;return a > b ? a : b;<br/>
+			}<br/>
+			// 递归：背包问题<br/>
+			function bagDigui (container, size, value, nums) {<br/>
+			&nbsp;&nbsp;if (nums === 0 || container === 0) return 0;<br/>
+			&nbsp;&nbsp;if (size[nums - 1] > container) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;return bagDigui (container, size, value, nums - 1);<br/>
+			&nbsp;&nbsp;} else {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;return max(bagDigui (container - size[nums - 1], size, value, nums - 1) + value[nums - 1], bagDigui (container, size, value, nums - 1));<br/>
+			&nbsp;&nbsp;}<br/>
+			}<br/>
+			var container = 16;<br/>
+			var size = [3, 4, 7, 8, 9];<br/>
+			var value = [4, 5, 10, 11, 13];<br/>
+			var nums = 5;<br/>
+			var value = bagDigui(container, size, value, nums);<br/>
+			console.log(value);		// 23
+		</code>
+	</dd>
+</dl>
+<dl>
+	<dt>4.动态规划：背包问题</dt>
+	<dd>
+		<code>
+			function dynBag(container, size, value, nums) {<br/>
+			&nbsp;&nbsp;var K = [];<br/>
+			&nbsp;&nbsp;for ( var i = 0; i <= container + 1; i++ ) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;K[i] = [];<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;for ( var i = 0; i <= nums; i++ ) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;for ( var j = 0; j <= container; j++ ) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (i === 0 || j === 0) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;K[i][j] = 0;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else if (size[nums - 1] > container) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;K[i][j] = K[i - 1][j];<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;K[i][j] = max(value[i - 1] + K[i - 1][j - size[i - 1]], K[i - 1][j]);<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;return K[nums][container];<br/>
+			}			
+		</code>
+	</dd>
+</dl>
+<dl>
+	<dt>5.贪婪算法：找零</dt>
+	<dd>
+		<code>
+			function makeChange(total) {<br/>
+			&nbsp;&nbsp;var init = total;<br/>
+			&nbsp;&nbsp;var coins = [];<br/>
+			&nbsp;&nbsp;if (total % 50 < total) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;coins[4] = parseInt(total / 50);<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;total = total % 50;<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;if (total % 20 < total) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;coins[3] = parseInt(total / 20);<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;total = total % 20;<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;if (total % 10 < total) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;coins[2] = parseInt(total / 10);<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;total = total % 10;<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;if (total % 5 < total) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;coins[1] = parseInt(total / 5);<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;total = total % 5;<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;coins[0] = parseInt(total / 1);<br/>
+			&nbsp;&nbsp;var str = '合计 ' + init + ' 找零：\r\n';<br/>
+			&nbsp;&nbsp;if (coins[4] != undefined && coins[4] !== 0) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;str += coins[4] + ' 张 50 元\r\n'<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;if (coins[3] != undefined && coins[3] !== 0) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;str += coins[3] + ' 张 20 元\r\n'<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;if (coins[2] != undefined && coins[2] !== 0) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;str += coins[2] + ' 张 10 元\r\n'<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;if (coins[1] != undefined && coins[1] !== 0) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;str += coins[1] + ' 张 5 元\r\n'<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;if (coins[0] != undefined && coins[0] !== 0) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;str += coins[0] + ' 张 1 元'<br/>
+			&nbsp;&nbsp;}<br/>
+
+			&nbsp;&nbsp;return str;<br/>
+			}<br/>
+			var coins = makeChange(95);<br/>
+			console.log(coins);<br/>
+		</code>
+	</dd>
+</dl>
+<dl>
+	<dt>6.贪婪算法：背包问题（物品必须是连续的，不能是分散的，意思是可以出现半斤米，但是不能出现半台电视机）
+		<ul>
+			<li>背包的容量为 W， 物品的价格为 v， 重量为 w。</li>
+			<li>根据 v/w 的比率对物品排序。</li>
+			<li>按比率的降序方式来考虑物品。</li>
+			<li>尽可能多地放入每个物品。</li>
+		</ul>
+	</dt>
+	<dd>
+		<code>
+			function greedyBag (values, weights, capacity) {<br/>
+			&nbsp;&nbsp;var load = 0; // 背包当前负载量<br/>
+			&nbsp;&nbsp;var i = 0;    // 数组索引<br/>
+			&nbsp;&nbsp;var w = 0;    // 价值总量<br/>
+			&nbsp;&nbsp;while (load < capacity && i < 4) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;if (weights[i] <= (capacity - load)) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;w += values[i];<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;load += weights[i];<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;} else {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;w += values[i] * ((capacity - load) / weights[i]);<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;load += weights[i];<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;i++;<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;return w;<br/>
+			}<br/>
+			var items = ["A", "B", "C", "D"];	// 物品 <br/>
+			var values = [50, 140, 60, 60];		// 价值<br/>
+			var weights = [5, 20, 10, 12];		// 重量<br/>
+			var capacity = 30;					// 背包容量<br/>
+			var w = greedyBag (values, weights, capacity);<br/>
+			console.log(w);	// 220		<br/>	
+		</code>
+	</dd>
+</dl>
+<script type="text/javascript" src=''></script>
+<script type="text/javascript">
+// 斐波那契数列：[1, 1, 2, 3, 5, 8, 13]
+function dynFib(n) {
+	if (n == 1 || n == 2) return 1;
+	var first = second = result = 1;
+	for ( var i = 3; i <= n; i++ ) {
+		result = first + second;
+		first = second;
+		second = result;
+	}
+	return result;
+}
+// 最长公共子串
+function lcs(word1, word2) {
+	var max = index = 0;
+	var lcsArr = new Array(word1.length);
+	for ( var i = 0; i <= word1.length; i++ ) {
+		lcsArr[i] = new Array(word2.length);
+		for ( var j = 0; j <= word2.length; j++ ) {
+			lcsArr[i][j] = 0;
+		}
+	}
+	// console.log(lcsArr);
+	for ( var i = 0; i <= word1.length; i++ ) {
+		for ( var j = 0; j <= word2.length; j++ ) {
+			if (i === 0 || j === 0) {
+				lcsArr[i][j] = 0;
+			} else {
+				if (word1[i - 1] == word2[j - 1]) {
+					// console.log(word1[i - 1] + ' == ' + word2[j - 1]);
+					lcsArr[i][j] = lcsArr[i - 1][j - 1] + 1;
+				} else {
+					lcsArr[i][j] = 0;
+				}
+			}
+			if (max < lcsArr[i][j]) {
+				max = lcsArr[i][j];
+				index = i;
+			}
+		}
+	}
+	// abbcc  dbbcc
+	//   0 1 2 3 4 5
+	//     d b b c c
+	// 0   0 0 0 0 0 0
+	// 1 a 0 0 0 0 0 0
+	// 2 b 0 0 1 1 0 0
+	// 3 b 0 0 1 2 0 0
+	// 4 c 0 0 0 0 3 1
+	// 5 c 0 0 0 0 0 4
+	// console.log(max);
+	// 显示二维数组--记录字符匹配
+	// for ( var i = 0; i <= word1.length; i++ ) {
+	// 	for ( var j = 0; j <= word2.length; j++ ) {
+	// 		document.write(lcsArr[i][j] + ' ');
+	// 	}
+	// 	document.write('<br/>');
+	// }
+	// console.log(index + ', ' + max);
+	var str = '';
+	if (max === 0) {
+		return '';
+	} else {
+		for (var i = index - max; i <= max; i++ ) {
+			str += word2[i];
+		}
+	}
+	return str;
+}
+// 取两个值中的最大值
+function max(a, b) {
+	return a > b ? a : b;
+}
+// 递归：背包问题
+function bagDigui (container, size, value, nums) {
+	if (nums === 0 || container === 0) return 0;
+	if (size[nums - 1] > container) {
+		return bagDigui (container, size, value, nums - 1);
+	} else {
+		return max(bagDigui (container - size[nums - 1], size, value, nums - 1) + value[nums - 1], bagDigui (container, size, value, nums - 1));
+	}
+}
+// 动态规划：背包问题
+function dynBag(container, size, value, nums) {
+	var K = [];
+	for ( var i = 0; i <= container + 1; i++ ) {
+		K[i] = [];
+	}
+	for ( var i = 0; i <= nums; i++ ) {
+		for ( var j = 0; j <= container; j++ ) {
+			if (i === 0 || j === 0) {
+				K[i][j] = 0;
+			} else if (size[nums - 1] > container) {
+				K[i][j] = K[i - 1][j];
+			} else {
+				K[i][j] = max(value[i - 1] + K[i - 1][j - size[i - 1]], K[i - 1][j]);
+			}
+		}
+	}
+	return K[nums][container];
+}
+// 贪婪算法：找零钱
+function makeChange(total) {
+	var init = total;
+	var coins = [];
+	if (total % 50 < total) {
+		coins[4] = parseInt(total / 50);
+		total = total % 50;
+	}
+	if (total % 20 < total) {
+		coins[3] = parseInt(total / 20);
+		total = total % 20;
+	}
+	if (total % 10 < total) {
+		coins[2] = parseInt(total / 10);
+		total = total % 10;
+	}
+	if (total % 5 < total) {
+		coins[1] = parseInt(total / 5);
+		total = total % 5;
+	}
+	coins[0] = parseInt(total / 1);
+	var str = '合计 ' + init + ' 找零：\r\n';
+	if (coins[4] != undefined && coins[4] !== 0) {
+		str += coins[4] + ' 张 50 元\r\n'
+	}
+	if (coins[3] != undefined && coins[3] !== 0) {
+		str += coins[3] + ' 张 20 元\r\n'
+	}
+	if (coins[2] != undefined && coins[2] !== 0) {
+		str += coins[2] + ' 张 10 元\r\n'
+	}
+	if (coins[1] != undefined && coins[1] !== 0) {
+		str += coins[1] + ' 张 5 元\r\n'
+	}
+	if (coins[0] != undefined && coins[0] !== 0) {
+		str += coins[0] + ' 张 1 元'
+	}
+
+	return str;
+}
+// 贪婪算法：背包问题
+// 物品必须是连续的，不能是分散的，意思是可以出现半斤米，但是不能出现半台电视机
+function greedyBag (values, weights, capacity) {
+	var load = 0; // 背包当前负载量
+	var i = 0;    // 数组索引
+	var w = 0;    // 价值总量
+	while (load < capacity && i < 4) {
+		if (weights[i] <= (capacity - load)) {
+			w += values[i];
+			load += weights[i];
+		} else {
+			w += values[i] * ((capacity - load) / weights[i]);
+			load += weights[i];
+		}
+		i++;
+	}
+	return w;
+}
+var items = ["A", "B", "C", "D"];	// 物品 
+var values = [50, 140, 60, 60];		// 价值
+var weights = [5, 20, 10, 12];		// 重量
+var capacity = 30;					// 背包容量
+var w = greedyBag (values, weights, capacity);
+console.log(w);	// 220
+</script>

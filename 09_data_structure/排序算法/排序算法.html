@@ -1,0 +1,219 @@
+<meta charset="utf-8"><style>* {font-size: 20px;}</style>
+<h3><a href='../index.html'>【返回】</a></h3>
+<dl>
+	<dt>1.数组平台测试类：该类封装定义了常规数组操作的方法</dt>
+	<dd>
+		<code>
+			function CArray (numElements) {<br/>
+			&nbsp;&nbsp;this.dataStore = [];<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;this.pos = 0;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;this.numElements = numElements;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;this.setData = setData;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;this.toString = toString;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;this.insert = insert;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;this.clear = clear;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;this.swap = swap;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;this.bubbleSort = bubbleSort;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;this.selectionSort = selectionSort;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;this.insertSort = insertSort;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;this.gaps = [5, 3, 1];<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;this.shellSort = shellSort;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;this.mergeSort = mergeSort;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;this.mergeArrays = mergeArrays;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;this.qSort = qSort;<br/>
+			}<br/>
+			// 在数组中添加数据<br/>
+			function insert (element) {<br/>
+			&nbsp;&nbsp;this.dataStore[this.pos++] = element;<br/>
+			}<br/>
+			// 清空数组<br/>
+			function clear() {<br/>
+			&nbsp;&nbsp;for ( var i = 0; i < this.dataStore.length; i++ ) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;this.dataStore[i] = 0;<br/>
+			&nbsp;&nbsp;}<br/>
+			}<br/>
+			// 设置数据<br/>
+			function setData() {<br/>
+			&nbsp;&nbsp;for ( var i = 0; i < this.numElements; i++ ) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;this.dataStore[i] = Math.floor(Math.random() * (this.numElements + 1));<br/>
+			&nbsp;&nbsp;}<br/>
+			}<br/>
+			// 数组字符串化<br/>
+			function toString () {<br/>
+			&nbsp;&nbsp;var str = '';<br/>
+			&nbsp;&nbsp;for ( var i = 0; i < this.numElements; i++ ) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;if (i > 0 && i % 10 === 0) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;str += '\r\n';<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;str += this.dataStore[i] + ' ';<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;return str;<br/>
+			}<br/>
+			// 交互数组中数据<br/>
+			function swap(arr, index1, index2) {<br/>
+			&nbsp;&nbsp;var temp = arr[index1];<br/>
+			&nbsp;&nbsp;arr[index1] = arr[index2];<br/>
+			&nbsp;&nbsp;arr[index2] = temp;<br/>
+			}<br/>
+		</code>
+	</dd>
+</dl>
+<dl>
+	<dt>2.冒泡排序</dt>
+	<dd>
+		<code>
+			function clear() {<br/>
+			&nbsp;&nbsp;for ( var i = 0; i < this.dataStore.length; i++ ) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;this.dataStore[i] = 0;<br/>
+			&nbsp;&nbsp;}<br/>
+			}<br/>
+		</code>
+	</dd>
+</dl>
+<dl>
+	<dt>3.选择排序</dt>
+	<dd>
+		<code>
+			function selectionSort() {<br/>
+			&nbsp;&nbsp;var min, temp;<br/>
+			&nbsp;&nbsp;// 遍历0 —— this.dataStore.length - 1 的数据<br/>
+			&nbsp;&nbsp;for ( var outer = 0; outer < this.dataStore.length - 1; outer++ ) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;// 将 第一个数据 赋值给 min<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;min = outer;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;// 遍历 1 —— this.dataStore.length 的数据<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;for ( var inner = outer + 1; inner < this.dataStore.length; inner++ ) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 将 1 —— this.dataStore.length 的数据中小于 min 的数据 赋值给 min<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (this.dataStore[inner] < this.dataStore[min]) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;min = inner;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;// 交互 min 和 outer 数据<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;this.swap(this.dataStore, outer, min);<br/>
+			&nbsp;&nbsp;}<br/>
+			}
+		</code>
+	</dd>
+</dl>
+<dl>
+	<dt>4.插入排序</dt>
+	<dd>
+		<code>
+			function insertSort() {<br/>
+			&nbsp;&nbsp;for ( var i = 1; i < this.dataStore.length; i++ ) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;var tempData = this.dataStore[i];<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;var j = i;this.dataStore<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;while (j > 0 && (this.dataStore[j - 1] >= tempData)) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.dataStore[j] = this.dataStore[j - 1];<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;j--; <br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;this.dataStore[j] = tempData;<br/>
+			&nbsp;&nbsp;}<br/>
+			}
+		</code>
+	</dd>
+</dl>
+<dl>
+	<dt>5.希尔排序</dt>
+	<dd>
+		<code>
+			function  shellSort() {<br/>
+			&nbsp;&nbsp;// 遍历间距序列<br/>
+			&nbsp;&nbsp;for ( var g = 0; g < this.gaps.length; g++ ) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;// 按照间距序列遍历要排序的数组<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;for ( var i = this.gaps[g]; i < this.dataStore.length; i++ ) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;// 保存单例值<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;var temp = this.dataStore[i];<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for ( var j = i; j >= this.gaps[g] && this.dataStore[j - this.gaps[g]] > temp; j -= this.gaps[g]) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.dataStore[j] = this.dataStore[j - this.gaps[g]];<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.dataStore[j] = temp; <br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;}<br/>
+			}
+		</code>
+	</dd>
+</dl>
+<dl>
+	<dt>6.归并排序</dt>
+	<dd>
+		<code>
+			function mergeSort() {<br/>
+			&nbsp;&nbsp;if (this.dataStore.length < 2) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;return;<br/>
+			&nbsp;&nbsp;} <br/>
+			&nbsp;&nbsp;var step = 1;<br/>
+			&nbsp;&nbsp;var left, right;<br/>
+			&nbsp;&nbsp;while (step < this.dataStore.length) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;left = 0;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;right = step;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;while (right + step <= this.dataStore.length) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mergeArrays(this.dataStore, left, left + step, right, right + step);<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;left = right + step;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;right = left + step;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;} <br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;if (right < this.dataStore.length) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;mergeArrays(this.dataStore, left, left + step, right, <br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;this.dataStore.length);<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;} <br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;step *= 2;<br/>
+			&nbsp;&nbsp;}<br/>
+			}<br/>
+			function mergeArrays(arr,startLeft, stopLeft, startRight, stopRight) {<br/>
+			&nbsp;&nbsp;var rightArr = new Array(stopRight - startRight + 1);<br/>
+			&nbsp;&nbsp;var leftArr = new Array(stopLeft - startLeft + 1);<br/>
+			&nbsp;&nbsp;k = startRight;<br/>
+			&nbsp;&nbsp;for (var i = 0; i < (rightArr.length-1); ++i) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;rightArr[i] = arr[k];<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;++k;<br/>
+			&nbsp;&nbsp;} <br/>
+			&nbsp;&nbsp;k = startLeft;<br/>
+			&nbsp;&nbsp;for (var i = 0; i < (leftArr.length-1); ++i) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;leftArr[i] = arr[k];<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;++k;<br/>
+			&nbsp;&nbsp;} <br/>
+			&nbsp;&nbsp;rightArr[rightArr.length -1 ] = Infinity; // 哨兵值<br/>
+			&nbsp;&nbsp;leftArr[leftArr.length -1 ] = Infinity; // 哨兵值<br/>
+			&nbsp;&nbsp;var m = 0;<br/>
+			&nbsp;&nbsp;var n = 0;<br/>
+			&nbsp;&nbsp;for (var k = startLeft; k < stopRight; ++k) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;if (leftArr[m] <= rightArr[n]) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;arr[k] = leftArr[m];<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;m++;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;} else {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;arr[k] = rightArr[n];<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;n++;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;} <br/>
+			}
+		</code>
+	</dd>
+</dl>
+<dl>
+	<dt>7.快速排序</dt>
+	<dd>
+		<code>
+			function qSort(arr) {<br/>
+			&nbsp;&nbsp;if (arr.length === 0)	return [];<br/>
+			&nbsp;&nbsp;var left = [];<br/>
+			&nbsp;&nbsp;var right = [];<br/>
+			&nbsp;&nbsp;var pivot = arr[0];<br/>
+			&nbsp;&nbsp;for ( var i = 1; i < arr.length; i++ ) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;if (arr[i] < pivot) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;left.push(arr[i]);<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;} else {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;right.push(arr[i]);<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;return qSort(left).concat(pivot, qSort(right));<br/>
+			}
+		</code>
+	</dd>
+</dl>
+<script type="text/javascript" src='CArray.js'></script>
+<script type="text/javascript">
+
+var arr = new CArray(10);
+arr.setData();
+console.log(arr.toString());
+console.log(arr.qSort(arr.dataStore));
+
+</script>

@@ -1,0 +1,49 @@
+<meta charset="utf-8">
+<style>* {font-size: 20px;}</style>
+<h3><a href='数组.html'>【返回】</a></h3>
+<dl>
+	<dt>1.push() 方法会将一个元素添加到数组末尾</dt>
+	<dd>
+		<code>
+			var arr1 = [1, 2, 3, 4];<br/>
+			arr1.push(5);<br/>
+			console.log(arr1);	//  [1, 2, 3, 4, 5]
+		</code>
+	</dd>
+</dl>
+<dl>
+	<dt>2.也可以使用数组的 length 属性为数组添加元素</dt>
+	<dd>
+		<code>
+			var arr2 = [1, 2, 3, 4];<br/>
+			arr2[arr2.length] = 5;<br/>
+			console.log(arr2);	//  [1, 2, 3, 4, 5]
+		</code>
+	</dd>
+</dl>
+<dl>
+	<dt>3.unshift() 方法可以将元素添加在数组的开头</dt>
+	<dd>
+		<code>
+			var arr3 = [1, 2, 3, 4];<br/>
+			arr3.unshift(0);<br/>
+			console.log(arr3);	//  [0, 1, 2, 3, 4]
+		</code>
+	</dd>
+</dl>
+
+
+<script type="text/javascript">
+// 添加元素
+var arr1 = [1, 2, 3, 4];
+arr1.push(5);
+console.log(arr1);	//  [1, 2, 3, 4, 5]
+
+var arr2 = [1, 2, 3, 4];
+arr2[arr2.length] = 5;
+console.log(arr2);	//  [1, 2, 3, 4, 5]
+
+var arr3 = [1, 2, 3, 4];
+arr3.unshift(0);
+console.log(arr3);	//  [0, 1, 2, 3, 4]
+</script>

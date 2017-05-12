@@ -1,0 +1,37 @@
+<meta charset="utf-8"><style>* {font-size: 20px;}</style>
+<h3><a href='数组.html'>【返回】</a></h3>
+<dl>
+	<dt>处理二维数组</dt>
+	<dd>
+		<code>
+			var grades = [[89, 77, 78],[76, 82, 81],[91, 94, 89]];<br/>
+			var total = 0;<br/>
+			var average = 0.0;<br/>
+			for ( var i = 0; i < grades.length; i++ ) {<br/>
+			&nbsp;&nbsp;for ( var j = 0; j < grades[i].length; j++ ) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;total += grades[i][j];<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;average = total / grades.length;<br/>
+			&nbsp;&nbsp;console.log('total: ' + total + ', average: ' + average);<br/>
+			}
+			
+		</code>
+	</dd>
+</dl>
+
+
+
+
+<script type="text/javascript">
+var grades = [[89, 77, 78],[76, 82, 81],[91, 94, 89]];
+var total = 0;
+var average = 0.0;
+for ( var i = 0; i < grades.length; i++ ) {
+	for ( var j = 0; j < grades[i].length; j++ ) {
+		total += grades[i][j];
+	}
+	average = total / grades[i].length;
+	console.log('total: ' + total + ', average: ' + average);
+}
+
+</script>

@@ -1,0 +1,331 @@
+<meta charset="utf-8"><style>* {font-size: 20px;}</style>
+<h3><a href='列表.html'>【返回】</a></h3>
+<dl>
+	<dt>1.定义列表的构造函数</dt>
+	<dd>
+		<code>
+		function List () {<br/>
+		&nbsp;&nbsp;this.listSize = 0;				// 列表的元素个数<br/>
+		&nbsp;&nbsp;this.pos = 0;					// 列表当前的位置<br/>
+		&nbsp;&nbsp;this.dataStrore = [];			// 保存列表数据<br/>
+		&nbsp;&nbsp;this.append = append;			// 给列表的下一个位置添加一个元素<br/>
+		&nbsp;&nbsp;this.find = find;				// 查找元素在列表中的位置<br/>
+		&nbsp;&nbsp;this.remove = remove;			// 从列表中删除元素<br/>
+		&nbsp;&nbsp;this.length = length;			// 返回列表中元素的个数<br/>
+		&nbsp;&nbsp;this.toString = toString;		// 显示列表中的元素<br/>
+		&nbsp;&nbsp;this.insert = insert;			// 向列表中插入一个元素<br/>
+		&nbsp;&nbsp;this.clear = clear;				// 清空列表<br/>
+		&nbsp;&nbsp;this.contains = contains;		// 判断给定值是否在列表中<br/>
+		&nbsp;&nbsp;this.currPos = currPos;			// 当前列表的位置<br/>
+		&nbsp;&nbsp;this.front = front;				// 将列表的当前位置移动到第一个元素<br/>
+		&nbsp;&nbsp;this.end = end;					// 将列表的当前位置移动到最后一个元素<br/>
+		&nbsp;&nbsp;this.prev = prev;				// 将列表的当前位置前移一位<br/>
+		&nbsp;&nbsp;this.next = next;				// 将列表的当前位置后移一位<br/>
+		&nbsp;&nbsp;this.moveTo = moveTo;			// 将列表当前位置移动到指定位置<br/>
+		&nbsp;&nbsp;this.getElement = getElement;	// 获取指定位置的元素<br/>
+		}
+		</code>
+	</dd>
+</dl>
+<dl>
+	<dt>2.append： 给列表添加元素</dt>
+	<dd>
+		<code>
+			function append (element) {<br/>
+			&nbsp;&nbsp;this.dataStrore[this.listSize++] = element;<br/>
+			}
+		</code>
+	</dd>
+</dl>
+<dl>
+	<dt>3.find： 查找元素在列表中的位置</dt>
+	<dd>
+		<code>
+			function find (element) {<br/>
+			&nbsp;&nbsp;for ( var i = 0; i < this.dataStrore.length; i++ ) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;if (this.dataStrore[i] === element) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return i;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;return -1;<br/>
+			}
+		</code>
+	</dd>
+</dl>
+<dl>
+	<dt>4.remove： 从列表中删除元素</dt>
+	<dd>
+		<code>
+			function remove (element) {<br/>
+			&nbsp;&nbsp;var foundAt = this.find(element);<br/>
+			&nbsp;&nbsp;if (foundAt > -1) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;this.dataStrore.splice(foundAt, 1);<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;this.listSize--;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;return true;<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;return false;<br/>
+			}
+		</code>
+	</dd>
+</dl>
+<dl>
+	<dt>5.length： 返回列表中元素的个数</dt>
+	<dd>
+		<code>
+			function length () {<br/>
+			&nbsp;&nbsp;return this.listSize;<br/>
+			}
+		</code>
+	</dd>
+</dl>
+<dl>
+	<dt>6.toString: 显示列表中的元素</dt>
+	<dd>
+		<code>
+			function toString () {<br/>
+			&nbsp;&nbsp;return this.dataStrore;<br/>
+			}
+		</code>
+	</dd>
+</dl>
+<dl>
+	<dt>7.insert： 向列表中插入一个元素</dt>
+	<dd>
+		<code>
+			function insert (element, after) {<br/>
+			&nbsp;&nbsp;var foundAt = this.find(after);<br/>
+			&nbsp;&nbsp;if (foundAt > -1) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;this.dataStrore.splice(foundAt + 1, 0, element);<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;++this.listSize;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;return true;<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;return false;<br/>
+			}
+		</code>
+	</dd>
+</dl>
+<dl>
+	<dt>8.clear： 清空列表中所有的元素</dt>
+	<dd>
+		<code>
+			function clear() {<br/>
+			&nbsp;&nbsp;delete this.dataStrore;<br/>
+			&nbsp;&nbsp;this.dataStrore = [];<br/>
+			&nbsp;&nbsp;this.listSize = this.pos = 0;<br/>
+			}
+		</code>
+	</dd>
+</dl>
+<dl>
+	<dt>9.contains： 判断给定值是否在列表中</dt>
+	<dd>
+		<code>
+			function contains (element) {<br/>
+			&nbsp;&nbsp;for ( var i = 0; i < this.dataStrore.length; i++ ) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;if (this.dataStrore[i] === element) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return true;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;return false;<br/>
+			}
+		</code>
+	</dd>
+</dl>
+<dl>
+	<dt>10.currPos：获取列表当前的位置</dt>
+	<dd>
+		<code>
+			function currPos () {<br/>
+			&nbsp;&nbsp;return this.pos;<br/>
+			}
+		</code>
+	</dd>
+</dl>
+<dl>
+	<dt>11.front： 将列表的当前位置移动到第一个元素</dt>
+	<dd>
+		<code>
+			function front () {<br/>
+			&nbsp;&nbsp;this.pos = 0;<br/>
+			}
+		</code>
+	</dd>
+</dl>
+<dl>
+	<dt>12.end： 将列表的当前位置移动到最后一个元素</dt>
+	<dd>
+		<code>
+			function end () {<br/>
+			&nbsp;&nbsp;this.pos = this.listSize - 1;<br/>
+			}
+		</code>
+	</dd>
+</dl>
+<dl>
+	<dt>13.prev： 将列表的当前位置前移一位</dt>
+	<dd>
+		<code>
+			function prev () {<br/>
+			&nbsp;&nbsp;if (this.pos > 0) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;--this.pos;<br/>
+			&nbsp;&nbsp;}<br/>
+			}
+		</code>
+	</dd>
+</dl>
+<dl>
+	<dt>14.next： 将列表的当前位置后移一位</dt>
+	<dd>
+		<code>
+			function next () {<br/>
+			&nbsp;&nbsp;if (this.pos < this.listSize -1) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;++this.pos;<br/>
+			&nbsp;&nbsp;}<br/>
+			}
+		</code>
+	</dd>
+</dl>
+<dl>
+	<dt>15.moveTo： 将列表当前位置移动到指定位置</dt>
+	<dd>
+		<code>
+			function moveTo(position) {<br/>
+			&nbsp;&nbsp;if (position < 0) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;throw new Error('指定位置小于零');<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;if (position > this.listSize - 1) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;throw new Error('指定位置大于列表的长度');<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;this.pos = position;<br/>
+			}
+		</code>
+	</dd>
+</dl>
+<dl>
+	<dt>16.getElement：获取指定位置的元素</dt>
+	<dd>
+		<code>
+			function getElement() {<br/>
+			&nbsp;&nbsp;return this.dataStrore[this.pos];<br/>
+			}
+		</code>
+	</dd>
+</dl>
+
+
+<script type="text/javascript">
+function List () {
+	this.listSize = 0;				// 列表的元素个数
+	this.pos = 0;					// 列表当前的位置
+	this.dataStrore = [];			// 保存列表数据
+	this.append = append;			// 给列表的下一个位置添加一个元素
+	this.find = find;				// 查找元素在列表中的位置
+	this.remove = remove;			// 从列表中删除元素
+	this.length = length;			// 返回列表中元素的个数
+	this.toString = toString;		// 显示列表中的元素
+	this.insert = insert;			// 向列表中插入一个元素
+	this.clear = clear;				// 清空列表
+	this.contains = contains;		// 判断给定值是否在列表中
+	this.currPos = currPos;			// 当前列表的位置
+	this.front = front;				// 将列表的当前位置移动到第一个元素
+	this.end = end;					// 将列表的当前位置移动到最后一个元素
+	this.prev = prev;				// 将列表的当前位置前移一位
+	this.next = next;				// 将列表的当前位置后移一位
+	this.moveTo = moveTo;			// 将列表当前位置移动到指定位置
+	this.getElement = getElement;	// 获取指定位置的元素
+}
+// append： 给列表添加元素
+function append (element) {
+	this.dataStrore[this.listSize++] = element;
+}
+// find： 查找元素在列表中的位置，如果不匹配，返回-1
+function find (element) {
+	for ( var i = 0; i < this.dataStrore.length; i++ ) {
+		if (this.dataStrore[i] === element) {
+			return i;
+		}
+	}
+	return -1;
+}
+// remove： 从列表中删除元素
+function remove (element) {
+	var foundAt = this.find(element);
+	if (foundAt > -1) {
+		this.dataStrore.splice(foundAt, 1);
+		this.listSize--;
+		return true;
+	}
+	return false;
+}
+// length： 返回列表中元素的个数
+function length () {
+	return this.listSize;
+}
+// toString: 显示列表中的元素
+function toString () {
+	return this.dataStrore;
+}
+// insert： 向列表中插入一个元素
+function insert (element, after) {
+	var foundAt = this.find(after);
+	if (foundAt > -1) {
+		this.dataStrore.splice(foundAt + 1, 0, element);
+		++this.listSize;
+		return true;
+	}
+	return false;
+}
+// clear： 清空列表中所有的元素
+function clear() {
+	delete this.dataStrore;
+	this.dataStrore = [];
+	this.listSize = this.pos = 0;
+}
+// contains： 判断给定值是否在列表中
+function contains (element) {
+	for ( var i = 0; i < this.dataStrore.length; i++ ) {
+		if (this.dataStrore[i] === element) {
+			return true;
+		}
+	}
+	return false;
+}
+// currPos： 获取列表当前的位置
+function currPos () {
+	return this.pos;
+}
+// front： 将列表的当前位置移动到第一个元素
+function front () {
+	this.pos = 0;
+}
+// end： 将列表的当前位置移动到最后一个元素
+function end () {
+	this.pos = this.listSize - 1;
+}
+// prev： 将列表的当前位置前移一位
+function prev () {
+	if (this.pos > 0) {
+		--this.pos;
+	}
+}
+// next： 将列表的当前位置后移一位
+function next () {
+	if (this.pos < this.listSize -1) {
+		++this.pos;
+	}
+}
+// moveTo： 将列表当前位置移动到指定位置
+function moveTo(position) {
+	if (position < 0) {
+		throw new Error('指定位置小于零');
+	}
+	if (position > this.listSize - 1) {
+		throw new Error('指定位置大于列表的长度');
+	}
+	this.pos = position;
+}
+// getElement：获取指定位置的元素
+function getElement() {
+	return this.dataStrore[this.pos];
+}
+</script>

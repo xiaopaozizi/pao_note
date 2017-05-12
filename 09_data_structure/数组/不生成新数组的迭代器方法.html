@@ -1,0 +1,83 @@
+<meta charset="utf-8"><style>* {font-size: 20px;}</style>
+<style>* {font-size: 20px;}</style>
+<h3><a href='数组.html'>【返回】</a></h3>
+<dl>
+	<dt>1.forEach()， 该方法接受一个函数作为参数， 对数组中的每个元素使用该函数</dt>
+	<dd>
+		<code>
+			function square(num) {<br/>
+			&nbsp;&nbsp;console.log(num * num);<br/>
+			}<br/>
+			var arr1 = [1, 2, 3];<br/>
+			arr1.forEach(square);	// 1, 4, 9
+		</code>
+	</dd>
+</dl>
+<dl>
+	<dt>2. every()， 该方法接受一个返回值为布尔类型的函数， 对数组中的每
+个元素使用该函数。<br/> 如果对于所有的元素， 该函数均返回 true， 则该方法返回 true。</dt>
+	<dd>
+		<code>
+			function isEven(num) {<br/>
+			&nbsp;&nbsp;return num % 2 == 0;<br/>
+			}<br/>
+			var arr2 = [2, 4, 6];<br/>
+			console.log(arr2.every(isEven)); // true
+		</code>
+	</dd>
+</dl>
+<dl>
+	<dt>3.sort() 方法是按照字典顺序对元素进行排序的</dt>
+	<dd>
+		<code>
+			function compare(num1, num2) {<br/>
+			&nbsp;&nbsp;return num1 - num2;<br/>
+			}<br/>
+			var arr2 = [3,1,2,100,4,200];<br/>
+			arr2.sort();<br/>
+			console.log(arr2);	//  [1, 100, 2, 200, 3, 4]<br/>
+			arr2.sort(compare);<br/>
+			console.log(arr2);	//  [1, 2, 3, 4, 100, 200]
+		</code>
+	</dd>
+</dl>
+<dl>
+	<dt>4.reduce() 方法接受一个函数， 返回一个值。 <br/>该方法会从一个累加值开始， 不断对累加值和
+数组中的后续元素调用该函数， 直到数组中的最后一个元素， 最后返回得到的累加值。</dt>
+	<dd>
+		<code>
+			function add(total, current) {<br/>
+			&nbsp;&nbsp;return total + current;<br/>
+			}<br/>
+			var arr4 = [1, 2, 3, 4, 5];<br/>
+			console.log(arr4.reduce(add));	//  15
+		</code>
+	</dd>
+</dl>
+
+
+<script type="text/javascript">
+
+function square(num) {
+	console.log(num * num);
+}
+var arr1 = [1, 2, 3];
+arr1.forEach(square);	// 1, 4, 9
+
+
+function isEven(num) {
+	return num % 2 == 0;
+}
+var arr2 = [2, 4, 6];
+console.log(arr2.every(isEven)); // true
+
+var arr3 = [1, 2, 3, 4];
+console.log(arr3.some(isEven));  // true
+
+
+function add(total, current) {
+	return total + current;
+}
+var arr4 = [1, 2, 3, 4, 5];
+console.log(arr4.reduce(add));	//  15
+</script>

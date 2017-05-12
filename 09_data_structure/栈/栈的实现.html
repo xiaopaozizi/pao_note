@@ -1,0 +1,138 @@
+<meta charset="utf-8"><style>* {font-size: 20px;}</style>
+<h3><a href='栈.html'>【返回】</a></h3>
+<dl>
+	<dt>1.定义栈的构造函数</dt>
+	<dd>
+		<code>
+		function Stack() {<br/>
+		&nbsp;&nbsp;this.dataStrore = [];				// 保存栈中的数据<br/>
+		&nbsp;&nbsp;this.top = 0;						// 记录栈顶的位置<br/>
+		&nbsp;&nbsp;this.push = push;					// 入栈<br/>
+		&nbsp;&nbsp;this.pop = pop;						// 出栈<br/>
+		&nbsp;&nbsp;this.peek = peek;					// 预览栈顶元素，并非删除	<br/>
+		&nbsp;&nbsp;this.clear = clear;					// 清空栈<br/>
+		&nbsp;&nbsp;this.length = length;				// 返回栈的长度<br/>
+		&nbsp;&nbsp;this.empty = empty;					// 返回栈是否为空/是否有元素<br/>
+		}
+		</code>
+	</dd>
+</dl>
+<dl>
+	<dt>2.push： 添加元素到栈顶</dt>
+	<dd>
+		<code>
+			function push(element) {<br/>
+			&nbsp;&nbsp;this.dataStrore[this.top++] = element;<br/>
+			}
+		</code>
+	</dd>
+</dl>
+<dl>
+	<dt>3.pop： 将栈顶上的元素弹出删除</dt>
+	<dd>
+		<code>
+			function pop () {<br/>
+			&nbsp;&nbsp;delete this.dataStrore[--this.top];<br/>
+			}
+		</code>
+	</dd>
+</dl>
+<dl>
+	<dt>4.peek：预览栈顶元素，并非删除</dt>
+	<dd>
+		<code>
+			function peek () {<br/>
+			&nbsp;&nbsp;return this.dataStrore[this.top - 1];<br/>
+			}
+		</code>
+	</dd>
+</dl>
+<dl>
+	<dt>5.clear：清空栈</dt>
+	<dd>
+		<code>
+			function clear() {<br/>
+			&nbsp;&nbsp;delete this.dataStrore;<br/>
+			&nbsp;&nbsp;this.dataStrore = [];<br/>
+			&nbsp;&nbsp;this.top = 0;<br/>
+			}
+		</code>
+	</dd>
+</dl>
+<dl>
+	<dt>6.length: 返回栈的长度</dt>
+	<dd>
+		<code>
+			function length() {<br/>
+			&nbsp;&nbsp;return this.top;<br/>
+			}
+		</code>
+	</dd>
+</dl>
+<dl>
+	<dt>7.empty：返回栈是否为空/是否有元素</dt>
+	<dd>
+		<code>
+			function empty() {<br/>
+			&nbsp;&nbsp;if (this.top == 0) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;return true;<br/>
+			&nbsp;&nbsp;} else {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;return false;<br/>
+			&nbsp;&nbsp;}<br/>
+			}
+		</code>
+	</dd>
+</dl>
+
+
+<script type="text/javascript">
+function Stack() {
+	this.dataStrore = [];				// 保存栈中的数据
+	this.top = 0;						// 记录栈顶的位置
+	this.push = push;					// 入栈
+	this.pop = pop;						// 出栈
+	this.peek = peek;					// 预览栈顶元素，并非删除	
+	this.clear = clear;					// 清空栈
+	this.length = length;				// 返回栈的长度
+	this.empty = empty;					// 返回栈是否为空/是否有元素
+}
+// push： 添加元素到栈顶
+function push(element) {
+	this.dataStrore[this.top++] = element;
+}
+// pop： 将栈顶上的元素弹出删除
+function pop () {
+	delete this.dataStrore[--this.top];
+}
+// peek：预览栈顶元素，并非删除
+function peek () {
+	return this.dataStrore[this.top - 1];
+}
+// clear：清空栈
+function clear() {
+	delete this.dataStrore;
+	this.dataStrore = [];
+	this.top = 0;
+}
+// length: 返回栈的长度
+function length() {
+	return this.top;
+}
+// empty：返回栈是否为空/是否有元素
+function empty() {
+	if (this.top == 0) {
+		return true;
+	} else {
+		return false;
+	}
+}
+var stack = new Stack();
+stack.push('zhang');
+stack.push('li');
+console.log(stack.dataStrore);
+console.log(stack.length());
+stack.clear();
+console.log(stack.dataStrore);
+console.log(stack.length());
+console.log(stack.empty());
+</script>

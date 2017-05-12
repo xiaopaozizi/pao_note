@@ -1,0 +1,49 @@
+<meta charset="utf-8"><style>* {font-size: 20px;}</style>
+<h3><a href='栈.html'>【返回】</a></h3>
+<dl>
+	<dt>1.回文： 一个单词、 短语或数字， 从前往后写和从后往前写都是一样的。</dt>
+	<dd>
+		<code>
+			function isHuiwen(word) {<br/>
+			&nbsp;&nbsp;word = word.toString();<br/>
+			&nbsp;&nbsp;var stack = new Stack();<br/>
+			&nbsp;&nbsp;for ( var i = 0; i < word.length; i++ ) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;stack.push(word[i]);<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;var str = '';<br/>
+			&nbsp;&nbsp;while(stack.length() > 0) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;str += stack.peek();<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;stack.pop();<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;if (str == word) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;return true;<br/>
+			&nbsp;&nbsp;} else {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;return false;<br/>
+			&nbsp;&nbsp;}<br/>
+			}<br/>
+			console.log(isHuiwen('121'));
+		</code>
+	</dd>
+</dl>
+
+<script type="text/javascript" src="stack.js"></script>
+<script type="text/javascript">
+function isHuiwen(word) {
+	word = word.toString();
+	var stack = new Stack();
+	for ( var i = 0; i < word.length; i++ ) {
+		stack.push(word[i]);
+	}
+	var str = '';
+	while(stack.length() > 0) {
+		str += stack.peek();
+		stack.pop();
+	}
+	if (str == word) {
+		return true;
+	} else {
+		return false;
+	}
+}
+console.log(isHuiwen('abcdcba'));
+</script>

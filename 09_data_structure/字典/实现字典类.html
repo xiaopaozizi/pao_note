@@ -1,0 +1,66 @@
+<meta charset="utf-8"><style>* {font-size: 20px;}</style>
+<h3><a href='字典.html'>【返回】</a></h3>
+<dl>
+	<dt>1.设计一个基于对象的链表：
+		<ul>
+			<li>Node 类用来表示节点</li>
+			<li>LinkedList 类提供了插入节点、 删除节点、 显示列表元素的方法</li>
+		</ul>
+	</dt>
+	<dd>
+		<code>
+			function Dictionary() {<br/>
+			&nbsp;&nbsp;this.dataStrore = [];<br/>
+			&nbsp;&nbsp;this.add = add;<br/>
+			&nbsp;&nbsp;this.remove = remove;<br/>
+			&nbsp;&nbsp;this.find = find;<br/>
+			&nbsp;&nbsp;this.showAll = showAll;<br/>
+			&nbsp;&nbsp;this.count = count;<br/>
+			&nbsp;&nbsp;this.clear = clear;<br/>
+			}<br/>
+			// 添加字典<br/>
+			function add (key, value) {<br/>
+			&nbsp;&nbsp;this.dataStrore[key] = value;<br/>
+			}<br/>
+			// 通过 key 查找 value<br/>
+			function find (key) {<br/>
+			&nbsp;&nbsp;return this.dataStrore[key];<br/>
+			}<br/>
+			// 通过 key 删除字典<br/>
+			function remove (key) {<br/>
+			&nbsp;&nbsp;delete this.dataStrore[key];<br/>
+			}<br/>
+			// 遍历字典<br/>
+			function showAll() {<br/>
+			&nbsp;&nbsp;var keys = Object.keys(this.dataStrore).sort();<br/>
+			&nbsp;&nbsp;for (var key in keys) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;console.log(keys[key] + ' => ' + this.dataStrore[keys[key]]);<br/>
+			&nbsp;&nbsp;}<br/>
+			}<br/>
+			// 字典个数<br/>
+			function count () {<br/>
+			&nbsp;&nbsp;var n = 0;<br/>
+			&nbsp;&nbsp;// Object.Keys 方法返回一个数组，其中包含了一个 Dictionary 对象中的全部现有的主键。<br/>
+			&nbsp;&nbsp;for (var key in Object.keys(this.dataStrore)) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;n++;<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;return n;<br/>
+			}<br/>
+			// 清空字典<br/>
+			function clear () {<br/>
+			&nbsp;&nbsp;for (var key in this.dataStrore) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;delete this.dataStrore[key];<br/>
+			&nbsp;&nbsp;}<br/>
+			}
+		</code>
+	</dd>
+</dl>
+<script type="text/javascript" src='Dictionary.js'></script>
+<script type="text/javascript">
+var dict = new Dictionary();
+dict.add('zhang', 'san');
+dict.add('li', 'si');
+dict.add('wang', 'wu');
+dict.add('bai', 'li');
+dict.showAll();
+</script>

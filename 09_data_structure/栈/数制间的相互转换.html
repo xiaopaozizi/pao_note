@@ -1,0 +1,56 @@
+<meta charset="utf-8"><style>* {font-size: 20px;}</style>
+<h3><a href='栈.html'>【返回】</a></h3>
+<dl>
+	<dt>1.数制间的相互转换：实现算法如下：
+		<ul>
+			<li>最高位为 n % b， 将此位压入栈。</li>
+			<li> 使用 n/b 代替 n。</li>
+			<li>重复步骤 1 和 2， 直到 n 等于 0， 且没有余数。</li>
+			<li>持续将栈内元素弹出， 直到栈为空， 依次将这些元素排列， 就得到转换后数字的字符
+串形式。</li>
+		</ul>
+	</dt>
+	<dd>
+		<code>
+			function mulBase (num, base) {<br/>
+			&nbsp;&nbsp;var init = num;<br/>
+			&nbsp;&nbsp;var stack = new Stack();<br/>
+			&nbsp;&nbsp;do {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;stack.push(num % base);<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;num = Math.floor(num / base);<br/>
+			&nbsp;&nbsp;} while (num > 0);<br/>
+			&nbsp;&nbsp;var covered = '';<br/>
+			&nbsp;&nbsp;while(stack.length() > 0) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;covered += stack.peek();<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;stack.pop();<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;console.log(init + ' 进行数字转换 ' + covered);<br/>
+			}<br/>
+			mulBase(128, 2);<br/>
+			mulBase(100, 8);<br/>
+			mulBase(1280, 12);
+		</code>
+	</dd>
+</dl>
+
+<script type="text/javascript" src="stack.js"></script>
+<script type="text/javascript">
+function mulBase (num, base) {
+	var init = num;
+	var stack = new Stack();
+	do {
+		stack.push(num % base);
+		num = Math.floor(num / base);
+	} while (num > 0);
+	var covered = '';
+	while(stack.length() > 0) {
+		covered += stack.peek();
+		stack.pop();
+	}
+	console.log(init + ' 进行数字转换 ' + covered);
+}
+mulBase(128, 2);
+mulBase(100, 8);
+mulBase(1280, 12);
+
+</script>

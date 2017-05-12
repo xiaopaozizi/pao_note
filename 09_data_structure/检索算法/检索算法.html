@@ -1,0 +1,234 @@
+<meta charset="utf-8"><style>* {font-size: 20px;}</style>
+<h3><a href='../index.html'>【返回】</a></h3>
+<dl>
+	<dt>1.顺序查找，也称线性查找</dt>
+	<dd>
+		<code>
+			function seqSearch(arr, data) {<br/>
+			&nbsp;&nbsp;for ( var i = 0; i < arr.length; i++ ) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;if (arr[i] === data) return i;<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;return -1;<br/>
+			}
+		</code>
+	</dd>
+</dl>
+<dl>
+	<dt>2.查找最小值</dt>
+	<dd>
+		<code>
+			function findMin(arr) {<br/>
+			&nbsp;&nbsp;var min = arr[0];<br/>
+			&nbsp;&nbsp;for ( var i = 0; i < arr.length; i++ ) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;if (min > arr[i]) min = arr[i];<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;return min;<br/>
+			}
+		</code>
+	</dd>
+</dl>
+<dl>
+	<dt>3.查找最大值</dt>
+	<dd>
+		<code>
+			function findMax(arr) {<br/>
+			&nbsp;&nbsp;var max = arr[0];<br/>
+			&nbsp;&nbsp;for ( var i = 0; i < arr.length; i++ ) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;if (max < arr[i]) max = arr[i];<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;return max;<br/>
+			}
+		</code>
+	</dd>
+</dl>
+<dl>
+	<dt>4.查找元素，并将经常查找到数据放在数组的前面</dt>
+	<dd>
+		<code>
+			function seqSearch(arr, data) {<br/>
+			&nbsp;&nbsp;for ( var i = 0; i < arr.length; i++ ) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;if (arr[i] === data) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (i > arr.length * 0.2) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;swap(arr, i, 0);<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return i;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;return -1;<br/>
+			}<br/>
+			// 交换一个数组中的两个元素的位置<br/>
+			function swap(arr, index1, index2) {<br/>
+			&nbsp;&nbsp;var temp = arr[index1];<br/>
+			&nbsp;&nbsp;arr[index1] = arr[index2];<br/>
+			&nbsp;&nbsp;arr[index2] = temp;<br/>
+			}
+		</code>
+	</dd>
+</dl>
+<dl>
+	<dt>5.二分查找法</dt>
+	<dd>
+		<code>
+			function binSearch(arr, data) {<br/>
+			&nbsp;&nbsp;var upperBound = arr.length-1;<br/>
+			&nbsp;&nbsp;var lowerBound = 0;<br/>
+			&nbsp;&nbsp;while (lowerBound <= upperBound) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;var mid = Math.floor((upperBound + lowerBound) / 2);<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;console.log(" 当前的中点： " + mid);<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;if (arr[mid] < data) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lowerBound = mid + 1;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;} else if (arr[mid] > data) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;upperBound = mid - 1;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;} else {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return mid;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;} <br/>
+			&nbsp;&nbsp;return -1;<br/>
+			}
+		</code>
+	</dd>
+</dl>
+<dl>
+	<dt>6.查找一个数字重复的次数</dt>
+	<dd>
+		<code>
+			function count(arr, data) {<br/>
+			&nbsp;&nbsp;var count = 0;<br/>
+			&nbsp;&nbsp;var position = binSearch(arr, data);<br/>
+			&nbsp;&nbsp;if (position > -1) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;count++;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;for ( var i = position - 1; i > 0; i-- ) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (data === arr[i]) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;count++;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;for ( var i = position + 1; i < arr.length; i++) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (data == arr[i]) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;count++;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;} else {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;return count;<br/>
+			}<br/>
+			// 快速排序<br/>
+			function qSort(arr) {<br/>
+			&nbsp;&nbsp;if (arr.length == 0) return [];<br/>
+			&nbsp;&nbsp;var left = [], right = [], init = arr[0];<br/>
+			&nbsp;&nbsp;for ( var i = 1; i < arr.length; i++) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;if (arr[i] < init) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;left.push(arr[i]);<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;} else {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;right.push(arr[i]);<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;return qSort(left).concat(init, qSort(right));<br/>
+			}
+		</code>
+	</dd>
+</dl>
+<script type="text/javascript" src=''></script>
+<script type="text/javascript">
+
+
+// 查找最小值
+function findMin(arr) {
+	var min = arr[0];
+	for ( var i = 0; i < arr.length; i++ ) {
+		if (min > arr[i]) min = arr[i];
+	}
+	return min;
+}
+// 查找最大值
+function findMax(arr) {
+	var max = arr[0];
+	for ( var i = 0; i < arr.length; i++ ) {
+		if (max < arr[i]) max = arr[i];
+	}
+	return max;
+}
+// 自组织数据
+// 即将经常查找到的数据放在前面
+// 顺序查找
+function seqSearch(arr, data) {
+	for ( var i = 0; i < arr.length; i++ ) {
+		if (arr[i] === data) {
+			if (i > arr.length * 0.2) {
+				swap(arr, i, 0);
+			}
+			return i;
+		}
+	}
+	return -1;
+}
+// 交换一个数组中的两个元素的位置
+function swap(arr, index1, index2) {
+	var temp = arr[index1];
+	arr[index1] = arr[index2];
+	arr[index2] = temp;
+}
+// 二分查找法
+function binSearch(arr, data) {
+	var upperBound = arr.length-1;
+	var lowerBound = 0;
+	while (lowerBound <= upperBound) {
+		var mid = Math.floor((upperBound + lowerBound) / 2);
+		console.log(" 当前的中点： " + mid);
+		if (arr[mid] < data) {
+			lowerBound = mid + 1;
+		} else if (arr[mid] > data) {
+			upperBound = mid - 1;
+		} else {
+			return mid;
+		}
+	} 
+	return -1;
+}
+// 查找一个数字重复的次数
+function count(arr, data) {
+	var count = 0;
+	var position = binSearch(arr, data);
+	if (position > -1) {
+		count++;
+		for ( var i = position - 1; i > 0; i-- ) {
+			if (data === arr[i]) {
+				count++;
+			} else {
+				break;
+			}
+		}
+		for ( var i = position + 1; i < arr.length; i++) {
+			if (data == arr[i]) {
+				count++;
+			} else {
+				break;
+			}
+		}
+	}
+	return count;
+}
+// 快速排序
+function qSort(arr) {
+	if (arr.length == 0) return [];
+	var left = [], right = [], init = arr[0];
+	for ( var i = 1; i < arr.length; i++) {
+		if (arr[i] < init) {
+			left.push(arr[i]);
+		} else {
+			right.push(arr[i]);
+		}
+	}
+	return qSort(left).concat(init, qSort(right));
+}
+
+var nums = [];
+for ( var i = 0; i < 1000; i++ ) {
+	nums[i] = Math.floor(Math.random() * 11);
+}
+nums = qSort(nums);
+var count = count(nums, 5);
+console.log('5出现的次数：' + count);
+</script>

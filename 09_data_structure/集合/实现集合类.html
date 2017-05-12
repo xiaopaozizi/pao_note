@@ -1,0 +1,137 @@
+<meta charset="utf-8"><style>* {font-size: 20px;}</style>
+<h3><a href='集合.html'>【返回】</a></h3>
+<dl>
+	<dt>1.集合的定义：</dt>
+	<dd>集合是由一组无序但彼此之间又有一定相关性的成员构成的， 每个成员在集合中只能出现一次。 </dd>
+</dl>
+<dl>
+	<dt>2.集合的特征：</dt>
+	<dd>
+		<ul>
+			<li>不包含任何成员的集合称为空集， 全集则是包含一切可能成员的集合。</li>
+			<li>如果两个集合的成员完全相同， 则称两个集合相等。</li>
+			<li>如果一个集合中所有的成员都属于另外一个集合， 则前一集合称为后一集合的子集。</li>
+		</ul>
+	</dd>
+</dl>
+<dl>
+	<dt>3.对集合的操作：并、交、差、补</dt>
+	<dd>
+		<code>
+			function Set() {<br/>
+			&nbsp;&nbsp;this.dataStore = [];<br/>
+			&nbsp;&nbsp;this.add = add;<br/>
+			&nbsp;&nbsp;this.remove = remove;<br/>
+			&nbsp;&nbsp;this.size = size;<br/>
+			&nbsp;&nbsp;this.contains = contains;<br/>
+			&nbsp;&nbsp;this.union = union;<br/>
+			&nbsp;&nbsp;this.intersect = intersect;<br/>
+			&nbsp;&nbsp;this.subset = subset;<br/>
+			&nbsp;&nbsp;this.difference = difference;<br/>
+			&nbsp;&nbsp;this.show = show;<br/>
+			}<br/>
+			// 添加成员<br/>
+			function add (data) {<br/>
+			&nbsp;&nbsp;if (this.dataStore.indexOf(data) == -1) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;this.dataStore.push(data);<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;return true;<br/>
+			&nbsp;&nbsp;} else {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;return false;<br/>
+			&nbsp;&nbsp;}<br/>
+			}<br/>
+			// 删除成员<br/>
+			function remove(data) {<br/>
+			&nbsp;&nbsp;var pos = this.dataStore.indexOf(data);<br/>
+			&nbsp;&nbsp;if (pos > -1) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;this.dataStore.splice(pos, 1);<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;return true;<br/>
+			&nbsp;&nbsp;} else {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;return false;<br/>
+			&nbsp;&nbsp;}<br/>
+			}<br/>
+			// 显示集合<br/>
+			function show () {<br/>
+			&nbsp;&nbsp;return this.dataStore;<br/>
+			}<br/>
+			// 返回集合的个数<br/>
+			function size () {<br/>
+			&nbsp;&nbsp;return this.dataStore.length;<br/>
+			}<br/>
+			// 判断成员是否属于集合<br/>
+			function contains (data) {<br/>
+			&nbsp;&nbsp;if (this.dataStore.indexOf(data) > -1) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;return true;<br/>
+			&nbsp;&nbsp;} else {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;return false;<br/>
+			&nbsp;&nbsp;}<br/>
+			}<br/>
+			// 并集<br/>
+			function union (set) {<br/>
+			&nbsp;&nbsp;var temSet = new Set();<br/>
+			&nbsp;&nbsp;for ( var i = 0; i < this.dataStore.length; i++ ) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;temSet.add(this.dataStore[i]);<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;for ( var j = 0; j < set.dataStore.length; j++ ) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;if (!temSet.contains(set.dataStore[j])) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;temSet.add(set.dataStore[j]);<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;return temSet;<br/>
+			}<br/>
+			// 交集<br/>
+			function intersect(set) {<br/>
+			&nbsp;&nbsp;var temSet = new Set();<br/>
+			&nbsp;&nbsp;for ( var i = 0; i < this.dataStore.length; i++ ) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;if (set.contains(this.dataStore[i])) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;temSet.add(this.dataStore[i]);<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;return temSet;<br/>
+			}<br/>
+			// 子集 A.subset(B) A是B的子集<br/>
+			function subset (set) {<br/>
+			&nbsp;&nbsp;if (this.size() > set.size()) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;return false;<br/>
+			&nbsp;&nbsp;} else {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;for (var i = 0; i < this.dataStore.length; i++ ) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (!set.contains(this.dataStore[i])) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return false;<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;return true;<br/>
+			&nbsp;&nbsp;}<br/>
+			}<br/>
+			// 交集<br/>
+			function difference (set) {<br/>
+			&nbsp;&nbsp;var temSet = new Set();<br/>
+			&nbsp;&nbsp;for ( var i = 0; i < this.dataStore.length; i++ ) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;if (!set.contains(this.dataStore[i])) {<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;temSet.add(this.dataStore[i]);<br/>
+			&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;}<br/>
+			&nbsp;&nbsp;return temSet;<br/>
+			}
+		</code>
+	</dd>
+</dl>
+<script type="text/javascript" src='Set.js'></script>
+<script type="text/javascript">
+
+
+
+var a = new Set();
+a.add('张三');
+a.add('里斯');
+a.add('王武');
+
+var b = new Set();
+b.add('one');
+b.add('two');
+b.add('张三');
+
+console.log(a.difference(b).show());
+console.log(b.difference(a).show());
+
+
+
+</script>
