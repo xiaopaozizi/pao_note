@@ -1,0 +1,82 @@
+
+#box {
+	width: 500px;
+	margin: 0 auto;
+	padding: 0;
+}
+#box .header {
+	height: 80px;
+	border-radius: 5px;
+	background-color: #bdab9d;
+	margin-bottom: 10px;
+}
+#box .header .logo {
+	border-radius: 5px;
+}
+#box .header .refrush {
+	margin-left: 80px;
+}
+#box .header .score {
+	float: right;
+	font-size:28px;
+	font-weight: bold;
+	color:#fff;
+	height: 80px;
+	line-height: 80px;
+	display: inline-block;
+	margin-right: 10px;
+}
+#box .body {
+	height: 500px;
+	border-radius: 10px;
+	background-color: #bdab9d;
+}
+
+#box .body div {
+	width: 100px;
+	height: 100px;
+	background: #ccc0c2;
+	margin: 12px;
+	border-radius:10px;
+	float:left;
+	line-height: 100px;
+	text-align: center;
+	font-size: 40px;
+	font-weight: bold;
+}
+/*不同数字的背景样式*/
+#box .body div.num2 {    	
+	background:#eee4da;    	
+}
+#box .body div.num4 {
+	background:#f3ae79;
+}
+#box .body div.num8 {
+	background:#f59563;
+}
+#box .body div.num16 {
+	background:#f8795e;
+}
+#box .body div.num32 {
+	background:#edce71;
+}
+#box .body div.num64 {
+	background:#f65d3b;
+}
+#box .body div.num128 {
+	background:#edce71;
+}
+#box .body div.num256 {
+	background:#edcc61;
+}
+#box .body div.num512 {
+	background:#ecc850;
+}
+#box .body div.num1024 {
+	background:#edc53f;
+}
+#box .body div.num2048 {
+	background:#eee4da;
+}
+
+
