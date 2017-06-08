@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .outer{
+            width:200px;
+            height:200px;
+            background: red;
+            border:10px solid #000;
+            overflow: hidden;
+            *position:relative;
+        }
+        .inner{
+            position: relative;
+            width:400px;
+            height:400px;
+            background:blue;
+        }
+    </style>
+</head>
+<body>
+<div class="outer">
+    <div class="inner"></div>
+</div>
+</body>
+</html>

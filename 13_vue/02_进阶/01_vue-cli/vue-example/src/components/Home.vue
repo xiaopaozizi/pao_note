@@ -1,6 +1,7 @@
 <template>
   <div class="home">
     我是首页
+    <el-input  placeholder="请输入内容"></el-input>
   </div>
 </template>
 

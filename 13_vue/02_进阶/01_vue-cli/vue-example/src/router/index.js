@@ -1,8 +1,11 @@
 import Vue from 'vue'
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-default/index.css'
 import VueRouter from 'vue-router'
 
 // 作为Vue的插件
 Vue.use(VueRouter)
+Vue.use(ElementUI)
 
 import Home from '@/components/Home'
 import Document from '@/components/Document'

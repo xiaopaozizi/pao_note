@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .box{
+            position:relative;
+            border:1px solid #000;
+            width:300px;
+            height:200px;
+        }
+        .box div{
+            width:250px;
+            margin-left:50px;
+            float:left;
+            background:red;
+        }
+        .box span{
+            width:50px;
+            height:50px;
+            position:absolute;
+            right:-10px;
+            top:-10px;
+            background:yellow;;
+        }
+    </style>
+</head>
+<body>
+<div class="box">
+    <div>浮动元素</div>
+    <p><span>绝对定位</span></p>
+</div>
+</body>
+</html>
