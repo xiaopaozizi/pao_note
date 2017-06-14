@@ -25,7 +25,7 @@ module.exports = {
   dev: {
     // 获取dev.env.js文件
     env: require('./dev.env'),
-    port: 8080,
+    port: 8081,
     autoOpenBrowser: true,
     assetsSubDirectory: 'static',
     // 公共文件的路劲
