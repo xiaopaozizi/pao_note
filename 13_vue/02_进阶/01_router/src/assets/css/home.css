@@ -1,0 +1,58 @@
+#home{
+  padding:0;
+  margin:0;
+  display: flex;
+  flex-direction: column;
+  align-content: stretch;
+  width:100%;
+}
+#home .header{
+  display: flex;
+  width:100%;
+  height:50px;
+  background: #373d41;
+}
+/*头部-----logo*/
+#home .header .header-logo {
+  border-right:2px solid #000;
+}
+#home .header .header-logo img{
+  width:50px;
+  height:50px;
+}
+#home .header .header-logo img:hover{
+  background: #4A5064;
+}
+/*头部-----标题*/
+#home .header .header-title{
+  width:200px;
+  text-align: center;
+  color: #fff;
+  height:50px;
+  line-height:50px;
+  padding:0 20px;
+  border-right:2px solid #000;
+}
+/*头部---右侧----下拉菜单*/
+#home .header .header-right{
+  width:100%;
+  display: flex;
+  color:#fff;
+  text-align: center;
+}
+#home .header .header-right .loginer{
+  color:#fff;
+  line-height:50px;
+  height:50px;
+}
+/*中间部分*/
+#home .main{
+  display: flex;
+  height:100%;
+}
+#home .main .nav{
+  height:100%;
+  width:20%;
+  background: red;
+}
+
