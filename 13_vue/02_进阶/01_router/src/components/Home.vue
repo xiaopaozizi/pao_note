@@ -6,6 +6,11 @@
         <a href="#" class="header-logo"><img src="../assets/logo.png"/></a>
         <!--标题-->
         <span class="header-title">小炮子子的后台管理系统</span>
+        <!--折叠按钮-->
+        <div class="header-fold">
+          <i class="iconfont icon-menufold" v-show="!isFoldMenu" @click="closeFoldMenu"></i>
+          <i class="iconfont icon-menuunfold" v-show="isFoldMenu" @click="closeFoldMenu"></i>
+        </div>
         <!--右侧下拉菜单-->
         <div class="header-right">
           <el-col :offset="21" :span="3">
@@ -26,24 +31,26 @@
       <!--中间-->
       <el-col :span="24" class="main">
         <el-col :span="3" class="main-nav">
-          <el-menu default-active="2" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" theme="dark">
-            <el-submenu index="1">
-              <template slot="title"><i class="el-icon-message"></i>导航一</template>
-              <el-menu-item-group>
-                <template slot="title">分组一</template>
-                <el-menu-item index="1-1">选项1</el-menu-item>
-                <el-menu-item index="1-2">选项2</el-menu-item>
-              </el-menu-item-group>
-              <el-menu-item-group title="分组2">
-                <el-menu-item index="1-3">选项3</el-menu-item>
-              </el-menu-item-group>
-              <el-submenu index="1-4">
-                <template slot="title">选项4</template>
-                <el-menu-item index="1-4-1">选项1</el-menu-item>
-              </el-submenu>
+          <!--导航条-->
+          <el-menu
+            v-show="!isFoldMenu"
+            default-active="2"
+            class="el-menu-vertical-demo"
+            @open="handleOpen"
+            @close="handleClose"
+            theme="dark">
+            <el-menu-item index="1"><i class="iconfont icon-home"></i> 首页</el-menu-item>
+            <el-menu-item index="2"><i class="iconfont icon-users"></i> 用户列表</el-menu-item>
+            <el-submenu index="3">
+              <template slot="title"><i class="iconfont icon-books"></i> 图书管理</template>
+              <el-menu-item index="3-1">图书列表</el-menu-item>
+              <el-menu-item index="3-2">图书分类</el-menu-item>
             </el-submenu>
-            <el-menu-item index="2"><i class="el-icon-menu"></i>导航二</el-menu-item>
-            <el-menu-item index="3"><i class="el-icon-setting"></i>导航三</el-menu-item>
+            <el-submenu index="4">
+              <template slot="title"><i class="iconfont icon-setting1"></i> 设置</template>
+              <el-menu-item index="4-1">个人信息</el-menu-item>
+              <el-menu-item index="4-2">修改密码</el-menu-item>
+            </el-submenu>
           </el-menu>
         </el-col>
       </el-col>
@@ -51,6 +58,18 @@
 </template>
 
 <script>
-    export default {}
+    export default {
+      data(){
+        return {
+          // 是否折叠菜单
+          isFoldMenu : false
+        }
+      },
+      methods:{
+        closeFoldMenu(){
+          this.isFoldMenu = !this.isFoldMenu;
+        }
+      }
+    }
 </script>
 
