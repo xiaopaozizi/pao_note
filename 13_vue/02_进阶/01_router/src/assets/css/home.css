@@ -62,15 +62,23 @@
   display: flex;
   height:100%;
 }
+/*中间部分----左边-----导航条*/
 #home .main .nav{
   height:100%;
   display: flex;
   flex-direction: column;
 }
-
 .el-menu--dark{
   height:100%;
 }
+/*中间部分---右边----内容区域*/
+#home .main .main-content{
+  width:100%;
+  height:100%;
+  overflow-y: scroll;
+  padding:20px;
+}
+
 
 
 

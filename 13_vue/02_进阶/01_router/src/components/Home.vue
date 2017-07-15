@@ -20,9 +20,9 @@
                 小炮子子<i class="el-icon-caret-bottom el-icon--right"></i>
               </span>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item><a href="#">个人信息</a></el-dropdown-item>
-                <el-dropdown-item><a href="#">修改密码</a></el-dropdown-item>
-                <el-dropdown-item divided><a href="#">退出系统</a></el-dropdown-item>
+                <el-dropdown-item><router-link :to="{ path: '/user/profile' }">个人信息</router-link></el-dropdown-item>
+                <el-dropdown-item><router-link :to="{ path: '/user/modPwd' }">修改密码</router-link></el-dropdown-item>
+                <el-dropdown-item divided @click.native="logoutHandle">退出系统</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
           </el-col>
@@ -30,16 +30,28 @@
       </el-col>
       <!--中间-->
       <el-col :span="24" class="main">
-        <el-col :span="3" class="main-nav">
+        <!--左边导航-->
+        <el-col :span="isFoldMenu ? 0 : 3" v-show ="!isFoldMenu" class="main-nav">
           <!--导航条-->
           <el-menu
-            v-show="!isFoldMenu"
             default-active="2"
             class="el-menu-vertical-demo"
-            @open="handleOpen"
-            @close="handleClose"
+            router
             theme="dark">
-            <el-menu-item index="1"><i class="iconfont icon-home"></i> 首页</el-menu-item>
+            <!--遍历路由信息，如果是showMenu的则拿出来-->
+            <template v-for="(item,index) in $router.options.routes" v-if="item.showMenu">
+              <!--无leaf属性的（leaf单一的叶子节点），即有子菜单的-->
+              <el-submenu :index="index+''" v-if="!item.leaf">
+                <template slot="title"><i :class="item.iconCol"></i> {{item.name}}</template>
+                <!--遍历子菜单-->
+                <el-menu-item :index="item2.path" v-for="(item2, index2) in item.children">{{item2.name}}</el-menu-item>
+              </el-submenu>
+              <el-menu-item
+                :index="item.children[0].path"
+                v-else-if="item.leaf && item.children && item.children.length"
+                ><i :class="item.iconCol"></i> {{item.children[0].name}}</el-menu-item>
+            </template>
+            <!--<el-menu-item index="1"><i class="iconfont icon-home"></i> 首页</el-menu-item>
             <el-menu-item index="2"><i class="iconfont icon-users"></i> 用户列表</el-menu-item>
             <el-submenu index="3">
               <template slot="title"><i class="iconfont icon-books"></i> 图书管理</template>
@@ -50,8 +62,16 @@
               <template slot="title"><i class="iconfont icon-setting1"></i> 设置</template>
               <el-menu-item index="4-1">个人信息</el-menu-item>
               <el-menu-item index="4-2">修改密码</el-menu-item>
-            </el-submenu>
+            </el-submenu>-->
           </el-menu>
+        </el-col>
+        <!--右边内容-->
+        <el-col :span="isFoldMenu ? 24 : 21" class="main-content">
+          <transition mode="out-in">
+            <keep-alive>
+              <router-view></router-view>
+            </keep-alive>
+          </transition>
         </el-col>
       </el-col>
     </el-row>
@@ -62,14 +82,27 @@
       data(){
         return {
           // 是否折叠菜单
-          isFoldMenu : false
+          isFoldMenu : false,
         }
       },
       methods:{
+        // 关闭或打开左侧导航菜单
         closeFoldMenu(){
           this.isFoldMenu = !this.isFoldMenu;
-        }
+        },
+        // 退出系统
+        logoutHandle(){
+          let _this = this;
+          this.$confirm('确认关闭？', '提示').then( () => {
+
+            // 情况seesionStorage('access-user'),并且跳转路由
+            window.sessionStorage.removeItem('access-user');
+            _this.$router.push({ path : '/login' })
+          }).catch(() => {
+              console.log(2222) });
+          }
       }
+
     }
 </script>
 
