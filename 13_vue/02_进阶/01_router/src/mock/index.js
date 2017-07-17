@@ -6,7 +6,7 @@
 
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
-import {LoginUsers} from './data/User'
+import {LoginUsers, userList} from './data/User'
 
 
 
@@ -41,6 +41,17 @@ export default {
             resolve([200, { code : 500, msg : '用户名或密码错误'}])
           }
         }, 1000)
+      })
+    })
+
+    // 获取用户列表
+    mock.onPost('/userList').reply(arg => {
+      let { username } = JSON.parse(arg.data);
+      //console.log(username);
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200, { data : userList }]);
+        }, 500)
       })
     })
   }
