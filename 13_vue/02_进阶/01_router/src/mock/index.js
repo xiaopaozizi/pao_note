@@ -7,7 +7,7 @@
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import {LoginUsers, userList} from './data/User'
-
+let _userList = userList;
 
 
 export default {
@@ -47,10 +47,21 @@ export default {
     // 获取用户列表
     mock.onPost('/userList').reply(arg => {
       let { username } = JSON.parse(arg.data);
-      //console.log(username);
+      // 通过username进行过滤筛选
+      // 如果username不为空
+      if(username && username !== ''){
+        _userList = _userList.filter((u)=>{
+          if(u.name.indexOf(username) > -1){
+            return true;
+          }
+          return false;
+        })
+      } else {
+        _userList = userList;
+      }
       return new Promise((resolve, reject) => {
         setTimeout(() => {
-          resolve([200, { data : userList }]);
+          resolve([200, { data : _userList }]);
         }, 500)
       })
     })

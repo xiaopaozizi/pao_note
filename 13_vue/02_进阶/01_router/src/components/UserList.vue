@@ -6,12 +6,12 @@
         <el-breadcrumb-item>用户列表</el-breadcrumb-item>
       </el-breadcrumb>
       <!--查询表单-->
-      <el-form :inline="true" :model="formInline" class="search-form">
-        <el-form-item label="审批人">
-          <el-input v-model="formInline.user" placeholder="审批人"></el-input>
+      <el-form :inline="true" class="search-form">
+        <el-form-item label="">
+          <el-input v-model="username" placeholder="姓名"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="onSubmit">查询</el-button>
+          <el-button type="primary" @click="searchUserList">查询</el-button>
         </el-form-item>
       </el-form>
       <!--表格数据-->
@@ -68,10 +68,8 @@
     export default {
       data(){
         return {
-          // 查询表单字段
-          formInline: {
-            user: '',
-          },
+          // 查询表单字段-----姓名
+          username : '',
           // 表格加载之前的样式
           loading : false,
           // 表格数据
@@ -85,16 +83,12 @@
         formatSex(row, col){
           return row.sex === true ? '男' : '女';
         },
-        searchUserList(user){
+        searchUserList(){
           let userListParams = {
-            user : user || ''
+            username : this.username
           }
-          //this.loading = true;
-          //console.log('lalal', user);
           reqUserList(userListParams).then((res) => {
-
             this.tableData = res.data;
-            console.log(this.tableData);
           })
 
         }

@@ -15,18 +15,7 @@ const LoginUsers = [
   }
 ]
 
-/*const userList = Mock.mock({
-  "userList|100": [
-    {
-      "id|+1" : 1,
-      "name" : Mock.Random.cname(),
-      "sex|1-2" : true,
-      "age|18-60" : 60,
-      "birth" : Mock.Random.date(),
-      "address" : Mock.Random.county(true)
-    }
-  ]
-})*/
+
 let userList = [];
 for( let i = 0; i < 100; i++ ) {
   userList.push(Mock.mock({

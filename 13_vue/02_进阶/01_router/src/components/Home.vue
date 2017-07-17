@@ -51,18 +51,6 @@
                 v-else-if="item.leaf && item.children && item.children.length"
                 ><i :class="item.iconCol"></i> {{item.children[0].name}}</el-menu-item>
             </template>
-            <!--<el-menu-item index="1"><i class="iconfont icon-home"></i> 首页</el-menu-item>
-            <el-menu-item index="2"><i class="iconfont icon-users"></i> 用户列表</el-menu-item>
-            <el-submenu index="3">
-              <template slot="title"><i class="iconfont icon-books"></i> 图书管理</template>
-              <el-menu-item index="3-1">图书列表</el-menu-item>
-              <el-menu-item index="3-2">图书分类</el-menu-item>
-            </el-submenu>
-            <el-submenu index="4">
-              <template slot="title"><i class="iconfont icon-setting1"></i> 设置</template>
-              <el-menu-item index="4-1">个人信息</el-menu-item>
-              <el-menu-item index="4-2">修改密码</el-menu-item>
-            </el-submenu>-->
           </el-menu>
         </el-col>
         <!--右边内容-->
