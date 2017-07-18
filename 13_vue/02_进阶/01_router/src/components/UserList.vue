@@ -17,7 +17,7 @@
       <!--表格数据-->
       <el-table
         :data="tableData"
-        v-loading="loading"
+        v-loading.body="loading"
         style="width: 100%"
         highlight-current-row
         :default-sort = "{prop: 'date', order: 'descending'}"
@@ -87,7 +87,9 @@
           let userListParams = {
             username : this.username
           }
+          this.loading = true;
           reqUserList(userListParams).then((res) => {
+            this.loading = false;
             this.tableData = res.data;
           })
 

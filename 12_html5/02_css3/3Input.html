@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input type="text">
+<input type="text">
+<input type="text">
+<button>提交</button>
+
+
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    (function(){
+        $('button').on('click',function(){
+            var result = [];
+            var noValue = true;
+            $('input').each(function(){
+                if($(this).val() !== '') noValue = false;
+                result.push($(this).val());
+            })
+            // 三个没有值的情况
+            if(noValue) {
+                alert('通过')
+                return;
+            }
+            // 有值的情况
+            var flag = result.every(function(item){
+                return item !== '';
+            })
+            if(flag) {
+                alert('通过')
+            } else {
+                alert('不通过')
+            }
+        })
+    })();
+</script>
+</body>
+</html>

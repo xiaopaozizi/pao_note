@@ -1,3 +1,23 @@
-#userList{
-
+#bookList{
+  width:100%;
+  display: flex;
+  flex-direction:column;
+}
+#bookList .search-form{
+  margin-top:20px;
+}
+/*表格----图书简介*/
+#bookList .table-desc-title{
+  font-weight:bold;
+}
+#bookList .table-desc-content{
+  font:normal normal 14px/28px '微软雅黑';
+  margin-top:15px;
+}
+/*分页*/
+#bookList .page{
+  margin-top:10px;
+  width:100%;
+  display: flex;
+  justify-content: space-between;
 }
