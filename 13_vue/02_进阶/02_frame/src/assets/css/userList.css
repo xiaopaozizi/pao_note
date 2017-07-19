@@ -1,0 +1,8 @@
+#userList{
+  width:100%;
+  display: flex;
+  flex-direction:column;
+}
+#userList .search-form{
+  margin-top:20px;
+}
