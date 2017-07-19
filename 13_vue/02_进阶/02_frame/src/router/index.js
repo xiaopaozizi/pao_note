@@ -32,7 +32,7 @@ let router =  new Router({
       // 图标
       iconCol : 'iconfont icon-home',
       children:[
-        { path : '/admin', name : '首页', component : Admin, meta : { parent : '后台首页'} }
+        { path : '/admin', name : '首页', component : Admin, meta : { parent : '后台首页'} },
       ]
     },
     {
