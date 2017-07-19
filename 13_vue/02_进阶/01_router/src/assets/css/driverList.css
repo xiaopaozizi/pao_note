@@ -1,0 +1,23 @@
+#driverList{
+  width:100%;
+  display: flex;
+  flex-direction:column;
+}
+#driverList .search-form{
+  margin-top:20px;
+}
+/*表格----图书简介*/
+#driverList .table-desc-title{
+  font-weight:bold;
+}
+#driverList .table-desc-content{
+  font:normal normal 14px/28px '微软雅黑';
+  margin-top:15px;
+}
+/*分页*/
+#driverList .page{
+  margin-top:10px;
+  width:100%;
+  display: flex;
+  justify-content: space-between;
+}

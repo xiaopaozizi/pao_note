@@ -4,6 +4,7 @@ import Login from '@/components/Login'
 import Home from '@/components/Home'
 import Admin from '@/components/Admin'
 import UserList from '@/components/UserList'
+import DriverList from '@/components/DriverList'
 import BookList from '@/components/BookList'
 import BookCategory from '@/components/BookCategory'
 import Profile from '@/components/Profile'
@@ -51,6 +52,20 @@ let router =  new Router({
     },
     {
       path : '/',
+      name : '司机管理',
+      component : Home,
+      // 是否显示菜单----再后台首页--左侧---导航条显示
+      showMenu : true,
+      // 是否为唯一的叶子节点，即没有子菜单
+      leaf : true,
+      // 图标
+      iconCol : 'iconfont icon-users',
+      children:[
+        { path : '/driver/list', name : '司机列表', component : DriverList }
+      ]
+    },
+    {
+      path : '/',
       name : '图书管理',
       component : Home,
       // 是否显示菜单----再后台首页--左侧---导航条显示
@@ -79,7 +94,7 @@ let router =  new Router({
   ],
 })
 // 路由拦截器
-router.beforeEach ((to, from, next) => {
+/*router.beforeEach ((to, from, next) => {
   //console.log(to.path);
   if(to.path.startsWith('/login')){
     // 登录路由，直接进入
@@ -94,6 +109,6 @@ router.beforeEach ((to, from, next) => {
       next();
     }
   }
-})
+})*/
 
 export default router;

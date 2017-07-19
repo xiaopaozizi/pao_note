@@ -10,6 +10,7 @@ import Axios from 'axios'
 import VueAxios from 'vue-axios'
 import mock from '@/mock'
 
+
 Vue.config.productionTip = false
 
 
