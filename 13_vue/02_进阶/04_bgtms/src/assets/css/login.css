@@ -1,0 +1,13 @@
+#login .el-form-item{
+  width:90%;
+}
+#login .remember-password-form-item{
+  height:36px;
+}
+#login .remember-password-checkbox{
+  position: absolute;
+  left: 0;
+}
+#login .loginBtn{
+  width:100%;
+}

@@ -1,0 +1,14 @@
+{
+  "goods": [
+    {"name": "序号", "id": 0, "isChecked":true, "record": "num"},
+    {"name": "", "id": 1, "isChecked":true, "record": ""},
+    {"name": "状态", "id": 2, "isChecked":true, "record": "state"},
+    {"name": "订单类型", "id": 8, "isChecked":true, "record": "orderType"},
+    {"name": "箱型", "id": 3, "isChecked":true, "record": "boxquantity"},
+    {"name": "排单方式", "id": 4, "isChecked":true, "record": "waybillNum"},
+    {"name": "接运方", "id": 5, "isChecked":true, "record": "ServiceType"},
+    {"name": "装拆地", "id": 6, "isChecked":true, "record": "currency"},
+    {"name": "车牌号", "id": 7, "isChecked":true, "record": "carnum"},
+    {"name": "司机/手机", "id": 7, "isChecked":true, "record": "driver"}
+  ]
+}
