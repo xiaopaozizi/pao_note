@@ -8,16 +8,18 @@ import '@/assets/css'
 import router from './router'
 import Axios from 'axios'
 import VueAxios from 'vue-axios'
-import mock from '@/mock'
+//import mock from '@/mock'
 
+
+
+Vue.use(VueAxios, Axios)
 
 Vue.config.productionTip = false
 
 
 Vue.use(ElementUI)
-Vue.use(VueAxios, Axios)
 // 初始化mock，可以直接发送axios
-mock.init();
+//mock.init();
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

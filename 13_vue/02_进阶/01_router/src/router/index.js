@@ -4,7 +4,11 @@ import Login from '@/components/Login'
 import Home from '@/components/Home'
 import Admin from '@/components/Admin'
 import UserList from '@/components/UserList'
-import DriverList from '@/components/DriverList'
+// 司机管理
+import DriverList from '@/components/driver/list'
+import DriverAdd from '@/components/driver/add'
+
+
 import BookList from '@/components/BookList'
 import BookCategory from '@/components/BookCategory'
 import Profile from '@/components/Profile'
@@ -56,12 +60,11 @@ let router =  new Router({
       component : Home,
       // 是否显示菜单----再后台首页--左侧---导航条显示
       showMenu : true,
-      // 是否为唯一的叶子节点，即没有子菜单
-      leaf : true,
       // 图标
       iconCol : 'iconfont icon-users',
       children:[
-        { path : '/driver/list', name : '司机列表', component : DriverList }
+        { path : '/driver/list', name : '司机列表', component : DriverList },
+        { path : '/driver/add', name : '添加司机', component : DriverAdd }
       ]
     },
     {
