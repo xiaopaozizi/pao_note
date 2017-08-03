@@ -35,36 +35,20 @@
           width="180">
         </el-table-column>
 
-        <el-table-column
-          prop="sex"
-          label="性别"
-          :formatter="formatSex"
-          sortable
-          width="180">
-        </el-table-column>
+
         <el-table-column
           prop="age"
           label="年龄"
           sortable
           width="180">
         </el-table-column>
-        <el-table-column
-          prop="birth"
-          label="生日"
-          sortable
-          width="180">
-        </el-table-column>
-        <el-table-column
-          prop="address"
-          sortable
-          label="地址">
-        </el-table-column>
+
       </el-table>
     </div>
 </template>
 
 <script>
-    import { reqUserList } from '@/api/api'
+    import { addUser } from '@/api/api'
     export default {
       data(){
         return {
@@ -85,10 +69,11 @@
         },
         searchUserList(){
           let userListParams = {
-            username : this.username
+            username: '小叶子',
+            age: 23
           }
           this.loading = true;
-          reqUserList(userListParams).then((res) => {
+          addUser(userListParams).then((res) => {
             this.loading = false;
             this.tableData = res.data;
           })

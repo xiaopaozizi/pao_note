@@ -5,7 +5,8 @@
 var sqlMap = {
   // 用户
   user: {
-    add: 'insert into user(id, name, age) values (0, ?, ?)'
+    add: 'insert into user(id, name, age) values (0, ?, ?)',
+    list: 'select * from user'
   }
 }
 module.exports = sqlMap;
