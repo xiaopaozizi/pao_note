@@ -341,11 +341,32 @@ export default {
   //车头的编辑
   carHeaderMod(params) {
     return fetch('truckbaseinfo/mod',params)
+  },
+
+  /*
+  * 权限部分的接口
+  *
+  * */
+  // 公司查询
+  powerCompanyList(parmas){
+    return fetch('syscompanyinfo/getlist',parmas)
+  },
+  // 添加公司
+  powerCompanyAdd(parmas){
+    return fetch('syscompanyinfo/add',parmas)
+  },
+  // 编辑公司
+  powerCompanyMod(parmas){
+    return fetch('syscompanyinfo/mod',parmas)
+  },
+  // 删除公司
+  powerCompanyDel(parmas){
+    return fetch('syscompanyinfo/del',parmas)
+  },
+  // 根据公司id获取部门
+  powerDepartmentList(parmas){
+    return fetch('sysdepartmentinfo/getlist',parmas)
   }
-
-
-
-
 
 
 }

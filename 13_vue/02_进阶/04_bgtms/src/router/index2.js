@@ -6,6 +6,7 @@ import Home from '@/components/pao-nav/Home'
 import order2 from '@/components/business/order2/list'
 import orderAdd from '@/components/business/order2/add'
 import waybill2 from '@/components/business/waybill2/list'
+import powerManage from '@/components/power/manage'
 
 import driverList from '@/components/logistics/driverList'
 import carManage from '@/components/logistics/carManage/list'
@@ -35,7 +36,7 @@ let router =  new Router({
       name : '箱单',
       component : Home,
       // 重定向
-      redirect : '/business/order2',
+      redirect : '/business/power',
       // 是否显示菜单----再后台首页--左侧---导航条显示
       showMenu : true,
       // 是否为唯一的叶子节点，即没有子菜单
@@ -46,6 +47,7 @@ let router =  new Router({
         { path : '/business/order2', name : '订单', component : order2, meta : { parent : '箱单', showMenu : true,} },
         { path : '/business/waybill2', name : '运单', component : waybill2, meta : { parent : '箱单',showMenu : true,} },
         { path : '/business/orderAdd', name : '新增', component : orderAdd, meta : { parent : '箱单'} },
+        { path : '/business/power', name : '权限', component : powerManage, meta : { parent : '箱单',showMenu : true} },
       ]
     },
     {
