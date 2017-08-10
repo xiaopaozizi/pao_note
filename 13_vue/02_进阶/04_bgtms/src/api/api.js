@@ -363,11 +363,43 @@ export default {
   powerCompanyDel(parmas){
     return fetch('syscompanyinfo/del',parmas)
   },
+
+
+
   // 根据公司id获取部门
   powerDepartmentList(parmas){
     return fetch('sysdepartmentinfo/getlist',parmas)
-  }
+  },
+  // 添加部门
+  powerDepartmentAdd(parmas){
+    return fetch('sysdepartmentinfo/add',parmas)
+  },
+  // 编辑部门
+  powerDepartmentMod(parmas){
+    return fetch('sysdepartmentinfo/mod',parmas)
+  },
+  // 删除部门
+  powerDepartmentDel(parmas){
+    return fetch('sysdepartmentinfo/del',parmas)
+  },
 
+
+// 根据公司id获取部门
+  powerStaffList(parmas){
+    return fetch('sysstaffinfo/getlist',parmas)
+  },
+  // 添加员工
+  powerStaffAdd(parmas){
+    return fetch('sysstaffinfo/add',parmas)
+  },
+  // 编辑员工
+  powerStaffMod(parmas){
+    return fetch('sysstaffinfo/mod',parmas)
+  },
+  // 删除员工
+  powerStaffDel(parmas){
+    return fetch('sysstaffinfo/del',parmas)
+  },
 
 }
 

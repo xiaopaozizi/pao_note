@@ -4,6 +4,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import Tool from '@/api/tool'
+import api from '@/api/api'
 
 Vue.use(Vuex);
 let tool = new Tool();
@@ -66,9 +67,34 @@ let tableModule = {
   }
 }
 
+
+/*
+* 权限模块
+* */
+let powerModule = {
+  state : {
+    // 公司列表
+
+
+  },
+  getters : {
+
+  },
+  mutations : {
+    // 获取公司列表
+
+  },
+  actions : {
+
+  }
+}
+
+
+
 let router = new Vuex.Store({
   modules : {
-    tableModule
+    tableModule,
+    powerModule
   }
 })
 
