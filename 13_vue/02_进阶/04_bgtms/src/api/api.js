@@ -347,9 +347,21 @@ export default {
   * 权限部分的接口
   *
   * */
-  // 公司查询
+
+
+  // 获取公司，部门，员工三级树节点
+  getPowerTree(parmas){
+    return fetch('syscompanyinfo/getlistfortree',parmas)
+  },
+
+
+  // 公司列表信息
   powerCompanyList(parmas){
     return fetch('syscompanyinfo/getlist',parmas)
+  },
+  // 通过id查询单条公司信息
+  powerOneCompany(parmas){
+    return fetch('syscompanyinfo/getcompanyinfo',parmas)
   },
   // 添加公司
   powerCompanyAdd(parmas){
@@ -370,6 +382,10 @@ export default {
   powerDepartmentList(parmas){
     return fetch('sysdepartmentinfo/getlist',parmas)
   },
+  // 通过id查询单条部门信息
+  powerOneDepartment(parmas){
+    return fetch('sysdepartmentinfo/getdepartmentinfo',parmas)
+  },
   // 添加部门
   powerDepartmentAdd(parmas){
     return fetch('sysdepartmentinfo/add',parmas)
@@ -384,9 +400,16 @@ export default {
   },
 
 
-// 根据公司id获取部门
+
+
+
+// 根据部门id获取员工
   powerStaffList(parmas){
     return fetch('sysstaffinfo/getlist',parmas)
+  },
+  // 通过id查询员工信息
+  powerOneStaff(parmas){
+    return fetch('sysstaffinfo/getstaffinfo',parmas)
   },
   // 添加员工
   powerStaffAdd(parmas){

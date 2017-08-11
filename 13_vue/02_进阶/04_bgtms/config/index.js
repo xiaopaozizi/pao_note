@@ -29,8 +29,8 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/api': {
-        target: 'http://10.16.21.186:9090/bgtms',
-        //target: 'http://223.94.77.108:90/bgtms',
+        //target: 'http://10.16.21.186:9090/bgtms',
+        target: 'http://223.94.77.108:90/bgtms',
          //target: 'http://60.12.218.237:90/bgtms',
         changeOrigin: true,
         pathRewrite: {

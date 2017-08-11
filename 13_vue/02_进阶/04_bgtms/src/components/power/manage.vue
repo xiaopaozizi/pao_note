@@ -6,6 +6,8 @@
             :data="leftNavs"
             :props="defaultProps"
             accordion
+            node-key="grade"
+            :default-expanded-keys="[1, 2, 3]"
             @node-click="nodeClickHandle">
           </el-tree>
         </el-col>
@@ -54,6 +56,7 @@
                            :gridOptions="departmentTable.method"
                            :columnDefs="departmentTable.header"
                            :rowData="departmentTable.content"
+                           v-show="departmentTable.content.length > 0"
                            :enableSorting="true"
                            :enableColResize="true"
                            :suppressMenuFilterPanel="true"
@@ -123,15 +126,46 @@
 
 
             <!--职员信息-->
-            <el-col :span="24" class="company" v-if="curGrade > 2">
-              <el-col :span="24">
-                <h3>张三</h3>
-              </el-col>
-              <el-col :span="8" v-for="item in staffField">
-                <label for="">{{item.title}}</label>
-                <span>jhjk</span>
-              </el-col>
+            <el-col :span="24" class="staff" v-if="curGrade > 2">
+              <el-card>
+                <div slot="header" class="clearfix">
+                  <span style="line-height: 36px;font-weight: bold;">{{staffField.name.text}}</span>
+                  <el-button
+                    style="float: right; margin-right:20px;"
+                    type="primary"
+                    @click="isEditStaffFiled = false; isAddStaffFiled = true;">新增</el-button>
+                  <el-button
+                    style="float: right; margin-right:20px;"
+                    @click="isEditStaffFiled = true; isAddStaffFiled = false;"
+                    type="primary">编辑</el-button>
+                  <el-button
+                    style="float: right; margin-right:20px;"
+                    @click="addOrEditStaffHandle"
+                    type="primary">保存</el-button>
+                  <el-button
+                    style="float: right; margin-right:20px;"
+                    type="danger"
+                    @click="delStaffHandle">删除</el-button>
+                  <el-button
+                </div>
+                <el-col :span="8" v-for="item in staffField">
+                  <el-form :inline="true"  :label-position="'right'" label-width="120px">
+                    <el-form-item :label="item.title" v-if="item.isShow">
+                      <!--显示-->
+                      <span v-if="!isEditStaffFiled && !isAddStaffFiled">{{item.text}}</span>
+                      <!--编辑-->
+                      <el-input v-if="isEditStaffFiled" v-model="item.text"></el-input>
+                      <!--添加-->
+                      <el-input v-if="isAddStaffFiled" v-model="item.add"></el-input>
+                    </el-form-item>
+                  </el-form>
+                </el-col>
+              </el-card>
             </el-col>
+
+
+
+
             <!--权限列表-->
             <el-col :span="24" class="company" v-if="curGrade ==  3">
               <el-table
@@ -206,7 +240,7 @@
           isEditCompanyFiled : false,
           departmentTable : {
             header : [],
-            content : null,
+            content : [],
             method : { }
           },
 
@@ -229,7 +263,7 @@
           isEditDepartmentFiled : false,
           staffTable : {
             header : [],
-            content : null,
+            content : [],
             method : { }
           },
 
@@ -245,53 +279,31 @@
             position:{ title : '岗位', isShow : true, text : '', add : ''},
             familyAddress:{ title : '家庭住址', isShow : true, text : '', add : ''},
             email:{ title : 'Email', isShow : true, text : '', add : ''},
-            status:{ title : '状态', isShow : true, text : '', add : ''},
-            joinedCompanyDate:{ title : '入职时间', isShow : true, text : '', add : ''},
-            leftCompanyDate:{ title : '离职时间', isShow : true, text : '', add : ''},
+            status:{ title : '状态', isShow : false, text : '', add : ''},
+            joinedCompanyDate:{ title : '入职时间', isShow : false, text : '', add : ''},
+            leftCompanyDate:{ title : '离职时间', isShow : false, text : '', add : ''},
             createDate:{ title : '创建时间', isShow : false, text : '', add : ''},
             createUser:{ title : '创建人', isShow : false, text : '', add : ''},
             remark:{ title : '备注', isShow : true, text : '', add : ''},
-            relDepartmentId:{ title : '所属部门ID', isShow : true, text : '', add : ''},
-            departmentName:{ title : '部门名称', isShow : true, text : '', add : ''},
-            relCompanyId:{ title : '关联的公司', isShow : true, text : '', add : ''},
-            companyName:{ title : '公司名称', isShow : true, text : '', add : ''},
+            relDepartmentId:{ title : '所属部门ID', isShow : false, text : '', add : ''},
+            departmentName:{ title : '部门名称', isShow : false, text : '', add : ''},
+            relCompanyId:{ title : '关联的公司', isShow : false, text : '', add : ''},
+            companyName:{ title : '公司名称', isShow : false, text : '', add : ''},
           },
-          /*部门*/
-          tableDepart: [{
-            date: 'IT部',
-            name: '老牛',
-            address: '老牛',
-          }, {
-            date: '财务部',
-            name: '何飞',
-            address: '何飞',
-          },{
-            date: '市场部',
-            name: '徐',
-            address: '徐',
-          },{
-            date: '人才部',
-            name: '飞哥',
-            address: '飞哥',
-          }],
-          /*职员*/
-          tableStaff: [{
-            date: '张三',
-            name: '123123123123',
-            address: '无',
-          }, {
-            date: '李四',
-            name: '123123123123',
-            address: '无',
-          },{
-            date: '王五',
-            name: '123123123123',
-            address: '无',
-          },{
-            date: '找刘',
-            name: '123123123123',
-            address: '无',
-          }],
+          // 添加和编辑部门
+          isAddStaffFiled : false,
+          isEditStaffFiled : false,
+          powerTable : {
+            header : [],
+            content : [],
+            method : { }
+          },
+
+
+
+
+
+
           /*角色*/
           tableRole: [{
             date: '出纳',
@@ -331,44 +343,27 @@
         this.getLeftNavsHandle();
         this.createDepartmentHeader();
         this.createStaffHeader();
+
+
+
       },
       methods: {
         // 左边导航栏的信息
         getLeftNavsHandle(){
           let self = this;
-          let params = {
-
-          };
-          api.powerCompanyList(params)
+          // 添加
+          api.getPowerTree({})
             .then(function(res) {
-              let result = res.data;
-              if(!result){
-                // 如果没有值，就从本地取出
-                result = tool.getIte('powerCompanyList');
-              } else {
-                // 将数据存到本地
-                tool.setIte('powerCompanyList', result);
+              if(res.status === 'success'){
+                // 先清空
+                self.leftNavs = res.data;
               }
-              // 先清空
-              self.leftNavs = [];
-              result.forEach(item=>{
-                self.leftNavs.push({
-                  // 菜单的名称
-                  label : item.companyShortName,
-                  // 菜单等级，1代表一级菜单
-                  grade : 1,
-                  // 孩子节点
-                  children : [],
-                });
-              })
             })
         },
 
 
-        /*
-        * 公司
-        *
-        * */
+
+
         // 添加或者编辑公司信息
         addOrEditCompanyHandle(){
           let self = this;
@@ -384,9 +379,7 @@
             api.powerCompanyAdd(params)
               .then(function(res) {
                 if(res.status === 'success'){
-                  alert('添加成功');
                   self.getLeftNavsHandle();
-                  self.curGrade = 0;
                   self.isEditCompanyFiled = false;
                   self.isAddCompanyFiled = false;
                   Object.entries(self.companyField).forEach(item => {
@@ -406,7 +399,6 @@
             api.powerCompanyMod(params)
               .then(function(res) {
                 if(res.status === 'success'){
-                  alert('修改成功')
                   self.getLeftNavsHandle();
                   self.isEditCompanyFiled = false;
                   self.isAddCompanyFiled = false;
@@ -424,17 +416,15 @@
           api.powerCompanyDel(params)
             .then(function(res) {
               if(res.status === 'success'){
-                alert('删除成功');
                 self.getLeftNavsHandle();
                 self.curGrade = 0;
               }
             })
         },
-        /*
-        * 部门
-        *
-        *
-        * */
+
+
+
+
         // 添加或者编辑部门信息
         addOrEditDepartmentHandle(){
           let self = this;
@@ -453,7 +443,6 @@
             api.powerDepartmentAdd(params)
               .then(function(res) {
                 if(res.status === 'success'){
-                  alert('添加部门成功');
                   self.getLeftNavsHandle();
                   self.isEditDepartmentFiled = false;
                   self.isAddDepartmentFiled = false;
@@ -475,7 +464,6 @@
             api.powerDepartmentMod(params)
               .then(function(res) {
                 if(res.status === 'success'){
-                  alert('修改部门成功')
                   self.getLeftNavsHandle();
                   self.isEditDepartmentFiled = false;
                   self.isAddDepartmentFiled = false;
@@ -486,42 +474,38 @@
         // 删除部门信息
         delDepartmentHandle(){
           let self = this;
-          // 添加
-
-
           let params = {
             uuid : self.departmentField.uuid.text,
           };
           api.powerDepartmentDel(params)
             .then(function(res) {
               if(res.status === 'success'){
-                alert('删除成功');
                 self.getLeftNavsHandle();
-                self.curGrade = 0;
+                self.curGrade = 1;
               }
             })
         },
 
 
 
-        /*
-         * 员工
-         * */
+
         // 添加或者编辑员工信息
         addOrEditStaffHandle(){
-          let self = this;
-          // 添加
-          if(this.isAddStaffFiled){
-            let params = {};
-            Object.entries(self.staffField).forEach(item => {
-              if(item[1].isShow){
-              params[item[0]] = item[1].add ? item[1].add : '';
-            }
-            // 如果是关联公司和关联公司id
-            if(item[0] === 'relCompanyId' || item[0] === 'companyName'){
-              params[item[0]] = item[1].text ? item[1].text : '';
-            }
-          });
+            let self = this;
+            // 添加
+            if(this.isAddStaffFiled){
+              let params = {};
+              Object.entries(self.staffField).forEach(item => {
+                if(item[1].isShow){
+                params[item[0]] = item[1].add ? item[1].add : '';
+              }
+
+              let textArr = ['relCompanyId', 'companyName', 'relDepartmentId', 'departmentName'];
+              // 如果是关联公司和关联公司id
+              if(textArr.indexOf(item[0]) > -1){
+                params[item[0]] = item[1].text ? item[1].text : '';
+              }
+            });
             api.powerStaffAdd(params)
               .then(function(res) {
                 if(res.status === 'success'){
@@ -540,14 +524,15 @@
             let params = {};
             Object.entries(self.staffField).forEach(item => {
               // 如果是关联公司和关联公司id
-              if(item[0] !== 'createDate' && item[0] !== 'createUser'){
-              params[item[0]] = item[1].text || '';
-            }
-          });
+              // 不需要修改的字段
+              let noUseField = ['createDate', 'createUser', 'joinedCompanyDate', 'leftCompanyDate', 'status'];
+              if(noUseField.indexOf(item[0]) === -1){
+                params[item[0]] = item[1].text || '';
+              }
+            });
             api.powerStaffMod(params)
               .then(function(res) {
                 if(res.status === 'success'){
-                  alert('修改员工成功')
                   self.getLeftNavsHandle();
                   self.isEditStaffFiled = false;
                   self.isAddStaffFiled = false;
@@ -565,7 +550,6 @@
           api.powerStaffDel(params)
             .then(function(res) {
               if(res.status === 'success'){
-                alert('删除成功');
                 self.getLeftNavsHandle();
                 self.curGrade = 0;
               }
@@ -583,81 +567,72 @@
           // 获取节点名称
           let name = data.label;
           let self = this;
-          // 从localstorage中获取缓存信息
+          // 等级 从localstorage中获取缓存信息
           this.curGrade = data.grade;
           switch(this.curGrade){
             case 1:
                 // 获取和公司有关的数据
-                let companyInfo = tool.getIte('powerCompanyList');
-                // 根据公司简称，找到一级菜单相同的数据，比如宁波大英
-                // 将数据放到右边显示的公司数据中，就是companyField对于字段的text中去
-                Object.entries(companyInfo.filter(item => {
-                    return item.companyShortName === name;
-                })[0]).forEach(item=>{
-                  self.companyField[item[0]].text = item[1];
-                });
-
+                // 通过uuid获取公司的信息
+                api.powerOneCompany({
+                  uuid : data.id
+                }).then(function(res) {
+                  if(res.status === 'success'){
+                    Object.entries(res.data).forEach(item=>{
+                        self.companyField[item[0]].text = item[1];
+                    });
+                  }
+                })
                 // 获取点击的公司的uuid,然后查询下面的部门
-                let companyUuid = self.companyField.uuid.text;
-                let params = {
-                  relCompanyId : companyUuid
-                }
-                api.powerDepartmentList(params)
-                .then(function(res) {
+                api.powerDepartmentList({
+                    relCompanyId : data.id
+                }) .then(function(res) {
                   let result = res.data;
                   self.departmentTable.content = result;
-                  if(result.length === 0) return;
-                  // 把值存到左边导航条下面
-                  self.leftNavs.forEach((item, index) => {
-                    item.children = [];
-                    result.forEach((item2,index2) => {
-                      if(item.label === item2.companyName){
-                        item.children.push({
-                          label : item2.departName,
-                          grade : 2,
-                          department : item2,
-                          children : []
-                        })
-                      }
-                    })
-                  })
                 })
                 break;
             case 2:
                 // 二级菜单
                 // 部门的信息
-                let departmentInfo = data.department;
-                Object.entries(departmentInfo).forEach(item=>{
-                    self.departmentField[item[0]].text = item[1];
-                });
-
+                // 通过uuid获取部门的信息
+                api.powerOneDepartment({
+                  uuid : data.id
+                }).then(function(res) {
+                  if(res.status === 'success'){
+                    Object.entries(res.data).forEach(item=>{
+                      self.departmentField[item[0]].text = item[1];
+                  });
+                  }
+                })
                 // 获取点击的部门的uuid,然后查询下面的员工
-                let staffUuid = departmentInfo.uuid;
-                let staffParams = {
-                  relDepartmentId : staffUuid
-                }
-                api.powerStaffList(staffParams)
-                .then(function(res) {
+                api.powerStaffList({
+                  relCompanyId : data.id
+                }) .then(function(res) {
                   let result = res.data;
                   self.staffTable.content = result;
-                  if(result.length === 0) return;
-                  // 把值存到左边导航条下面
-                  self.leftNavs.forEach((item, index) => {
-                    item.children = [];
-                    result.forEach((item2,index2) => {
-                      if(item.label === item2.name){
-                        item.children.push({
-                          label : item2.name,
-                          grade : 3,
-                          staff : item2,
-                          children : []
-                        })
-                      }
-                    })
-                  })
-                  console.log(self.leftNavs)
                 })
                 break;
+            case 3:
+              // 二级菜单
+              // 部门的信息
+              // 通过uuid获取部门的信息
+              api.powerOneStaff({
+                uuid : data.id
+              }).then(function(res) {
+                if(res.status === 'success'){
+                  Object.entries(res.data).forEach(item=>{
+                    self.staffField[item[0]].text = item[1];
+                  });
+                }
+              })
+              return;
+              // 获取点击的部门的uuid,然后查询下面的员工
+              api.powerStaffList({
+                relCompanyId : data.id
+              }) .then(function(res) {
+                let result = res.data;
+                self.staffTable.content = result;
+              })
+              break;
           }
         },
         // 创建部门表头
@@ -673,7 +648,6 @@
             }
           })
         },
-
         // 创建员工表头
         createStaffHeader(){
           let self = this;
@@ -686,7 +660,8 @@
             })
           }
         })
-        }
+        },
+
       }
     }
 </script>
