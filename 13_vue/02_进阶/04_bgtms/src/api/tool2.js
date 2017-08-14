@@ -14,6 +14,8 @@ class Tool {
   setIte(key, value) {
     localStorage.setItem(key, JSON.stringify(value)); //存数据 =>
   }
+
+
 }
 
 

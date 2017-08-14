@@ -7,7 +7,6 @@
             :props="defaultProps"
             accordion
             node-key="grade"
-            :default-expanded-keys="[1, 2, 3]"
             @node-click="nodeClickHandle">
           </el-tree>
         </el-col>
@@ -20,11 +19,15 @@
                   <span style="line-height: 36px;font-weight: bold;">{{companyField.companyFullName.text}}</span>
                   <el-button
                     style="float: right; margin-right:20px;"
-                    type="primary"
-                    @click="isEditCompanyFiled = false; isAddCompanyFiled = true;">新增</el-button>
+                    type="success"
+                    @click="changeAddDepartmentHandle">部门</el-button>
                   <el-button
                     style="float: right; margin-right:20px;"
-                    @click="isEditCompanyFiled = true; isAddCompanyFiled = false;"
+                    type="primary"
+                    @click="controllPageShow('companyStatus', 'add');">新增</el-button>
+                  <el-button
+                    style="float: right; margin-right:20px;"
+                    @click="controllPageShow('companyStatus', 'edit');"
                     type="primary">编辑</el-button>
                   <el-button
                     style="float: right; margin-right:20px;"
@@ -40,11 +43,11 @@
                   <el-form :inline="true"  :label-position="'right'" label-width="120px">
                     <el-form-item :label="item.title" v-if="item.isShow">
                       <!--显示-->
-                      <span v-if="!isEditCompanyFiled && !isAddCompanyFiled">{{item.text}}</span>
+                      <span v-if="companyStatus.show">{{item.text}}</span>
                       <!--编辑-->
-                      <el-input v-if="isEditCompanyFiled" v-model="item.text"></el-input>
+                      <el-input v-if="companyStatus.edit" v-model="item.text"></el-input>
                       <!--添加-->
-                      <el-input v-if="isAddCompanyFiled" v-model="item.add"></el-input>
+                      <el-input v-if="companyStatus.add" v-model="item.add"></el-input>
                     </el-form-item>
                   </el-form>
                 </el-col>
@@ -77,11 +80,15 @@
                   <span style="line-height: 36px;font-weight: bold;">{{departmentField.departName.text}}</span>
                   <el-button
                     style="float: right; margin-right:20px;"
-                    type="primary"
-                    @click="isEditDepartmentFiled = false; isAddDepartmentFiled = true;">新增</el-button>
+                    type="success"
+                    @click="changeAddStaffHandle">职员</el-button>
                   <el-button
                     style="float: right; margin-right:20px;"
-                    @click="isEditDepartmentFiled = true; isAddDepartmentFiled = false;"
+                    type="primary"
+                    @click="controllPageShow('departmentStatus', 'add');">新增</el-button>
+                  <el-button
+                    style="float: right; margin-right:20px;"
+                    @click="controllPageShow('departmentStatus', 'edit');"
                     type="primary">编辑</el-button>
                   <el-button
                     style="float: right; margin-right:20px;"
@@ -97,11 +104,11 @@
                   <el-form :inline="true"  :label-position="'right'" label-width="120px">
                     <el-form-item :label="item.title" v-if="item.isShow">
                       <!--显示-->
-                      <span v-if="!isEditDepartmentFiled && !isAddDepartmentFiled">{{item.text}}</span>
+                      <span v-if="departmentStatus.show">{{item.text}}</span>
                       <!--编辑-->
-                      <el-input v-if="isEditDepartmentFiled" v-model="item.text"></el-input>
+                      <el-input v-if="departmentStatus.edit" v-model="item.text"></el-input>
                       <!--添加-->
-                      <el-input v-if="isAddDepartmentFiled" v-model="item.add"></el-input>
+                      <el-input v-if="departmentStatus.add" v-model="item.add"></el-input>
                     </el-form-item>
                   </el-form>
                 </el-col>
@@ -125,6 +132,9 @@
             </el-col>
 
 
+
+
+
             <!--职员信息-->
             <el-col :span="24" class="staff" v-if="curGrade > 2">
               <el-card>
@@ -133,10 +143,10 @@
                   <el-button
                     style="float: right; margin-right:20px;"
                     type="primary"
-                    @click="isEditStaffFiled = false; isAddStaffFiled = true;">新增</el-button>
+                    @click="controllPageShow('staffStatus', 'add');">新增</el-button>
                   <el-button
                     style="float: right; margin-right:20px;"
-                    @click="isEditStaffFiled = true; isAddStaffFiled = false;"
+                    @click="controllPageShow('staffStatus', 'edit');"
                     type="primary">编辑</el-button>
                   <el-button
                     style="float: right; margin-right:20px;"
@@ -152,11 +162,11 @@
                   <el-form :inline="true"  :label-position="'right'" label-width="120px">
                     <el-form-item :label="item.title" v-if="item.isShow">
                       <!--显示-->
-                      <span v-if="!isEditStaffFiled && !isAddStaffFiled">{{item.text}}</span>
+                      <span v-if="staffStatus.show">{{item.text}}</span>
                       <!--编辑-->
-                      <el-input v-if="isEditStaffFiled" v-model="item.text"></el-input>
+                      <el-input v-if="staffStatus.edit" v-model="item.text"></el-input>
                       <!--添加-->
-                      <el-input v-if="isAddStaffFiled" v-model="item.add"></el-input>
+                      <el-input v-if="staffStatus.add" v-model="item.add"></el-input>
                     </el-form-item>
                   </el-form>
                 </el-col>
@@ -193,8 +203,6 @@
           </el-row>
         </el-col>
       </el-row>
-
-
     </div>
 </template>
 
@@ -235,9 +243,14 @@
             status: { title : '公司类型', isShow : false ,text : '', add : '', },
             tranLicense:{ title : '道路运输许可证', isShow : true,text : '', add : '', },
           },
-          // 添加和编辑公司
-          isAddCompanyFiled : false,
-          isEditCompanyFiled : false,
+          // 显示，添加和编辑公司
+          companyStatus : {
+            show : true,
+            edit : false,
+            add : false
+          },
+          //isAddCompanyFiled : false,
+          //isEditCompanyFiled : false,
           departmentTable : {
             header : [],
             content : [],
@@ -259,8 +272,11 @@
             companyName:{ title : '公司名称', isShow : false, text : '', add : '' },
           },
           // 添加和编辑部门
-          isAddDepartmentFiled : false,
-          isEditDepartmentFiled : false,
+          departmentStatus : {
+            show : true,
+            edit : false,
+            add : false
+          },
           staffTable : {
             header : [],
             content : [],
@@ -280,9 +296,12 @@
             familyAddress:{ title : '家庭住址', isShow : true, text : '', add : ''},
             email:{ title : 'Email', isShow : true, text : '', add : ''},
             status:{ title : '状态', isShow : false, text : '', add : ''},
-            joinedCompanyDate:{ title : '入职时间', isShow : false, text : '', add : ''},
-            leftCompanyDate:{ title : '离职时间', isShow : false, text : '', add : ''},
+            leftCompanyDate:{ title : '入职时间', isShow : false, text : '', add : ''},
+            leftCompanyDateStr:{ title : '入职时间', isShow : true, text : '', add : ''},
+            joinedCompanyDate:{ title : '离职时间', isShow : false, text : '', add : ''},
+            joinedCompanyDateStr:{ title : '离职时间', isShow : true, text : '', add : ''},
             createDate:{ title : '创建时间', isShow : false, text : '', add : ''},
+            createDateStr:{ title : '创建时间', isShow : true, text : '', add : ''},
             createUser:{ title : '创建人', isShow : false, text : '', add : ''},
             remark:{ title : '备注', isShow : true, text : '', add : ''},
             relDepartmentId:{ title : '所属部门ID', isShow : false, text : '', add : ''},
@@ -290,9 +309,12 @@
             relCompanyId:{ title : '关联的公司', isShow : false, text : '', add : ''},
             companyName:{ title : '公司名称', isShow : false, text : '', add : ''},
           },
-          // 添加和编辑部门
-          isAddStaffFiled : false,
-          isEditStaffFiled : false,
+          // 添加和编辑员工
+          staffStatus : {
+            show : true,
+            edit : false,
+            add : false
+          },
           powerTable : {
             header : [],
             content : [],
@@ -318,10 +340,11 @@
             date: '老板',
             name: '王小虎'
           },],
-          multipleSelection: []
+          multipleSelection: [],
 
 
-
+          // 记录节点的信息
+          node : null,
 
 
         };
@@ -363,32 +386,31 @@
 
 
 
-
         // 添加或者编辑公司信息
         addOrEditCompanyHandle(){
           let self = this;
           // 添加
-          if(this.isAddCompanyFiled){
+          if(this.companyStatus.add){
             let params = {};
             Object.entries(self.companyField).forEach(item => {
               if(item[1].isShow){
                 params[item[0]] = item[1].add ? item[1].add : '';
               }
             });
-
             api.powerCompanyAdd(params)
               .then(function(res) {
                 if(res.status === 'success'){
                   self.getLeftNavsHandle();
-                  self.isEditCompanyFiled = false;
-                  self.isAddCompanyFiled = false;
+                  // 点击保持，回到显示页面
+                  self.controllPageShow('companyStatus', 'show');
                   Object.entries(self.companyField).forEach(item => {
                     item[1].add = '';
                   });
+                  self.curGrade = 0;
                 }
               })
           }
-          else if (this.isEditCompanyFiled){
+          else if (this.companyStatus.edit){
             // 编辑
             let params = {};
             Object.entries(self.companyField).forEach(item => {
@@ -400,8 +422,8 @@
               .then(function(res) {
                 if(res.status === 'success'){
                   self.getLeftNavsHandle();
-                  self.isEditCompanyFiled = false;
-                  self.isAddCompanyFiled = false;
+                  // 点击保持，回到显示页面
+                  self.controllPageShow('companyStatus', 'show');
                 }
               })
           }
@@ -429,7 +451,7 @@
         addOrEditDepartmentHandle(){
           let self = this;
           // 添加
-          if(this.isAddDepartmentFiled){
+          if(this.departmentStatus.add){
             let params = {};
             Object.entries(self.departmentField).forEach(item => {
               if(item[1].isShow){
@@ -444,15 +466,15 @@
               .then(function(res) {
                 if(res.status === 'success'){
                   self.getLeftNavsHandle();
-                  self.isEditDepartmentFiled = false;
-                  self.isAddDepartmentFiled = false;
+                  self.controllPageShow('departmentStatus', 'show');
                   Object.entries(self.departmentField).forEach(item => {
                     item[1].add = '';
                   });
+                  self.curGrade = 1;
                 }
               })
           }
-          else if (this.isEditDepartmentFiled){
+          else if (this.departmentStatus.edit){
             // 编辑
             let params = {};
             Object.entries(self.departmentField).forEach(item => {
@@ -465,8 +487,7 @@
               .then(function(res) {
                 if(res.status === 'success'){
                   self.getLeftNavsHandle();
-                  self.isEditDepartmentFiled = false;
-                  self.isAddDepartmentFiled = false;
+                  self.controllPageShow('departmentStatus', 'show');
                 }
               })
           }
@@ -481,6 +502,7 @@
             .then(function(res) {
               if(res.status === 'success'){
                 self.getLeftNavsHandle();
+                self.controllPageShow('departmentStatus', 'show');
                 self.curGrade = 1;
               }
             })
@@ -493,7 +515,7 @@
         addOrEditStaffHandle(){
             let self = this;
             // 添加
-            if(this.isAddStaffFiled){
+            if(this.staffStatus.add){
               let params = {};
               Object.entries(self.staffField).forEach(item => {
                 if(item[1].isShow){
@@ -511,15 +533,15 @@
                 if(res.status === 'success'){
                   alert('添加员工成功');
                   self.getLeftNavsHandle();
-                  self.isEditStaffFiled = false;
-                  self.isAddStaffFiled = false;
+                  self.controllPageShow('staffStatus', 'edit');
                   Object.entries(self.staffField).forEach(item => {
                     item[1].add = '';
+                  self.curGrade = 2;
                 });
                 }
               })
           }
-          else if (this.isEditStaffFiled){
+          else if (this.staffStatus.edit){
             // 编辑
             let params = {};
             Object.entries(self.staffField).forEach(item => {
@@ -534,8 +556,7 @@
               .then(function(res) {
                 if(res.status === 'success'){
                   self.getLeftNavsHandle();
-                  self.isEditStaffFiled = false;
-                  self.isAddStaffFiled = false;
+                  self.controllPageShow('staffStatus', 'edit');
                 }
               })
           }
@@ -551,6 +572,7 @@
             .then(function(res) {
               if(res.status === 'success'){
                 self.getLeftNavsHandle();
+                self.controllPageShow('staffStatus', 'edit');
                 self.curGrade = 0;
               }
             })
@@ -558,80 +580,112 @@
 
 
 
+        // 公司切换到添加部门的操作
+        changeAddDepartmentHandle(){
+          this.showCompalyInfoAndDepartmentListHandle();
+          // 还有将公司的id和name，传给部门字段中
+          this.departmentField.relCompanyId.text = this.companyField.uuid.text;
+          this.departmentField.companyName.text = this.companyField.companyShortName.text;
+          this.curGrade = 2;
+          this.controllPageShow('departmentStatus', 'add');
+        },
+        // 部门切换到添加员工的操作
+        changeAddStaffHandle(){
+          this.showDepartmentInfoAndStaffListHandle();
+          // 还有将公司的id和name，传给部门字段中
+          this.staffField.relCompanyId.text = this.departmentField.relCompanyId.text;
+          this.staffField.companyName.text = this.departmentField.companyName.text;
+          this.staffField.relDepartmentId.text = this.departmentField.uuid.text;
+          this.staffField.departmentName.text = this.departmentField.departName.text;
+          this.curGrade = 3;
+          this.controllPageShow('staffStatus', 'add');
+        },
 
 
+        // 点击一级菜单，获取公司信息和部门列表
+        showCompalyInfoAndDepartmentListHandle(){
+          let self = this;
+           self.controllPageShow('companyStatus', 'show');
+          let id = this.node.id;
+          // 获取和公司有关的数据
+          // 通过uuid获取公司的信息
+          api.powerOneCompany({
+            uuid : id
+          }).then(function(res) {
+            if(res.status === 'success'){
+              Object.entries(res.data).forEach(item=>{
+                self.companyField[item[0]].text = item[1];
+            });
+            }
+          })
+          // 获取点击的公司的uuid,然后查询下面的部门
+          api.powerDepartmentList({
+            relCompanyId : id
+          }) .then(function(res) {
+            let result = res.data;
+            self.departmentTable.content = result;
+          })
+        },
+        // 点击二级菜单，获取部门信息和员工列表
+        showDepartmentInfoAndStaffListHandle(){
+          let self = this;
+          self.controllPageShow('departmentStatus', 'show');
+          let id = this.node.id;
+          // 二级菜单
+          // 部门的信息
+          // 通过uuid获取部门的信息
+          api.powerOneDepartment({
+            uuid : id
+          }).then(function(res) {
+            if(res.status === 'success'){
+              Object.entries(res.data).forEach(item=>{
+                self.departmentField[item[0]].text = item[1];
+              });
+            }
+          })
+          // 获取点击的部门的uuid,然后查询下面的员工
+          api.powerStaffList({
+            relDepartmentId : id
+          }) .then(function(res) {
+            let result = res.data;
+            self.staffTable.content = result;
+          })
+        },
+        // 点击三级菜单，获取部门信息和员工列表
+        showStaffInfoAndRoleListHandle(){
+          let self = this;
+          self.controllPageShow('staffStatus', 'show');
+          let id = this.node.id;
+          // 二级菜单
+          // 部门的信息
+          // 通过uuid获取部门的信息
+          api.powerOneStaff({
+            uuid : id
+          }).then(function(res) {
+            if(res.status === 'success'){
+              Object.entries(res.data).forEach(item=>{
+                self.staffField[item[0]].text = item[1];
+              });
+            }
+          })
 
-
+        },
         // 点击左边导航条，一级，二级，三级菜单
         nodeClickHandle(data) {
+          this.node = data;
           // 获取节点名称
-          let name = data.label;
           let self = this;
           // 等级 从localstorage中获取缓存信息
           this.curGrade = data.grade;
           switch(this.curGrade){
             case 1:
-                // 获取和公司有关的数据
-                // 通过uuid获取公司的信息
-                api.powerOneCompany({
-                  uuid : data.id
-                }).then(function(res) {
-                  if(res.status === 'success'){
-                    Object.entries(res.data).forEach(item=>{
-                        self.companyField[item[0]].text = item[1];
-                    });
-                  }
-                })
-                // 获取点击的公司的uuid,然后查询下面的部门
-                api.powerDepartmentList({
-                    relCompanyId : data.id
-                }) .then(function(res) {
-                  let result = res.data;
-                  self.departmentTable.content = result;
-                })
+                self.showCompalyInfoAndDepartmentListHandle();
                 break;
             case 2:
-                // 二级菜单
-                // 部门的信息
-                // 通过uuid获取部门的信息
-                api.powerOneDepartment({
-                  uuid : data.id
-                }).then(function(res) {
-                  if(res.status === 'success'){
-                    Object.entries(res.data).forEach(item=>{
-                      self.departmentField[item[0]].text = item[1];
-                  });
-                  }
-                })
-                // 获取点击的部门的uuid,然后查询下面的员工
-                api.powerStaffList({
-                  relCompanyId : data.id
-                }) .then(function(res) {
-                  let result = res.data;
-                  self.staffTable.content = result;
-                })
+                self.showDepartmentInfoAndStaffListHandle();
                 break;
             case 3:
-              // 二级菜单
-              // 部门的信息
-              // 通过uuid获取部门的信息
-              api.powerOneStaff({
-                uuid : data.id
-              }).then(function(res) {
-                if(res.status === 'success'){
-                  Object.entries(res.data).forEach(item=>{
-                    self.staffField[item[0]].text = item[1];
-                  });
-                }
-              })
-              return;
-              // 获取点击的部门的uuid,然后查询下面的员工
-              api.powerStaffList({
-                relCompanyId : data.id
-              }) .then(function(res) {
-                let result = res.data;
-                self.staffTable.content = result;
-              })
+                self.showStaffInfoAndRoleListHandle();
               break;
           }
         },
@@ -661,6 +715,17 @@
           }
         })
         },
+        // 控制显示的页面，比如是显示列表、编辑还是添加
+        // filedStatus 代表控制哪个字段，有companyStatus，departmentStatus,staffStatus
+        // str 代表显示哪一个页面，show代表显示页面，edit代表编辑页面，add代表添加页面
+        controllPageShow(filedStatus, str){
+          let self = this;
+          // 让所有属性为false，然后让当前str为true
+          Object.keys(self[filedStatus]).forEach(item => {
+            self[filedStatus][item] = false;
+          })
+          self[filedStatus][str] = true;
+        }
 
       }
     }
