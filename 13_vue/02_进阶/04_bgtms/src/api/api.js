@@ -424,6 +424,27 @@ export default {
     return fetch('sysstaffinfo/del',parmas)
   },
 
+  // 角色列表
+  powerRoleList(parmas){
+    return fetch('sysroleinfo/getlist',parmas)
+  },
+
+
+  // 权限列表
+  powerPowerList(parmas){
+    return fetch('syspowerinfo/getlist',parmas)
+  },
+
+  // 通过角色和公司relRoleId，relCompanyId获取权限列表
+  getPowerListByIds(parmas){
+    return fetch('sysrolepowerrel/getpowertree',parmas)
+  },
+
+  // 编辑保存角色的权限配置
+  editRolePower(parmas){
+    return fetch('sysrolepowerrel/addbatch',parmas)
+  },
+
 }
 
 

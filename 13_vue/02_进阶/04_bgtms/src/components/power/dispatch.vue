@@ -1,373 +1,136 @@
 <template>
     <div id="role">
-      <el-row>
-        <el-col :span="6">
-          <el-col :span="24">
-            <label style="float:left;font-size:24px;">调度</label>
-            <el-button style="float:right;" type="success">保存</el-button>
-          </el-col>
-          <el-col style="margin-top:40px;">
+      <el-row style="margin-top:20px;">
+        <el-col style="margin-bottom:20px;">
+          <el-button type="primary" @click="editRolePowerHandle">保存</el-button>
+        </el-col>
+        <el-col :span="6" >
+          <el-col>
             <el-tree
-              :data="roles.dispatch"
-              show-checkbox
-              node-key="id"
-              :props="defaultProps">
-            </el-tree>
+              :data="roleList"
+              :props="roleListProps"
+              highlight-current
+              @node-click="nodeClickRoleHandle"></el-tree>
           </el-col>
+        </el-col>
+        <el-col :offset="2" :span="16">
+          <el-tree
+            :data="powerList"
+            :default-checked-keys="powerListSelected"
+            show-checkbox
+            default-expand-all
+            ref="tree"
+            node-key="id"
+            :props="powerListProps">
+          </el-tree>
         </el-col>
       </el-row>
     </div>
 </template>
 
 <script>
+  import api from '@/api/api'
   export default {
     data() {
       return {
-        roles : {
-          // 调度
-          'dispatch' : [
-            {
-              id: 1,
-              label: '箱单',
-              children : [
-                {
-                  id: 4,
-                  label: '订单',
-                  children : [
-                    {
-                      id: 13,
-                      label: '基本信息',
-                      children : [
-                        {
-                          id: 18,
-                          label: '添加',
-                        },
-                        {
-                          id: 19,
-                            label: '编辑',
-                        }
-                      ],
-                    },
-                    {
-                      id: 14,
-                      label: '托卡信息',
-                      children : [
-                        {
-                          id: 20,
-                          label: '添加',
-                        },
-                        {
-                          id: 21,
-                          label: '编辑',
-                        },
-                        {
-                          id: 22,
-                          label: '删除',
-                        },
-                        {
-                          id: 23,
-                          label: '拖卡',
-                        },
-                        {
-                          id: 24,
-                          label: '作废',
-                        },
-                        {
-                          id: 25,
-                          label: '完成',
-                        }
-                      ],
-                    },
-                    {
-                      id: 15,
-                      label: '费用信息'
-                    },
-                    {
-                      id: 16,
-                      label: '上传图片'
-                    },
-                    {
-                      id: 17,
-                      label: '日志信息',
-                    }
-                  ]
-                },
-                {
-                  id: 5,
-                  label: '运单',
-                  children : [
-                    {
-                      id: 26,
-                      label: '运单信息',
-                      children : [
-                        {
-                          id: 27,
-                          label: '排车',
-                        },
-                        {
-                          id: 28,
-                          label: '编辑',
-                        }
-                      ],
-                    },
-                    {
-                      id: 29,
-                      label: '订单信息',
-                    },
-                    {
-                      id: 30,
-                      label: '费用信息',
-                      children : [
-                        {
-                          id: 31,
-                          label: '新增',
-                        },
-                        {
-                          id: 32,
-                          label: '删除',
-                        }
-                      ],
-                    },
-
-                    {
-                      id: 33,
-                      label: '上传图片',
-                    },
-
-                    {
-                      id: 34,
-                      label: '日志信息',
-                    },
-                  ]
-                }
-              ]
-            },
-            {
-              id: 2,
-              label: '后勤',
-              children : [
-                {
-                  id: 6,
-                  label: '司机',
-                  children : [
-                    {
-                      id : 35,
-                      label : '新增',
-                    },
-
-                    {
-                      id : 36,
-                      label : '绑定车牌',
-                    },
-
-                    {
-                      id : 37,
-                      label : '编辑',
-                    },
-
-
-                    {
-                      id : 38,
-                      label : '删除',
-                    }
-                  ]
-                },
-                {
-                  id: 7,
-                  label: '车辆',
-                  children : [
-                    {
-                      id: 39,
-                      label: '车头登记',
-                      children : [
-                        {
-                          id : 40,
-                          label : '新增',
-                        },
-                        {
-                          id : 41,
-                          label : '编辑',
-                        },
-                        {
-                          id : 42,
-                          label : '删除',
-                        }
-                      ]
-                    },
-                    {
-                      id: 43,
-                      label: '挂车登记',
-                    },
-                  ]
-                },
-                {
-                  id: 8,
-                  label: '客户',
-                  children : [
-                    {
-                      id: 44,
-                      label: '基本信息',
-                      children : [
-                        {
-                          id : 45,
-                          label : '新增',
-                        },
-                        {
-                          id : 46,
-                          label : '编辑',
-                        },
-                        {
-                          id : 47,
-                          label : '删除',
-                        },
-                        {
-                          id : 48,
-                          label : '查询',
-                        },
-                        {
-                          id : 49,
-                          label : '导出',
-                        }
-                      ]
-                    },
-                    {
-                      id: 50,
-                      label: '银行账号',
-                    },
-
-                    {
-                      id: 51,
-                      label: '取（交）单点',
-                    },
-
-                    {
-                      id: 52,
-                      label: '联系人',
-                      children : [
-                        {
-                          id : 54,
-                          label : '新增',
-                        },
-                        {
-                          id : 55,
-                          label : '编辑',
-                        },
-                        {
-                          id : 56,
-                          label : '删除',
-                        },
-                      ]
-                    },
-
-                    {
-                      id: 53,
-                      label: '装拆点',
-                      children : [
-                        {
-                          id : 57,
-                          label : '新增',
-                        },
-                        {
-                          id : 58,
-                          label : '编辑',
-                        },
-                        {
-                          id : 58,
-                          label : '删除',
-                        },
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              id: 3,
-              label: '结算',
-              children : [
-                {
-                  id: 9,
-                  label: '账单',
-                  children : [
-                    {
-                      id : 59,
-                      label : '查询'
-                    },
-                    {
-                      id : 60,
-                      label : '编辑'
-                    }
-                  ]
-                },
-                {
-                  id: 10,
-                  label: '通知',
-                  children : [
-                    {
-                      id : 61,
-                      label : '查询'
-                    },
-                    {
-                      id : 62,
-                      label : '编辑'
-                    }
-                  ]
-                },
-                {
-                  id: 11,
-                  label: '销账',
-                  children : [
-                    {
-                      id : 63,
-                      label : '查询'
-                    },
-
-                    {
-                      id : 64,
-                      label : '审核'
-                    },
-                    {
-                      id : 65,
-                      label : '编辑'
-                    }
-                  ]
-                },
-
-                {
-                  id: 12,
-                  label: '账户',
-                  children : [
-                    {
-                      id : 66,
-                      label : '查询'
-                    },
-                    {
-                      id : 67,
-                      label : '新增'
-                    },
-                    {
-                      id : 68,
-                      label : '编辑'
-                    },
-                    {
-                      id : 69,
-                      label : '删除'
-                    },
-                  ]
-                }
-              ]
-            },
-          ]
+        // 角色列表
+        roleList: [],
+        // 当前点击选中的roleId
+        curRoleId : 0,
+        roleListProps: {
+          label: 'roleName'
         },
-        defaultProps: {
+        // 权限列表
+        powerList : {},
+        // 选择的权限
+        powerListSelected : [],
+        powerListProps: {
           children: 'children',
-          label: 'label'
-        }
+          label: 'name',
+        },
       };
+    },
+    mounted(){
+      this.getRoleListHandle();
+      //this.getPowerListHandle();
+    },
+    methods: {
+      nodeClickRoleHandle(data) {
+        // 获取当前角色的id
+        this.curRoleId = data.uuid;
+        this.getPowerListHandle(data.uuid, 1)
+      },
+      // 获取角色列表
+      getRoleListHandle(){
+        let self = this;
+        let params = {}
+        api.powerRoleList(params)
+          .then(function(res) {
+            if(res.status === 'success'){
+              self.roleList = res.data;
+            }
+          })
+      },
+      // 获取权限列表
+      getPowerListHandle(roleUuid, companyUuid){
+        let self = this;
+        let params = {
+          relRoleId : roleUuid,
+          relCompanyId : companyUuid
+        }
+        api.getPowerListByIds(params)
+          .then(function(res) {
+            if(res.status === 'success'){
+              self.powerList = res.data;
+              self.powerListSelected = [];
+              self.dealSelectedPowerHandle(res.data);
+              console.log(self.powerListSelected)
+            }
+          })
+      },
+      // 提取选中的权限
+      dealSelectedPowerHandle(data){
+        if(data === null) return;
+        data.forEach(item => {
+          if ( item.selected ) {
+            this.powerListSelected.push(item.id);
+          }
+          if( item.children ) {
+           this.dealSelectedPowerHandle(item.children);
+          }
+        })
+      },
+      // 编辑角色权限
+      editRolePowerHandle(){
+        let self = this;
+        let params = {
+          sysRolePowerRelList : []
+        }
+        this.$refs.tree.getCheckedKeys().forEach(item => {
+          params.sysRolePowerRelList.push({
+            relRoleId : self.curRoleId,
+            relPowerId : item,
+            relCompanyId : 1
+          })
+        })
+        params.sysRolePowerRelList = JSON.stringify(params.sysRolePowerRelList)
+        api.editRolePower(params)
+          .then(function(res) {
+            if(res.status === 'success'){
+              self.$message({
+                message: '保存成功',
+                type: 'success'
+              });
+            }
+          })
+      }
     }
   };
 </script>
 
 <style>
-
+  .el-tree--highlight-current .el-tree-node.is-current>.el-tree-node__content{
+    background:#00afc7;
+    color:#fff;
+  }
 </style>
