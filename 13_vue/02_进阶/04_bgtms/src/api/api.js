@@ -445,6 +445,24 @@ export default {
     return fetch('sysrolepowerrel/addbatch',parmas)
   },
 
+
+  // 根据staff的uuid获取角色列表
+  getRoleListByStaffId(parmas){
+    return fetch('sysrolestaffrel/getrolesbystaffid',parmas)
+  },
+
+  // 根据staff的uuid获取权限列表
+  getPowerListByStaffId(parmas){
+    return fetch('sysstaffinfo/getpowerbystaffid',parmas)
+  },
+
+
+  // 为员工赋予职责
+  giveRoleToStaff(parmas){
+    return fetch('sysrolestaffrel/addforbatch',parmas)
+  },
+
+
 }
 
 

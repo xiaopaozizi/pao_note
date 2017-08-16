@@ -21,6 +21,7 @@ import account from '@/components/settlement/account/accountList'
 // 权限管理
 import manage from '@/components/power/manage'
 import dispatch from '@/components/power/dispatch'
+import test from '@/components/power/test'
 
 Vue.use(Router)
 
@@ -97,6 +98,7 @@ let router =  new Router({
       children:[
         { path : '/power/manage', name : '公司', component : manage, meta : { parent : '权限',showMenu : true,} },
         { path : '/power/dispatch', name : '角色', component : dispatch, meta : { parent : '权限',showMenu : true,} },
+        { path : '/power/test', name : '测试', component : test, meta : { parent : '权限',showMenu : true,} },
        ]
     },
 

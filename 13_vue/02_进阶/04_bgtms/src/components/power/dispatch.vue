@@ -87,6 +87,8 @@
               console.log(self.powerListSelected)
             }
           })
+
+
       },
       // 提取选中的权限
       dealSelectedPowerHandle(data){

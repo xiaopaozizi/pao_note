@@ -30,6 +30,29 @@ class Tool {
     second = second < 10 ? ('0' + second) : second;
     return y + '-' + m + '-' + d+' '+h+':'+minute+':'+second;
   };
+  // 数组去重
+  //将对象元素转换成字符串以作比较
+  obj2key(obj, keys){
+    var n = keys.length,
+      key = [];
+    while(n--){
+      key.push(obj[keys[n]]);
+    }
+    return key.join('|');
+  }
+  //对象数组去重操作
+  uniqeByKeys(array,keys){
+    var arr = [];
+    var hash = {};
+    for (var i = 0, j = array.length; i < j; i++) {
+      var k = this.obj2key(array[i], keys);
+      if (!(k in hash)) {
+        hash[k] = true;
+        arr .push(array[i]);
+      }
+    }
+    return arr ;
+  }
 }
 
 

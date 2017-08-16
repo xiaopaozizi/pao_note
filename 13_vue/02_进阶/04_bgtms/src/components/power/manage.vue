@@ -1,6 +1,7 @@
 <template>
     <div id="manage">
       <el-row>
+        <!--左边导航树-->
         <el-col :span="3">
           <el-tree
             :data="leftNavs"
@@ -12,6 +13,7 @@
         </el-col>
         <el-col :offset="0" :span="21">
           <el-row>
+
             <!--公司信息-->
             <el-col :span="24" class="company" v-if="curGrade > 0">
               <el-card>
@@ -177,29 +179,43 @@
 
 
             <!--权限列表-->
-            <el-col :span="24" class="company" v-if="curGrade ==  3">
-              <el-table
-                ref="multipleTable"
-                :data="tableRole"
-                border
-                tooltip-effect="dark"
-                style="width: 100%">
-                <el-table-column
-                  type="selection"
-                  width="100">
-                </el-table-column>
-                <el-table-column
-                  label="角色"
-                  width="120">
-                  <template scope="scope">{{ scope.row.date }}</template>
-                </el-table-column>
-                <el-table-column
-                  prop="name"
-                  label="描述"
-                  width="120">
-                </el-table-column>
-              </el-table>
-            </el-col>
+            <div v-if="curGrade == 3">
+              <el-col :span="24" style="margin:20px 0;">
+                <el-button type="success" @click="addPowerToStaffHandle">授权</el-button>
+              </el-col>
+              <el-col :span="24" class="company" >
+                <el-table
+                  ref="multipleTable"
+                  :data="tableRole"
+                  border
+                  tooltip-effect="dark"
+                  style="width: 100%"
+                  @selection-change="handleSelectionChange"
+                >
+                  <el-table-column
+                    type="selection"
+                    width="70">
+                  </el-table-column>
+                  <el-table-column
+                    prop="uuid"
+                    label="uuid"
+                    width="120">
+                  </el-table-column>
+                  <el-table-column
+                    prop="roleCode"
+                    label="编码">
+                  </el-table-column>
+                  <el-table-column
+                    prop="roleName"
+                    label="名称">
+                  </el-table-column>
+                  <el-table-column
+                    prop="status"
+                    label="有效">
+                  </el-table-column>
+                </el-table>
+              </el-col>
+            </div>
           </el-row>
         </el-col>
       </el-row>
@@ -327,24 +343,16 @@
 
 
           /*角色*/
-          tableRole: [{
-            date: '出纳',
-            name: '王小虎'
-          },{
-            date: '财务',
-            name: '王小虎'
-          },{
-            date: '经理',
-            name: '王小虎'
-          },{
-            date: '老板',
-            name: '王小虎'
-          },],
-          multipleSelection: [],
+          tableRole: [],
+          // 复选框勾中的数组
+          mulSelTableRole: [],
 
-
-          // 记录节点的信息
-          node : null,
+          // 记录当前公司，部门，员工的
+          node : {
+            companyId : 0,
+            departmentId : 0,
+            staffId : 0,
+          },
 
 
         };
@@ -606,7 +614,7 @@
         showCompalyInfoAndDepartmentListHandle(){
           let self = this;
            self.controllPageShow('companyStatus', 'show');
-          let id = this.node.id;
+          let id = this.node.companyId;
           // 获取和公司有关的数据
           // 通过uuid获取公司的信息
           api.powerOneCompany({
@@ -630,7 +638,7 @@
         showDepartmentInfoAndStaffListHandle(){
           let self = this;
           self.controllPageShow('departmentStatus', 'show');
-          let id = this.node.id;
+          let id = this.node.departmentId;
           // 二级菜单
           // 部门的信息
           // 通过uuid获取部门的信息
@@ -655,10 +663,8 @@
         showStaffInfoAndRoleListHandle(){
           let self = this;
           self.controllPageShow('staffStatus', 'show');
-          let id = this.node.id;
-          // 二级菜单
-          // 部门的信息
-          // 通过uuid获取部门的信息
+          let id = this.node.staffId;
+          // 通过uuid获取员工的信息
           api.powerOneStaff({
             uuid : id
           }).then(function(res) {
@@ -668,23 +674,78 @@
               });
             }
           })
-
+          // 通过uuid获取角色的信息
+          api.getRoleListByStaffId({
+            relStaffId : id
+          }).then(function(res) {
+            //self.tableRole = [];
+            self.mulSelTableRole = [];
+            res.forEach((item,index) => {
+              self.tableRole[index] = item;
+            })
+            // 勾选
+            if(self.tableRole){
+              self.tableRole.forEach(row => {
+                self.$refs.multipleTable.toggleRowSelection(row, row.selected);
+              })
+            }
+          })
+          // 通过uuid获取权限的信息
+          api.getPowerListByStaffId({
+            uuid : id
+          }).then(function(res) {
+            //console.log(4444,res);
+          });
         },
+        // 将权限赋值给员工
+        addPowerToStaffHandle(){
+          let self = this;
+          let params = [];
+          this.mulSelTableRole.forEach(item=>{
+              params.push({
+                relStaffId : self.staffField.uuid.text,
+                relRoleId : item.uuid
+              });
+          });
+          api.giveRoleToStaff({
+            sysRoleStaffRelList : JSON.stringify(params)
+          }).then(function(res) {
+            if(res.status === 'success'){
+              self.$message({
+                message: '授权成功',
+                type: 'success'
+              });
+            }
+          })
+        },
+        //复选框状态改变
+        handleSelectionChange(val) {
+          val = tool.uniqeByKeys(val, ['roleCode']);
+          //console.log(val);
+          this.mulSelTableRole = val;
+        },
+
         // 点击左边导航条，一级，二级，三级菜单
         nodeClickHandle(data) {
-          this.node = data;
+         // console.log(7777,data)
+          //this.node = data.id;
           // 获取节点名称
           let self = this;
           // 等级 从localstorage中获取缓存信息
           this.curGrade = data.grade;
           switch(this.curGrade){
             case 1:
+                self.node.companyId = data.id;
                 self.showCompalyInfoAndDepartmentListHandle();
                 break;
             case 2:
+                self.node.departmentId = data.id;
                 self.showDepartmentInfoAndStaffListHandle();
                 break;
             case 3:
+                self.node.departmentId = data.parentId;
+                self.showDepartmentInfoAndStaffListHandle();
+                self.node.staffId = data.id;
                 self.showStaffInfoAndRoleListHandle();
               break;
           }
