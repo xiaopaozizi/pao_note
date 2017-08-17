@@ -3,11 +3,14 @@
         <div class="ms-title">车队管理系统</div>
         <div class="ms-login">
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0px" class="demo-ruleForm">
-                <el-form-item prop="username">
-                    <el-input v-model="ruleForm.username" placeholder="username"></el-input>
+                <el-form-item prop="companyCode">
+                    <el-input v-model="ruleForm.companyCode" placeholder="公司代码"></el-input>
                 </el-form-item>
+              <el-form-item prop="telephone">
+                <el-input v-model="ruleForm.telephone" placeholder="手机号码"></el-input>
+              </el-form-item>
                 <el-form-item prop="password">
-                    <el-input type="password" placeholder="password" v-model="ruleForm.password" @keyup.enter.native="submitForm('ruleForm')"></el-input>
+                    <el-input type="password" placeholder="密码" v-model="ruleForm.password" @keyup.enter.native="submitForm('ruleForm')"></el-input>
                 </el-form-item>
                 <div class="login-btn">
                     <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
@@ -24,16 +27,20 @@
         data: function(){
             return {
                 ruleForm: {
-                    username: '',
-                    password: ''
+                  companyCode: '',
+                  telephone: '',
+                  password : ''
                 },
                 rules: {
-                    username: [
-                        { required: true, message: '请输入用户名', trigger: 'blur' }
-                    ],
-                    password: [
-                        { required: true, message: '请输入密码', trigger: 'blur' }
-                    ]
+                  companyCode: [
+                    { required: true, message: '请输入公司代码', trigger: 'blur' }
+                  ],
+                  telephone: [
+                    { required: true, message: '请输入手机号', trigger: 'blur' }
+                  ],
+                  password: [
+                      { required: true, message: '请输入密码', trigger: 'blur' }
+                  ]
                 }
             }
         },
@@ -42,12 +49,13 @@
                 const self = this;
                 self.$refs[formName].validate((valid) => {
                     if (valid) {
-                        localStorage.setItem('ms_username',self.ruleForm.username);
-                        console.log('kkkkkk')
-                        self.$router.push('/order/');
+
                     } else {
-                        console.log('error submit!!');
-                        return false;
+                      self.$message({
+                        message: '请完善登录信息',
+                        type: 'error'
+                      });
+                      return false;
                     }
                 });
             }
@@ -75,7 +83,7 @@
     left:50%;
     top:50%;
     width:300px;
-    height:230px;
+    height:300px;
     margin:-150px 0 0 -160px;
     padding:40px;
     border-radius: 5px;

@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from '@/components/login/Login'
 import Home from '@/components/pao-nav/Home'
 
 import order2 from '@/components/business/order2/list'
@@ -22,6 +21,11 @@ import account from '@/components/settlement/account/accountList'
 import manage from '@/components/power/manage'
 import dispatch from '@/components/power/dispatch'
 import test from '@/components/power/test'
+
+
+
+// 懒加载方式，当路由被访问的时候才加载对应组件
+const Login = resolve => require(['@/components/login/Login'], resolve)
 
 Vue.use(Router)
 
@@ -105,7 +109,7 @@ let router =  new Router({
   ],
 })
 // 路由拦截器
-/*router.beforeEach ((to, from, next) => {
+router.beforeEach ((to, from, next) => {
   //console.log(to.path);
   if(to.path.startsWith('/login')){
     // 登录路由，直接进入
@@ -120,6 +124,6 @@ let router =  new Router({
       next();
     }
   }
-})*/
+})
 
 export default router;
