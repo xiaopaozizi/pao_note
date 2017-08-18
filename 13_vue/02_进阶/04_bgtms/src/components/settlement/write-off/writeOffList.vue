@@ -1,24 +1,7 @@
 <template>
   <div class="write-off-list" id="writeOffListId">
     <!--查询框-->
-<!--    <div class="container-fluid">
-      <div class="row" >
-        <div class="col-sm-12">
-          <div style="float: left;">
-            <p class="icon-inline">
-              <i class="fa fa-share fa-lg" aria-hidden="true" style="cursor: pointer"></i>
-              <span style="font-size: 4px!important;">导出</span>
-            </p>
-            <p class="icon-inline" @click="addWriteBtn">
-              <i class="fa fa-plus" aria-hidden="true" style="cursor: pointer"></i>
-              <span>新增</span>
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>-->
-    <div></div>
-    <el-row>
+<!--    <el-row>
       <el-form  :model="writeSearchForm"  label-width="90px">
         <el-row>
           <el-col :span="6">
@@ -65,12 +48,29 @@
         </el-row>
         </el-form-item>
       </el-form>
-    </el-row>
+    </el-row>-->
     <!--合计内容-->
     <el-row :gutter="20">
-      <el-col :span="6">应收合计:</el-col>
-      <el-col :span="6">应付合计:</el-col>
-      <el-col :span="6">合计金额:</el-col>
+      <el-col :span="6"  class="searchText">
+        <span>应收合计:</span>
+        <span>应付合计:</span>
+        <span>合计金额:</span>
+      </el-col>
+      <el-col :span="18">
+        <span>制单日期:</span>
+        <el-date-picker
+          size="small"
+          v-model="writeSearchForm.date"
+          type="daterange"
+          align="right"
+          placeholder="选择日期范围"
+          range-separator=" ~ "
+          @change="setChangedValue"
+          :picker-options="pickerOptions2">
+        </el-date-picker>
+        <el-button type="primary" @click="xzSearchBtn"  size="small">查询</el-button>
+        <el-button type="primary" @click="shenheBtn"  size="small">审核</el-button>
+      </el-col>
     </el-row>
     <!--表格内容-->
     <bill-table :tableData="tableData" ref="writeListTable" @seletClk="parentSelect"></bill-table>
@@ -189,26 +189,26 @@
         isDetailShow:true,
         activeName:'销账详情',
         tableDetailsData:[
-          {name: '单号', isChecked:true, record: "billCodes"},
-          {name: '产生日期', isChecked:true, record: "createDateStr"},
-          {name: "结算方简称", isChecked:true, record: "settleAccountsShortName"},
-          {name: "结算方全称", isChecked:true, record: "settleAccountsFullName"},
-          {name: "账单号", isChecked:true, record: "monthlyStatementNo"},
-          {name: "费用状态", isChecked:true, record: "costStatus"},
-          {name: "收付", isChecked:true,record: "costType"},
-          {name: "费用名称", isChecked:true, record: "costName"},
-          {name: "单价", isChecked:true, record: "unitPrice"},
-          {name: "数量", isChecked:true, record: "number"},
-          {name: "金额",isChecked:true, record: "money"},
-          {name: "备注",isChecked:true, record: "remark"},
-          {name: "业务类型",isChecked:true, record: ""},
-          {name: "客户单号", isChecked:true, record: "customerCode"},
-          {name: "箱型", isChecked:true, record: "teuType"},
-          {name: "箱号", isChecked:true, record: "teuNo"},
-          {name: "车牌号", isChecked:true, record: "plateNo"},
-          {name: "装拆地",isChecked:true, record: "destination"},
-          {name: "通知号",isChecked:true, record: "receiptPaymentNo"},
-          {name: "销账号",isChecked:true, record: "chargeOffNo"},
+          {name: '单号', isChecked:true, record: "billCodes",filterText: 'text'},
+          {name: '产生日期', isChecked:true, record: "createDateStr",filterText: 'text'},
+          {name: "结算方简称", isChecked:true, record: "settleAccountsShortName",filterText: 'text'},
+          {name: "结算方全称", isChecked:true, record: "settleAccountsFullName",filterText: 'text'},
+          {name: "账单号", isChecked:true, record: "monthlyStatementNo",filterText: 'text'},
+          {name: "费用状态", isChecked:true, record: "costStatus",filterText: 'text'},
+          {name: "收付", isChecked:true,record: "costType",filterText: 'text'},
+          {name: "费用名称", isChecked:true, record: "costName",filterText: 'text'},
+          {name: "单价", isChecked:true, record: "unitPrice",filterText: 'text'},
+          {name: "数量", isChecked:true, record: "number",filterText: 'text'},
+          {name: "金额",isChecked:true, record: "money",filterText: 'text'},
+          {name: "备注",isChecked:true, record: "remark",filterText: 'text'},
+          {name: "业务类型",isChecked:true, record: "",filterText: 'text'},
+          {name: "客户单号", isChecked:true, record: "customerCode",filterText: 'text'},
+          {name: "箱型", isChecked:true, record: "teuType",filterText: 'text'},
+          {name: "箱号", isChecked:true, record: "teuNo",filterText: 'text'},
+          {name: "车牌号", isChecked:true, record: "plateNo",filterText: 'text'},
+          {name: "装拆地",isChecked:true, record: "destination",filterText: 'text'},
+          {name: "通知号",isChecked:true, record: "receiptPaymentNo",filterText: 'text'},
+          {name: "销账号",isChecked:true, record: "chargeOffNo",filterText: 'text'},
         ],
         selectNowData:null,
 
@@ -422,6 +422,14 @@
     padding: 5px 10px 5px 10px;
     background-color: lightblue;
     margin-top: 5px;
+  }
+  .searchText {
+    padding-top: 8px;
+
+  }
+  .searchText span {
+    display: inline-block;
+    padding-right: 25px;;
   }
 </style>
 

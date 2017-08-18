@@ -1,17 +1,35 @@
 <template>
   <div class="waybill">
-
-    <el-row style="margin-top: 20px">
-      <el-col :span="8">
-        <el-radio-group v-model="tabsRadio" @change="radioChange">
+    <el-row style="padding-top: 6px">
+      <el-col :span="8" style="padding-top: 5px">
+        <el-radio-group v-model="tabsRadio" @change="radioChange" >
           <el-radio label="">综合</el-radio>
           <el-radio label="待排车">待排车</el-radio>
           <el-radio label="运输中">运输中</el-radio>
           <el-radio label="未审核">未审核</el-radio>
         </el-radio-group>
       </el-col>
-      <el-col :span="2" :offset="14" style="text-align: right">
-        <ag-grid-filter></ag-grid-filter>
+      <el-col :span="14" >
+        <el-radio-group v-model="searchForm.timeRadio"  @change="dateRadioChange" style="margin-right: 25px">
+          <el-radio label="今天">今天</el-radio>
+          <el-radio label="明天">明天</el-radio>
+          <el-radio label="后天">后天</el-radio>
+        </el-radio-group>
+
+        <el-date-picker
+          v-model="searchForm.date"
+          size="small"
+          type="daterange"
+          align="right"
+          placeholder="选择日期范围"
+          @change="setChangedValue"
+          range-separator=" ~ "
+        >
+        </el-date-picker>
+        <el-button type="primary" size="small" @click="searchBtn">查询</el-button>
+      </el-col>
+      <el-col :span="2" style="text-align: right">
+        <ag-grid-filter   :tableData="agGridFilterData.bigHeader" :type="'bigHeader'"></ag-grid-filter>
       </el-col>
     </el-row>
     <ag-grid-vue style="height: 250px;width: 100%;" class="ag-blue" id="myGrid"
@@ -25,7 +43,6 @@
                  :suppressMenuColumnPanel="true"
                  :toolPanelSuppressValues="true"
                  :sortingOrder="['asc','desc']"
-                 :rowDataChanged="rowDataChanged"
                  :floatingFilter="true"
                  rowSelection="multiple"
                  :rowData="rowData">
@@ -44,9 +61,9 @@
       <el-tab-pane label="上传图片" name="上传图片">
         <show-img></show-img>
       </el-tab-pane>
-      <el-tab-pane label="日志信息" name="日志信息">
+<!--      <el-tab-pane label="日志信息" name="日志信息">
         <show-journal></show-journal>
-      </el-tab-pane>
+      </el-tab-pane>-->
     </el-tabs>
   </div>
 </template>
@@ -61,6 +78,7 @@
   import showXd from './showXdInfo.vue'
   import editFee from './editFee.vue'
   import agGridFilter from '@/components/common/ag-grid-filter'
+  import Tool from '@/api/tool'
   import axios from 'axios'
   const neiP = '内排';
   const waiP = '外排';
@@ -68,10 +86,13 @@
     name: "waybill",
     data() {
       return {
+        // ag-grid-filter的数据
+        agGridFilterData :  this.$store.state.tableModule.caseTransform,
+        type:'bigHeader',
         gridOptions: null,
         columnDefs: [],
         rowData: null,
-        defCol: this.$store.state.tableModule.caseTransform,
+        defCol: [],
         /*表单的输出*/
         //订单切换状态
         tabsRadio:'',
@@ -81,6 +102,12 @@
         selectNowData:null,
         //选中的行数
         selectNowRows:null,
+        searchForm: {
+          date:'',
+          dateStr:'',
+          timeRadio:'今天',
+          initFlag: true,
+        }
 
       }
     },
@@ -120,48 +147,62 @@
         console.log(xdtList);
         //       this.gridOptions.api.setRowData(xdtList);//将数据插入到表格里面
 //        this.rowData = this.gridOptions.api.setRowData(xdtList);
-        //   this.createRowData(xdtList);
-        this.rowData = xdtList
+        this.createRowData(xdtList);
+       // this.rowData = xdtList
+      },
+      //判断字符串为空
+      isStringHandle(item) {
+          if(item.indexOf('null') ===0) {
+            return ' ';
+          }else {
+            return item;
+          }
       },
       createRowData(xdtList) {//生成表格数据函数
         const rowData = [];
         rowData.splice(0,rowData.length);
         for(let objTemp of xdtList) {
           rowData.push({
-            account: objTemp.account,
-            accountNo: objTemp.accountNo,
-            allowDriveType: objTemp.allowDriveType,
-            bank: objTemp.bank,
-            bankAddr: objTemp.bankAddr,
-            bindingTruckNo: objTemp.bindingTruckNo,
-            contactAddr: objTemp.contactAddr,
-            createDateStr: objTemp.createDateStr,
-            createUser: objTemp.createUser,
-            driverHeadPic: objTemp.driverHeadPic,
-            driverId: objTemp.driverId,
-            driverLicenseEnd: objTemp.driverLicenseEnd,
-            driverLicenseStart: objTemp.driverLicenseStart,
+            billStatus: objTemp.billStatus,
+            billType: objTemp.billType,
+            ccPlace: objTemp.ccPlace,
+            ccvNo: objTemp.ccvNo,
+            destination: objTemp.destination,
+            destinationDateStr: objTemp.destinationDateStr,
+            destinationPoint: objTemp.destinationPoint,
+            doBillType: objTemp.doBillType,
+            downClpPlace: objTemp.downClpPlace,
             driverName: objTemp.driverName,
-            familyTel: objTemp.familyTel,
-            fleet: objTemp.fleet,
-            idAddr: objTemp.idAddr,
-            idCard: objTemp.idCard,
-            medicalCheck: objTemp.medicalCheck,
-            medicalCheckDateStr: objTemp.medicalCheckDateStr,
-            nextReturnDue: objTemp.nextReturnDue,
-            relFleetId: objTemp.relFleetId,
+            driverTelephone: objTemp.driverTelephone,
+            getClpPlace: objTemp.getClpPlace,
+            needCcv: objTemp.needCcv,
+            planWeight: objTemp.planWeight,
+            plateNo: objTemp.plateNo,
+            realWeight: objTemp.realWeight,
+            receiveBillId: objTemp.receiveBillId,
+            receiveBillInfo: objTemp.receiveBillInfo,
+            relDriverId: objTemp.relDriverId,
+            relTruckId: objTemp.relTruckId,
+            relOrderId: objTemp.relOrderId,
+            relTransFleetId: objTemp.relTransFleetId,
+            relXdOrderCode: objTemp.relXdOrderCode,
             remark: objTemp.remark,
-            status: objTemp.status,
-            telephone1: objTemp.telephone1,
-            telephone2: objTemp.telephone2,
-            usualAddr: objTemp.usualAddr,
-            workNo: objTemp.workNo,
-            workNoEnd: objTemp.workNoEnd,
-            workNoStart: objTemp.workNoStart,
-            driverTep: objTemp.telephone1 + '/' +objTemp.driverName
+            sealNo: objTemp.sealNo,
+            sendBillId: objTemp.sendBillId,
+            sendBillInfo: objTemp.sendBillInfo,
+            sendBillMark: objTemp.sendBillMark,
+            sendTruckId: objTemp.sendTruckId,
+            teuNo: objTemp.teuNo,
+            teuType: objTemp.teuType,
+            tkBillCode: objTemp.tkBillCode,
+            transFleet: objTemp.transFleet,
+            xdTkBillId: objTemp.xdTkBillId,
+            driverTep: this. isStringHandle(objTemp.driverName +'/' + objTemp.driverTelephone)
           })
         }
         this.rowData = rowData;
+        console.log('我是创建表格table');
+        console.log(rowData);
       },
       createColumnDefs() {//生成表格表头
         /*表头内容显示数据数组*/
@@ -202,6 +243,8 @@
         };
         api.tkOrderQueryList(params)
           .then(function(res) {
+            console.log('我事实上+++');
+            console.log(res);
             self.initData(res)
           })
           .catch(function(err) {
@@ -488,8 +531,54 @@
         } else  if(tab.label === '费用信息') {
           self.$refs.tkFee.getCostList(self.selectNowData.xdTkBillId);
         }
+      },
+      //时间转换格式化
+      setChangedValue(value){
+        let self = this;
+        this.searchForm.dateStr = value;
+        let params =  {
+          destinationDateQuery:  value,
+          billStatus:  this.tabsRadio
+        };
+        if(this.searchForm.initFlag){
+          self.billSearchInterface(params);
+          self.searchForm.initFlag = false;
+        }
+      },
+      //今天、明天、后天 点击事件
+      //列表切换状态
+      dateRadioChange(val) {
+        console.log(val);
+        if(val ==='明天') {
+          let stateDate = (new Date()).setTime(new Date().getTime() + 3600 * 1000 * 24 );
+          let endDate = (new Date()).setTime(new Date().getTime() + 3600 * 1000 * 24);
+          this.searchForm.date = [stateDate,endDate];
+        } else if(val ==='后天') {
+          let stateDate = (new Date()).setTime(new Date().getTime() + 3600 * 1000 * 24 *2 );
+          let endDate = (new Date()).setTime(new Date().getTime() + 3600 * 1000 * 24 * 2);
+          this.searchForm.date = [stateDate,endDate];
+        }else if(val ==='今天') {
+          let stateDate = new Date();
+          let  endDate = new Date();
+          this.searchForm.date = [stateDate,endDate];
+        }
+      },
+      searchBtn()  {
+        let params =  {
+          destinationDateQuery:  this.searchForm.dateStr,
+          billStatus:  this.tabsRadio
+        };
+        //查询接口
+        this.billSearchInterface(params)
+      },
+      billSearchInterface(item) {
+        let self= this;
+        api.tkOrderQueryList(item)
+          .then(function(res) {
+            self.initData(res);
+          })
+          .catch(function(err){})
       }
-
     },
     beforeMount() {
       this.gridOptions = {
@@ -518,19 +607,28 @@
           filterOoo: '请输入您要过滤的内容',
         }
       };
-      this.createColumnDefs();
+      let tool = new Tool();
+      tool.setIte("caseTransform", "bigHeader", this.agGridFilterData.bigHeader);//把值存入
     },
     mounted() {
-      this.getRowData();
+      //存入数据
+        let tool = new Tool();
+        this.defCol = tool.getIte('caseTransform').bigHeader;
+        this.createColumnDefs();
+        let stateDate = new Date();
+        let endDate = new Date();
+        this.searchForm.date = [stateDate,endDate];
+      this.getRowData('');
       this.gridOptions.api.sizeColumnsToFit();
+/*
+    :rowDataChanged="rowDataChanged"
+*/
     },
   }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  /*  .grid {
-      text-align: center;
-    }*/
+
 </style>
 

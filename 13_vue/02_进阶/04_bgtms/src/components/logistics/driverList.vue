@@ -2,13 +2,14 @@
    <div class="account">
      <div style="margin-top: 10px"></div>
      <!--查询框-->
-     <el-row>
-       <el-form  :inline="true" :model="searchForm"  label-width="100px">
+ <!--    <el-row>
+       <el-form  :model="searchForm"  label-width="100px">
          <el-row>
            <el-col :span="6">
              <el-form-item label="司机/手机">
                <el-autocomplete
                  class="inline-input"
+                 size="small"
                  v-model="searchForm.driver"
                  :fetch-suggestions="driverQuerySearch"
                  placeholder="请输入内容"
@@ -20,7 +21,7 @@
            </el-col>
            <el-col :span="6">
              <el-form-item label="状态">
-               <el-select v-model="searchForm.state" @change="accountTypeChange" clearable placeholder="请选择">
+               <el-select  size="small"  v-model="searchForm.state" @change="accountTypeChange" clearable placeholder="请选择">
                  <el-option
                    v-for="item in searchForm.options2"
                    :key="item.value"
@@ -31,18 +32,18 @@
              </el-form-item>
            </el-col>
            <el-col :span="2">
-             <el-button type="primary" @click="listSearchBtn">查询</el-button>
+             <el-button type="primary" @click="listSearchBtn" size="small">查询</el-button>
            </el-col>
          </el-row>
          </el-form-item>
        </el-form>
-     </el-row>
-     <el-button @click="addBtn">新增</el-button>
-     <el-button @click="bindCarNoBtn">绑定车牌</el-button>
-     <el-button @click="cancelCarNoBtn">取消绑定</el-button>
-     <list-table :tableData="tableData" ref="refListTable" @seletClk="parentSelect"></list-table>
+     </el-row>-->
+     <el-button @click="addBtn" size="small">新增</el-button>
+     <el-button @click="bindCarNoBtn" size="small">驾驶车辆</el-button>
+     <el-button @click="cancelCarNoBtn" size="small">取消驾驶</el-button>
+     <list-table :tableData="tableData" ref="refListTable" @seletClk="parentSelect"  @selectNow="selectNow"></list-table>
      <!--账户新增弹出框-->
-     <el-dialog :modal="false"  :close-on-click-modal="false"  title="司机新增" v-model="dialogFormVisible" size="large">
+     <el-dialog :modal="false"   @close="addHandClose"   :close-on-click-modal="false"  title="司机新增" v-model="dialogFormVisible" size="large">
        <el-form :model="addForm"  label-width="140px" :rules="addFormRules"  ref="addForm">
          <el-row>
            <el-col :span="6">
@@ -97,21 +98,11 @@
              </el-form-item>
            </el-col>
            <el-col :span="6" >
-             <el-form-item label="驾驶证有效期起" prop="driverLicenseStartStr">
-               <el-date-picker
-                 v-model="addForm.driverLicenseStartStr"
-                 format="yyyy-MM-dd"
-                 type="date"
-                 placeholder="选择日期"
-                 :editable="false"
-                 >
-               </el-date-picker>
-             </el-form-item>
            </el-col>
            <el-col :span="6" >
-             <el-form-item label="驾驶证有效期止" prop="driverLicenseSedStr">
+             <el-form-item label="驾驶证有效期" prop="driverLicenseEndStr">
                <el-date-picker
-                 v-model="addForm.driverLicenseSedStr"
+                 v-model="addForm.driverLicenseEndStr"
                  type="date"
                  placeholder="选择日期"
                  :editable="false"
@@ -126,30 +117,21 @@
                  type="date"
                  placeholder="选择日期"
                  :editable="false"
-                 :picker-options="pickerOptions0">
+               >
                </el-date-picker>
              </el-form-item>
            </el-col>
          </el-row>
          <el-row>
            <el-col :span="6" >
-           <el-form-item label="从业资格证号" prop="workNo">
+           <el-form-item label="资格证号" prop="workNo">
              <el-input v-model="addForm.workNo" placeholder="请输入内容"></el-input>
            </el-form-item>
          </el-col>
            <el-col :span="6">
-             <el-form-item label="从业资格证有效期起"  prop="workNoStartStr">
-               <el-date-picker
-                 v-model="addForm.workNoStartStr"
-                 type="date"
-                 placeholder="选择日期"
-                 :editable="false"
-                 >
-               </el-date-picker>
-             </el-form-item>
            </el-col>
            <el-col :span="6" >
-             <el-form-item label="从业资格证有效期止" prop="workNoEndStr">
+             <el-form-item label="资格证有效期" prop="workNoEndStr">
                <el-date-picker
                  v-model="addForm.workNoEndStr"
                  type="date"
@@ -160,7 +142,7 @@
              </el-form-item>
            </el-col>
            <el-col :span="6">
-             <el-form-item label="驾驶车牌"  prop="bindingTruckNo">
+             <el-form-item label="驾驶车辆"  prop="bindingTruckNo">
                <el-autocomplete
                  v-model="addForm.bindingTruckNo"
                  :fetch-suggestions="plateNoSearch"
@@ -182,28 +164,39 @@
                <el-input v-model="addForm.contactAddr" placeholder="请输入内容"></el-input>
              </el-form-item>
            </el-col>
+           <el-col  :span="12">
+             <el-form-item label="备注" prop="remark">
+               <el-input
+                 type="textarea"
+                 :autosize="{ minRows: 2, maxRows: 4}"
+                 placeholder="请输入内容"
+                 v-model="addForm.remark">
+               </el-input>
+             </el-form-item>
+
+           </el-col>
          </el-row>
        </el-form>
        <div slot="footer">
          <el-button type="primary" @click="addSaveBtn">保存</el-button>
        </div>
      </el-dialog>
-     <!--司机绑定车牌号弹出框-->
-     <el-dialog :modal="false"  :close-on-click-modal="false"  title="绑定车牌号" v-model="editDialogFormVisible" size="small">
+     <!--司机驾驶车辆号弹出框-->
+     <el-dialog :modal="false"  :close-on-click-modal="false"  title="驾驶车辆号" v-model="editDialogFormVisible" size="small">
        <el-form :model="editForm"  label-width="100px" :rules="editFormRules"  ref="editForm">
          <el-row>
            <el-col :span="12">
-             <el-form-item label="姓名">
+             <el-form-item label="姓名" prop="driverName">
                <el-input v-model="editForm.driverName" :disabled="true" placeholder="请输入内容"></el-input>
              </el-form-item>
            </el-col>
            <el-col :span="12">
-             <el-form-item label="常用手机">
+             <el-form-item label="常用手机" prop="telephone1">
                <el-input v-model="editForm.telephone1" :disabled="true" placeholder="请输入内容"></el-input>
              </el-form-item>
            </el-col>
            <el-col :span="12">
-             <el-form-item label="绑定车牌" prop="bindingTruckNo">
+             <el-form-item label="驾驶车辆" prop="bindingTruckNo">
                <el-autocomplete
                  v-model="editForm.bindingTruckNo"
                  :fetch-suggestions="plateNoSearch"
@@ -223,12 +216,12 @@
          <el-button type="primary" @click="bindSaveBtn">保存</el-button>
        </div>
      </el-dialog>
-     <!--司机绑定车牌号弹出框-->
+     <!--司机驾驶车辆号弹出框-->
      <el-dialog :modal="false"  :close-on-click-modal="false"  title="解绑车牌" v-model="cancelFormVisible" size="small">
-       <el-form :model="cancelForm"  label-width="100px">
+       <el-form :model="cancelForm"  label-width="100px" :rules="cancelRules">
          <el-row>
            <el-col :span="12">
-             <el-form-item label="取消类型">
+             <el-form-item label="取消类型" prop="type">
                <el-select v-model="cancelForm.type"  clearable placeholder="请选择">
                  <el-option
                    v-for="item in cancelForm.options"
@@ -240,7 +233,7 @@
              </el-form-item>
            </el-col>
            <el-col :span="24">
-             <el-form-item label="原因">
+             <el-form-item label="原因" prop="remark">
                <el-input
                  type="textarea"
                  :autosize="{ minRows: 2, maxRows: 4}"
@@ -293,9 +286,9 @@
             {name: "年审日期",isChecked:true, record: "nextReturnDueStr"},
             {name: "状态",isChecked:true, record: "status"},
             {name: '准驾车型', isChecked:true, record: "allowDriveType"},
-            {name: "从业资格证号",isChecked:true, record: "workNo"},
+            {name: "资格证号",isChecked:true, record: "workNo"},
             {name: "备注",isChecked:true, record: "remark"},
-            {name: "关联车牌号",isChecked:true, record: "bindingTruckNo"}
+            {name: "驾驶车辆",isChecked:true, record: "bindingTruckNo"}
           ],
           searchForm: {
             driver:'', //司机
@@ -311,6 +304,7 @@
             remark:'', //备注
             options:[],
           },
+          cancelRules: {},
           //司机新增表单
           addForm: {
             driverName:'', //姓名
@@ -322,45 +316,44 @@
             usualAddr:'', //常住地址
             contactAddr:'',//通讯地址
             nextReturnDueStr:'',//年审日期
-            status:'1-有效',//状态
-            bindingTruckNo:'', //绑定车牌
+            status:'有效',//状态
+            bindingTruckNo:'', //驾驶车辆
             allowDriveType:'',//准驾车型
-            driverLicenseStartStr:'',//驾驶证有效期起
-            driverLicenseSedStr:'',//驾驶证有效期止
+            driverLicenseEndStr:'',//驾驶证有效期止
             workNo:'', //从业资格证号
-            workNoStartStr:'',//从业资格证有效期起
             workNoEndStr:'',//从业资格证有效期止
-            truckBaseId:'' //绑定的车牌号ID
+            truckBaseId:'', //绑定的车牌号ID
+            remark:'' // 备注
           },
           addFormRules:{
             driverName: [
               { required: true, message: '请输入姓名', trigger: 'blur' }
             ],
-            telephone1: [
+   /*         telephone1: [
               { required: true, message: '请输入手机号码', trigger: 'blur' },
               { pattern: /^1(3|4|5|7|8)\d{9}$/, message: '请输入正确手机号码', trigger: 'blur' },
-            ],
-            idCard:[
+            ],*/
+   /*         idCard:[
               { required: true, message: '请输入司机身份证号', trigger: 'blur'},
               {pattern: /^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{4}$/, message: '请输入正确的身份证号码', trigger: 'blur'}
-            ]
+            ]*/
           },
 
-          //司机关联车牌号表单
+          //司机驾驶车辆表单
           editForm: {
             driverId:'',//司机ID
             driverName:'', //姓名
             telephone1:'',//电话1
             telephone2:'',//电话2
             usualAddr:'', //常住地址
-            bindingTruckNo:'', //绑定车牌
+            bindingTruckNo:'', //驾驶车辆
             remark:'', //备注
             truckBaseId:'',//chepaihaoID
             options:[]
           },
-          editFormRules:  [
+          editFormRules:  {
 
-          ],
+          },
           //获取表格选中的参数
           selectDataTable: null,
           //车牌号存储数据
@@ -371,8 +364,8 @@
       methods: {
         //转日期格式
          formatDate(date) {
-           if(date === '') {
-            return date;
+           if(!date) {
+            return '';
            }else {
              let  start = new Date(date);
              let y = start.getFullYear();
@@ -455,6 +448,7 @@
           let self = this;
           api.driverBindNo(queryString)
             .then(function (res) {
+              console.log(res);
               let  data  = res.data;
               let resultData = [];
               for(var objTemp of data){
@@ -477,9 +471,11 @@
         //父级控制事件
         parentSelect(item) {
           this.selectDataTable = item;
+          console.log(this.selectDataTable);
         },
         //获取tabs编辑成功以后的数据
         editSucData(item) {
+          console.log(item);
           this.$refs.refListTable.updateRow(item)
         },
         //表单删除让table数据刷新
@@ -497,11 +493,19 @@
             status: this.searchForm.state
           };
           api.driverListShow(params)
-            .then(function() {})
+            .then(function(res) {
+              self.$refs.refListTable.setRowData(res)
+            })
             .catch(function(err) {
-              self.$refs.refListTable.initData(err.data)
+
             })
 
+        },
+        //新增取消关闭
+        addHandClose(done) {
+          console.log(2222)
+         this.$refs['addForm'].resetFields();
+//          done();
         },
         //新增按钮
         addBtn() {
@@ -523,17 +527,32 @@
                contactAddr: self.addForm.contactAddr,//通讯地址
                nextReturnDueStr: self.formatDate(self.addForm.nextReturnDueStr),//年审日期
                status: self.addForm.status,//状态
-               bindingTruckNo: self.addForm.bindingTruckNo, //绑定车牌
+               bindingTruckNo: self.addForm.bindingTruckNo, //驾驶车辆
                relTruckId: self.addForm.truckBaseId,
                allowDriveType: self.addForm.allowDriveType,//准驾车型
-               driverLicenseStartStr: self.formatDate(self.addForm.driverLicenseStartStr),//驾驶证有效期起
-               driverLicenseSedStr: self.formatDate(self.addForm.driverLicenseSedStr),//驾驶证有效期止
+               driverLicenseEndStr: self.formatDate(self.addForm.driverLicenseEndStr),//驾驶证有效期止
                workNo: self.addForm.workNo, //从业资格证号
-               workNoStartStr: self.formatDate(self.addForm.workNoStartStr),//从业资格证有效期起
-               workNoEndStr: self.formatDate(self.addForm.workNoEndStr)//从业资格证有效期止
+               workNoEndStr: self.formatDate(self.addForm.workNoEndStr),//从业资格证有效期止
+               remark:  self.addForm.remark
                };
-               console.log(params);
-               api.driverAdd(params)
+               if(params.bindingTruckNo  != '' &&  params. relTruckId == '') {
+                self.$alert('请不要自创车牌,请选择查询条件里面的车牌号码再进行保存', '车牌信息', {
+                   confirmButtonText: '确定'
+                 });
+               } else {
+                 api.driverAdd(params)
+                   .then(function(res) {
+                     let data  = res.data;
+                     console.log(data);
+                     self.$refs['addForm'].resetFields();
+                     self.addForm.truckBaseId = '';
+                     self.dialogFormVisible = false;
+                     self.$refs.refListTable.addNewRow(data);
+                   })
+                   .catch(function(err) {
+                   })
+               }
+    /*           api.driverAdd(params)
                 .then(function(res) {
                   let data  = res.data;
                   console.log(data);
@@ -543,18 +562,18 @@
                 })
                 .catch(function(err) {
 
-                })
+                })*/
             }
           });
 
         },
-        //绑定车牌按钮
+        //驾驶车辆按钮
         bindCarNoBtn() {
           let self = this;
           let isBinding = this.selectDataTable.bindingTruckNo; //获取表格车牌号
           if(isBinding) {
             console.log(isBinding);
-            this.$alert('此司机已有车辆在驾驶，不能重复绑定', '绑定车牌信息', {
+            this.$alert('此司机已有车辆在驾驶，不能重复绑定', '驾驶车辆信息', {
               confirmButtonText: '确定'
             })
             } else if(isBinding == "" || isBinding == null || isBinding == undefined) {
@@ -564,7 +583,7 @@
             this.editForm.driverId = this.selectDataTable.driverId;//电话1
           }
         },
-        //绑定车牌保存按钮
+        //驾驶车辆保存按钮
         bindSaveBtn() {
           let self = this;
           let params = {
@@ -586,7 +605,11 @@
 
             })
         },
-        //取消绑定按钮
+        //
+        selectNow() {
+
+        },
+        //取消驾驶按钮
         cancelCarNoBtn() {
           let isBinding = this.selectDataTable.bindingTruckNo;
           if(isBinding){
@@ -598,7 +621,7 @@
             })
           }
         },
-        //取消绑定保存按钮
+        //取消驾驶保存按钮
         cancelPlateNoBtn() {
           let self = this;
           let params = {
@@ -607,15 +630,26 @@
             unbindType: this.cancelForm.type,  //取消类型
             unbindReason: this.cancelForm.remark // 取消原因
           };
-          api.driverCancelPlateNo(params)
-            .then(function(res) {
-              let  data  = res.data;
-              self.cancelFormVisible = false;
-              self.$refs.refListTable.updateRow(data)
+          if(params.unbindType == '') {
+            self.$alert('您必须选择取消类型', '信息', {
+              confirmButtonText: '确定'
             })
-            .catch(function(err) {
+          } else{
+            console.log(params);
+            api.driverCancelPlateNo(params)
+              .then(function(res) {
+                let  data  = res.data;
+                self.cancelFormVisible = false;
+                self.cancelForm.type = '';
+                self.cancelForm.remark  = '';
+                self.$refs.refListTable.updateRow(data);
 
-            })
+              })
+              .catch(function(err) {
+              })
+          }
+
+
         },
         //删除按钮
         delBtn() {

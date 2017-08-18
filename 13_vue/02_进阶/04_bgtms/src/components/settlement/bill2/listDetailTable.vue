@@ -77,10 +77,22 @@
         });
         this.gridOptions.columnApi.autoSizeColumns(allColumnIds);
       },
+      //获取行样式
+      rowStyle() {
+        this.gridOptions.getRowStyle = function(params){
+          if(params.data.unitPrice < 0) {
+
+            return {color:'red'}
+          } else if( params.data.unitPrice > 0 ) {
+            return {color:'blue'}
+          }
+        };
+      },
       //初始化
       initData(xdtList){
         this.gridOptions.api.setRowData([]);
         this.createRowData(xdtList);
+        this.rowStyle();
       },
       createRowData(xdtList) {//生成表格数据函数
         let self= this;
@@ -130,7 +142,7 @@
       },
       createColumnDefs() {//生成表格表头
         /*表头内容显示数据数组*/
-        let tableCol = this.defCol
+        let tableCol = this.defCol;
         /*表头对应显示的数据内容field*/
         for(var i=0; i < tableCol.length; i++){
           this.columnDefs.push(
@@ -183,6 +195,7 @@
       this.createColumnDefs();
     },
     mounted() {
+      console.log('我是想请table')
       this.gridOptions.api.sizeColumnsToFit();
     }
   }

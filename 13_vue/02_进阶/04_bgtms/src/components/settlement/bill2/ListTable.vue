@@ -10,6 +10,7 @@
                  :suppressMenuMainPanel="true"
                  :suppressMenuColumnPanel="true"
                  :toolPanelSuppressValues="true"
+                 :floatingFilter="true"
                  rowSelection="multiple"
                  :rowData="rowData">
     </ag-grid-vue>
@@ -140,20 +141,25 @@
         this.rowData = rowData;
       },
       createColumnDefs() {//生成表格表头
+        let self = this;
         /*表头内容显示数据数组*/
-        let tableCol = this.defCol
+        let tableCol = this.defCol;
         /*表头对应显示的数据内容field*/
         for(var i=0; i < tableCol.length; i++){
-          this.columnDefs.push(
-            {
-              headerName: tableCol[i].name,
-              field: tableCol[i].record,
-              suppressMenu: false,
-              suppressFilter: false,
-              checkboxSelection: tableCol[i].checkBox,
-              headerCheckboxSelection: tableCol[i].checkBox
-            }
-          )
+           if( tableCol[i].isChecked) {
+             self.columnDefs.push(
+               {
+                 headerName: tableCol[i].name,
+                 field: tableCol[i].record,
+                 suppressMenu: false,
+                 filter:tableCol[i].filterText,
+                 suppressFilter: false,
+                 checkboxSelection: tableCol[i].checkBox,
+                 headerCheckboxSelection: tableCol[i].checkBox
+               }
+             )
+           }
+
         }
       },
       clickRowHandle(item) {
@@ -216,6 +222,16 @@
           previous: '上一页',
           loadingOoo: '正在加载....',
           noRowsToShow: '没有找到您想要的数据...',
+          // for number filter
+          contains: '包含',
+          notContains: '不包含',
+          startsWith:'开始',
+          endsWith: '结束',
+          equals: '等于',
+          notEqual: '不等于',
+          lessThan: '小于',
+          greaterThan: '大于',
+          filterOoo: '请输入您要过滤的内容',
         }
       };
       this.createColumnDefs();

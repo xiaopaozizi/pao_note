@@ -224,7 +224,7 @@
 
 <script>
     import api from '@/api/api'
-    import Tool from '@/api/tool'
+    import Tool from '@/api/tool2'
     import {AgGridVue} from "ag-grid-vue";
     let tool = new Tool();
     export default {
@@ -596,6 +596,7 @@
           this.departmentField.companyName.text = this.companyField.companyShortName.text;
           this.curGrade = 2;
           this.controllPageShow('departmentStatus', 'add');
+          console.log(111111,this.departmentField);
         },
         // 部门切换到添加员工的操作
         changeAddStaffHandle(){

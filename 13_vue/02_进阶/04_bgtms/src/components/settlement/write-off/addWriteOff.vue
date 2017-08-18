@@ -1,10 +1,10 @@
 <template>
   <div class="add-write">
     <!--查询框-->
-    <el-row>
+<!--    <el-row>
       <el-form   :model="addSearchFrom" ref="addSearchFrom" label-width="100px">
         <el-row>
-  <!--        <el-col :span="6">
+  &lt;!&ndash;        <el-col :span="6">
             <el-form-item label="销账号">
               <el-input :disabled="true"
                         v-model="addSearchFrom.xzNum"
@@ -21,7 +21,7 @@
                 @select="shipperInfoHandleSelect"
               ></el-autocomplete>
             </el-form-item>
-          </el-col>-->
+          </el-col>&ndash;&gt;
           <el-col :span="6">
             <el-form-item label="制单日期">
               <el-date-picker
@@ -79,59 +79,102 @@
           </el-col>
         </el-row>
       </el-form>
-    </el-row>
-    <div></div>
+    </el-row>-->
     <!--合计内容-->
-    <el-row :gutter="20">
-      <el-col :span="6">应收合计: {{yShou}}</el-col>
-      <el-col :span="6">应付合计: {{yFu}}</el-col>
-      <el-col :span="6">合计金额:{{yShou + yFu }}</el-col>
+    <el-row>
+      <el-col :span="8" class="searchText">
+        <span>应收合计:{{yShou}}</span>
+        <span>应付合计:{{yFu}}</span>
+        <span>合计金额:{{yShou + yFu }}</span>
+      </el-col>
+      <el-col :span="16">
+        <el-form   :model="addSearchFrom" ref="addSearchFrom" label-width="100px">
+          <el-row class="col-height-show">
+            <el-col :span="9">
+              <el-form-item label="制单日期">
+                <el-date-picker
+                  v-model="addSearchFrom.date"
+                  size="small"
+                  type="daterange"
+                  align="right"
+                  placeholder="选择日期范围"
+                  range-separator=" ~ "
+                  @change="setChangedValue"
+                  :picker-options="pickerOptions2">
+                </el-date-picker>
+              </el-form-item>
+            </el-col>
+            <el-col :span="9">
+              <el-form-item label="费用状态">
+                <el-select   size="small"  v-model="addSearchFrom.costType" multiple placeholder="请选择" @visible-change="showContent">
+                  <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.value"
+                    :value="item.value">
+                  </el-option>
+                </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :span="4" style="text-align: center">
+              <el-button type="primary" @click="addSearchFromSubmit"  size="small">查询</el-button>
+            </el-col>
+          </el-row>
+        </el-form>
+      </el-col>
+    </el-row>
+    <el-row >
+      <el-form  :inline="true" :model="writeEditForm" ref="writeEditForm" label-width="100px">
+        <el-row  class="col-height-show">
+          <el-col  :xs="8" :sm="6" :md="6" :lg="6">
+            <el-form-item label="销账类型">
+              <el-select v-model="writeEditForm.xzType" @change="selectXzType" clearable placeholder="请选择" size="small">
+                <el-option
+                  v-for="item in xzOptions"
+                  :key="item.value"
+                  :label="item.value"
+                  :value="item.value">
+                </el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :xs="8" :sm="6" :md="6" :lg="6" v-show="writeEditForm.accountDisplay"  >
+            <el-form-item label="关联账号">
+              <el-autocomplete
+                size="small"
+                v-model="writeEditForm.account"
+              ></el-autocomplete>
+            </el-form-item>
+          </el-col>
+          <el-col  :xs="8" :sm="6" :md="6" :lg="6">
+            <el-form-item label="销账日期">
+              <el-date-picker
+                size="small"
+                v-model="writeEditForm.realDate"
+                type="date"
+                placeholder="选择日期"
+                @change="setChangedValue2"
+              >
+              </el-date-picker>
+            </el-form-item>
+          </el-col>
+          <el-col  :xs="8" :sm="6" :md="6" :lg="6">
+            <el-form-item label="备注">
+              <el-input type="textarea" :rows="1"
+                        size="small"
+                        v-model="writeEditForm.remark" style="width:200px"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col  :xs="8" :sm="6" :md="6" :lg="6">
+            <el-button @click="saveBtn"  size="small">保存</el-button>
+            <el-button @click="cancelBtn"  size="small">取消</el-button>
+          </el-col>
+        </el-row>
+      </el-form>
     </el-row>
     <!--表格内容-->
     <add-table :tableData="tableData" ref="addCostTable" @seletClk="selectClick" :getDataForm="getDataForm"></add-table>
-    <el-form  :inline="true" :model="writeEditForm" ref="writeEditForm" label-width="100px">
-      <el-row>
-        <el-col :span="6">
-          <el-form-item label="销账类型">
-            <el-select v-model="writeEditForm.xzType" @change="selectXzType" clearable placeholder="请选择">
-              <el-option
-                v-for="item in xzOptions"
-                :key="item.value"
-                :label="item.value"
-                :value="item.value">
-              </el-option>
-            </el-select>
-          </el-form-item>
-        </el-col>
-        <el-col :span="6" v-show="writeEditForm.accountDisplay">
-          <el-form-item label="关联账号">
-            <el-autocomplete
-              size="small"
-              v-model="writeEditForm.account"
-            ></el-autocomplete>
-          </el-form-item>
-        </el-col>
-        <el-col :span="6">
-          <el-form-item label="销账日期">
-            <el-date-picker
-              size="small"
-              v-model="writeEditForm.realDate"
-              type="date"
-              placeholder="选择日期"
-              @change="setChangedValue2"
-          >
-            </el-date-picker>
-          </el-form-item>
-        </el-col>
-        <el-col :span="6">
-          <el-form-item label="备注">
-            <el-input type="textarea" :rows="3"
-                      size="small"
-                      v-model="writeEditForm.remark" style="width:200px"></el-input>
-          </el-form-item>
-        </el-col>
-      </el-row>
-    </el-form>
+
 
   </div>
   <!---->
@@ -537,6 +580,17 @@
     padding: 5px 10px 5px 10px;
     background-color: lightblue;
     margin-top: 5px;
+  }
+  .searchText {
+    padding-top: 8px;
+
+  }
+  .searchText span {
+    display: inline-block;
+    padding-right: 25px;;
+  }
+  .col-height-show .el-col {
+    height: 40px ;
   }
 </style>
 

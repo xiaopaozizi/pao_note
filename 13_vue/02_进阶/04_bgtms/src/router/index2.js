@@ -1,31 +1,29 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import Login from '@/components/login/Login'
 import Home from '@/components/pao-nav/Home'
 
 import order2 from '@/components/business/order2/list'
 import orderAdd from '@/components/business/order2/add'
 import waybill2 from '@/components/business/waybill2/list'
-import powerManage from '@/components/power/manage'
+import withHolding  from '@/components/business/withHolding/list'
+//import addOrder2  from '@/components/business/order2/addOrder2'
 
 import driverList from '@/components/logistics/driverList'
 import carManage from '@/components/logistics/carManage/list'
 import customer from '@/components/logistics/customer/list'
 
 
-import bill2 from '@/components/settlement/bill2/List'
-import notice2 from '@/components/settlement/notice3/List'
-import writeOff from '@/components/settlement/write-off/writeOffList'
-import account from '@/components/settlement/account/accountList'
+import bill2 from '@/components/settlement/bill2/List2'
+import notice2 from '@/components/settlement/notice3/List2'
+import writeOff from '@/components/settlement/write-off/List2'
+import account from '@/components/settlement/account/List2'
 
 // 权限管理
 import manage from '@/components/power/manage'
 import dispatch from '@/components/power/dispatch'
-import test from '@/components/power/test'
 
 
-
-// 懒加载方式，当路由被访问的时候才加载对应组件
-const Login = resolve => require(['@/components/login/Login'], resolve)
 
 Vue.use(Router)
 
@@ -43,7 +41,7 @@ let router =  new Router({
       name : '箱单',
       component : Home,
       // 重定向
-      redirect : '/power/dispatch',
+      redirect : '/business/order2/0',
       // 是否显示菜单----再后台首页--左侧---导航条显示
       showMenu : true,
       // 是否为唯一的叶子节点，即没有子菜单
@@ -51,8 +49,9 @@ let router =  new Router({
       // 图标
       iconCol : 'fa fa-truck fa-lg',
       children:[
-        { path : '/business/order2', name : '订单', component : order2, meta : { parent : '箱单', showMenu : true,} },
+        { path : '/business/order2/:id', name : '订单', component : order2, meta : { parent : '箱单', showMenu : true,} },
         { path : '/business/waybill2', name : '运单', component : waybill2, meta : { parent : '箱单',showMenu : true,} },
+        { path : '/business/withHolding', name : '预提', component : withHolding, meta : { parent : '箱单',showMenu : true,} },
         { path : '/business/orderAdd', name : '新增', component : orderAdd, meta : { parent : '箱单'} },
       ]
     },
@@ -102,8 +101,7 @@ let router =  new Router({
       children:[
         { path : '/power/manage', name : '公司', component : manage, meta : { parent : '权限',showMenu : true,} },
         { path : '/power/dispatch', name : '角色', component : dispatch, meta : { parent : '权限',showMenu : true,} },
-        { path : '/power/test', name : '测试', component : test, meta : { parent : '权限',showMenu : true,} },
-       ]
+      ]
     },
 
   ],
@@ -125,5 +123,6 @@ router.beforeEach ((to, from, next) => {
     }
   }
 })
+
 
 export default router;

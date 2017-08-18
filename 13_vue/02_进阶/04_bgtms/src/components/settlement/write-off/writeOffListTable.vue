@@ -10,6 +10,7 @@
                  :suppressMenuMainPanel="true"
                  :suppressMenuColumnPanel="true"
                  :toolPanelSuppressValues="true"
+                 :floatingFilter="true"
                  rowSelection="multiple"
                  :rowDoubleClicked="onRowDoubleClicked"
                  :rowData="rowData">
@@ -176,6 +177,16 @@
           previous: '上一页',
           loadingOoo: '正在加载....',
           noRowsToShow: '没有找到您想要的数据...',
+          // for number filter
+          contains: '包含',
+          notContains: '不包含',
+          startsWith:'开始',
+          endsWith: '结束',
+          equals: '等于',
+          notEqual: '不等于',
+          lessThan: '小于',
+          greaterThan: '大于',
+          filterOoo: '请输入您要过滤的内容',
         }
       };
       this.createColumnDefs();

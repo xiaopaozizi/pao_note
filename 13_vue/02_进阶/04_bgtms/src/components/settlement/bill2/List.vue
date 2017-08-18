@@ -1,7 +1,7 @@
 <template>
   <div class="list" >
     <!--查询框-->
-    <el-row>
+<!--    <el-row>
       <el-form  :model="searchForm"  label-width="100px">
         <el-row>
           <el-col :span="6">
@@ -29,18 +29,46 @@
               </el-date-picker>
             </el-form-item>
           </el-col>
-          <el-col :span="4">
+          <el-col :span="5" style="text-align: center">
             <el-button type="primary" @click="listSearchBtn"  size="small">查询</el-button>
           </el-col>
         </el-row>
         </el-form-item>
       </el-form>
-    </el-row>
+    </el-row>-->
     <!--合计内容-->
-    <el-row :gutter="20">
-      <el-col :span="6">应收合计:</el-col>
-      <el-col :span="6">应付合计:</el-col>
-      <el-col :span="6">合计金额:</el-col>
+    <el-row>
+      <el-col :span="6"  class="searchText">
+        <span>应收合计:</span>
+        <span>应付合计:</span>
+        <span>合计金额:</span>
+      </el-col>
+      <el-col :span="18">
+        <span>制单日期:</span>
+        <el-date-picker
+          v-model="searchForm.date"
+          size="small"
+          type="daterange"
+          align="right"
+          placeholder="选择日期范围"
+          range-separator=" ~ "
+          @change="setChangedValue"
+          :picker-options="pickerOptions2">
+        </el-date-picker>
+        <el-button type="primary" @click="listSearchBtn"  size="small">查询</el-button>
+        <!--<el-form  :model="searchForm"  label-width="100px">
+          <el-row>
+            <el-col :span="6">
+              <el-form-item label="制单日期">
+
+              </el-form-item>
+            </el-col>
+            <el-col :span="5" style="text-align: center">
+
+            </el-col>
+          </el-row>
+        </el-form>-->
+      </el-col>
     </el-row>
     <!--表格内容-->
     <bill-table :tableData="tableData" ref="refListTable" @seletClk="parentSelect"></bill-table>
@@ -77,7 +105,7 @@
     data() {
       return {
         tableData : [
-          {name: '账单ID', isChecked:true, record: "monthlyStatementId"},
+          {name: '账单ID', isChecked:false, record: "monthlyStatementId"},
           {name: '账单号', isChecked:true, record: "monthlyStatementNo"},
           {name: "收付", isChecked:true,record: "receiptPaymentType"},
           {name: "结算方简称", isChecked:true, record: "settleAccountsShortName"},
@@ -136,26 +164,28 @@
         //tabs切换框
         activeName:'账单详情',
         tableDetailsData : [
-          {name: '单号', isChecked:true, record: "billCodes"},
-          {name: '产生日期', isChecked:true, record: "createDate"},
-          {name: "结算方简称", isChecked:true, record: "settleAccountsShortName"},
-          {name: "结算方全称", isChecked:true, record: "settleAccountsFullName"},
-          {name: "账单号", isChecked:true, record: "monthlyStatementNo"},
-          {name: "费用状态", isChecked:true, record: "costStatus"},
-          {name: "收付", isChecked:true,record: "costType"},
-          {name: "费用名称", isChecked:true, record: "costName"},
-          {name: "单价", isChecked:true, record: "unitPrice"},
-          {name: "数量", isChecked:true, record: "number"},
-          {name: "金额",isChecked:true, record: "money"},
-          {name: "备注",isChecked:true, record: "remark"},
-          {name: "业务类型",isChecked:true, record: ""},
-          {name: "客户单号", isChecked:true, record: "customerCode"},
-          {name: "箱型", isChecked:true, record: "teuType"},
-          {name: "箱号", isChecked:true, record: "teuNo"},
-          {name: "车牌号", isChecked:true, record: "plateNo"},
-          {name: "装拆地",isChecked:true, record: "destination"},
-          {name: "通知号",isChecked:true, record: "receiptPaymentNo"},
-          {name: "销账号",isChecked:true, record: "chargeOffNo"},
+          {name: '单号', isChecked:true, record: "billCodes",filterText: 'text'},
+          {name: '产生日期', isChecked:true, record: "createDate",filterText: 'text'},
+          {name: "结算方简称", isChecked:true, record: "settleAccountsShortName",filterText: 'text'},
+          {name: "结算方全称", isChecked:true, record: "settleAccountsFullName",filterText: 'text'},
+          {name: "账单号", isChecked:true, record: "monthlyStatementNo",filterText: 'text'},
+          {name: "费用状态", isChecked:true, record: "costStatus",filterText: 'text'},
+          {name: "收付", isChecked:true,record: "costType",filterText: 'text'},
+          {name: "费用名称", isChecked:true, record: "costName",filterText: 'text'},
+          {name: "类别", isChecked:true, record: "costName",filterText: 'text'},
+          {name: "单价", isChecked:true, record: "unitPrice",filterText: 'text'},
+          {name: "数量", isChecked:true, record: "number",filterText: 'text'},
+          {name: "金额",isChecked:true, record: "money",filterText: 'text'},
+          {name: "备注",isChecked:true, record: "remark",filterText: 'text'},
+          {name: "业务类型",isChecked:true, record: "",filterText: 'text'},
+          {name: "客户单号", isChecked:true, record: "specsModel",filterText: 'text'},
+          {name: "箱型", isChecked:true, record: "teuType",filterText: 'text'},
+          {name: "箱型", isChecked:true, record: "teuType",filterText: 'text'},
+          {name: "箱号", isChecked:true, record: "teuNo",filterText: 'text'},
+          {name: "车牌号", isChecked:true, record: "plateNo",filterText: 'text'},
+          {name: "装拆地",isChecked:true, record: "destination",filterText: 'text'},
+          {name: "通知号",isChecked:true, record: "receiptPaymentNo",filterText: 'text'},
+          {name: "销账号",isChecked:true, record: "chargeOffNo",filterText: 'text'},
         ],
         //存储父表格点击选中的数据
         selectNowData:null,
@@ -298,12 +328,20 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  .list .icon-inline {
+/*  .list .icon-inline {
     cursor: pointer;
     display: inline-block;
     padding: 5px 10px 5px 10px;
     background-color: lightblue;
     margin-top: 5px;
+  }*/
+  .searchText {
+    padding-top: 8px;
+
+  }
+  .searchText span {
+    display: inline-block;
+    padding-right: 25px;;
   }
 </style>
 

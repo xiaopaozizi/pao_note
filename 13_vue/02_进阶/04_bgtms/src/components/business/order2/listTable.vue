@@ -10,8 +10,7 @@
                  :suppressMenuMainPanel="true"
                  :suppressMenuColumnPanel="true"
                  :toolPanelSuppressValues="true"
-                 :rowDataChanged="rowDataChanged"
-                 :enableFilter="true"
+                 :floatingFilter="true"
                  rowSelection="multiple"
                  :rowData="rowData">
     </ag-grid-vue>
@@ -23,6 +22,7 @@
   import { mapState } from 'vuex'
   import {AgGridVue} from "ag-grid-vue";
   import api from '@/api/api'
+  import Tool from '@/api/tool'
   export default {
     props: ['getDataForm'],
     name: "grid",
@@ -32,7 +32,8 @@
         columnDefs: [],
         rowData: null,
         defCol: [],
-        freshFlag:false
+        freshFlag:false,
+        total: null,
       }
     },
     components: {
@@ -56,6 +57,11 @@
         this.gridOptions.columnApi.autoSizeColumns(allColumnIds);
       },
       //转日期格式
+      getDate(strDate) {
+        var date = eval('new Date(' + strDate.replace(/\d+(?=-[^-]+$)/,
+            function (a) { return parseInt(a, 10) - 1; }).match(/\d+/g) + ')');
+        return date;
+      },
       formatDate(date) {
         if(date === '') {
           return date;
@@ -71,9 +77,31 @@
 
       },
       //转日期+时间的格式
+      //转日期+时间的格式
+      formatDateTime(date) {
+        if(date === '') {
+          return date;
+        }else {
+          let  start = new Date(date);
+          let y = start.getFullYear();
+          let m = start.getMonth() + 1;
+          m = m < 10 ? '0' + m : m;
+          var d = start.getDate();
+          d = d < 10 ? ('0' + d) : d;
+          let  h = start.getHours();
+          h = h < 10 ? '0' + h : h;
+          let  z =  start.getMinutes();
+          z = z < 10 ? '0' + z : z;
+          let  s =  start.getSeconds();
+          s = s < 10 ? '0' + s : s;
+          return y + '-' + m + '-' + d + ' ' + h +':'+ z +':' + s;
+        }
+
+      },
   //初始化
       initData(xdtList){
        this.createRowData(xdtList);
+
       },
       createRowData(xdtList) {//生成表格数据函数
         let  self = this;
@@ -83,14 +111,14 @@
           rowData.push({
           billNumber: objTemp.billNumber,
           busType: objTemp.busType,
-          createDateStr: objTemp.createDateStr,
+          createDateStr: self.formatDateTime(objTemp.createDateStr),
           createUser: objTemp.createUser,
           customerCode: objTemp.customerCode,
-          cyClosingDayStr: objTemp.cyClosingDayStr,
+          cyClosingDayStr: self.formatDate(objTemp.cyClosingDayStr),
           department: objTemp.department,
           destination: objTemp.destination,
           downClpPlace: objTemp.downClpPlace,
-          expdateStr: objTemp.expdateStr,
+          expdateStr: self.formatDate(objTemp.expdateStr),
           expdateQuery: objTemp.expdateQuery,
           getClpPlace: objTemp.getClpPlace,
           markType: objTemp.markType,
@@ -114,7 +142,7 @@
       },
       createColumnDefs() {//生成表格表头
         /*表头内容显示数据数组*/
-        this.defCol = this.$store.state.tableModule.caseOrder;
+       // console.log(3333,this.defCol);
         let that = this;
         /*表头对应显示的数据内容field*/
         for(var i=0; i < this.defCol.length; i++){
@@ -123,6 +151,7 @@
               {
                 headerName: that.defCol[i].name,
                 field: that.defCol[i].record,
+                filter:that.defCol[i].filterText,
                 suppressFilter: false,
                 checkboxSelection: that.defCol[i].checkBox,
                 headerCheckboxSelection: that.defCol[i].checkBox
@@ -167,7 +196,9 @@
         };
         api.orderStatus(params)
           .then(function(res) {
+            self.total = res.length;
             self.initData(res);
+
           })
           .catch(function(err) {
 
@@ -192,7 +223,8 @@
         var newStore = this.rowData.slice();
         newStore.unshift(objTemp);
         this.gridOptions.api.setRowData(newStore); //将数据设置到表格数据里
-      }
+      },
+
     },
     beforeMount() {
       this.gridOptions = {
@@ -210,17 +242,31 @@
           previous: '上一页',
           loadingOoo: '正在加载....',
           noRowsToShow: '没有找到您想要的数据...',
+          // for number filter
+          contains: '包含',
+          notContains: '不包含',
+          startsWith:'开始',
+          endsWith: '结束',
+          equals: '等于',
+          notEqual: '不等于',
+          lessThan: '小于',
+          greaterThan: '大于',
+          filterOoo: '请输入您要过滤的内容',
         }
       };
-      this.createColumnDefs();
     },
     mounted() {
+      let tool = new Tool();
+      this.defCol = tool.getIte('caseOrder').bigHeader;
       this.getRowData();
       this.gridOptions.api.sizeColumnsToFit();
+/*    :rowDataChanged="rowDataChanged"*/
+     this.createColumnDefs();
     },
     watch:{
       '$route' : function () {
            this.getRowData();
+           console.log(this.$route.params.id);
       }
     },
     destroyed(){

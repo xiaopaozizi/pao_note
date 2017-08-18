@@ -3,13 +3,13 @@
     <el-tabs v-model="activeName">
       <el-tab-pane label="基本信息" name="基本信息">
         <!--基本信息显示-->
-        <el-button @click="editFormBtn" v-if="displayForm">编辑</el-button>
-        <el-button @click="saveFormBtn" v-if="!displayForm">保存</el-button>
-        <el-button @click="delFormBtn">删除</el-button>
-        <el-button @click="cancelFormBtn" v-if="!displayForm">取消</el-button>
+        <el-button @click="editFormBtn" v-if="displayForm" size="small">编辑</el-button>
+        <el-button @click="saveFormBtn" v-if="!displayForm" size="small">保存</el-button>
+        <el-button @click="delFormBtn" v-if="displayForm"  size="small">删除</el-button>
+        <el-button @click="cancelFormBtn" v-if="!displayForm" size="small">取消</el-button>
         <div v-if="displayForm">
           <el-form :model="showForm"  label-width="140px" >
-            <el-row>
+            <el-row class="col-height-show">
               <el-col :span="6">
                 <el-form-item label="姓名">
                   <span>{{showForm.driverName}}</span>
@@ -31,7 +31,7 @@
                 </el-form-item>
               </el-col>
             </el-row>
-            <el-row>
+            <el-row class="col-height-show">
               <el-col :span="6">
                 <el-form-item label="身份证号">
                   <span>{{showForm.idCard}}</span>
@@ -48,51 +48,41 @@
                 </el-form-item>
               </el-col>
             </el-row>
-            <el-row>
+            <el-row class="col-height-show">
               <el-col :span="6">
                 <el-form-item label="准驾车型">
                   <span>{{showForm.allowDriveType}}</span>
                 </el-form-item>
               </el-col>
               <el-col :span="6">
-                <el-form-item label="驾驶证有效期起">
-                  <span>{{showForm.driverLicenseStartStr}}</span>
-                </el-form-item>
-              </el-col>
-              <el-col :span="6">
-                <el-form-item label="驾驶证有效期止">
-                  <span>{{showForm.driverLicenseSedStr}}</span>
+                <el-form-item label="驾驶证有效期">
+                  <span>{{showForm.driverLicenseEndStr}}</span>
                 </el-form-item>
               </el-col>
               <el-col :span="6">
                 <el-form-item label="年审日期">
-                  <span>{{showForm.nextReturnDue}}</span>
+                  <span>{{showForm.nextReturnDueStr}}</span>
                 </el-form-item>
               </el-col>
             </el-row>
-            <el-row>
+            <el-row class="col-height-show">
               <el-col :span="6">
-                <el-form-item label="从业资格证号">
+                <el-form-item label="资格证号">
                   <span>{{showForm.workNo}}</span>
                 </el-form-item>
               </el-col>
               <el-col :span="6">
-                <el-form-item label="从业资格证有效期起">
-                  <span>{{showForm.workNoStartStr}}</span>
-                </el-form-item>
-              </el-col>
-              <el-col :span="6">
-                <el-form-item label="从业资格证有效期止">
+                <el-form-item label="资格证有效期">
                   <span>{{showForm.workNoEndStr}}</span>
                 </el-form-item>
               </el-col>
               <el-col :span="6">
-                <el-form-item label="驾驶车牌">
+                <el-form-item label="驾驶车辆">
                   <span>{{showForm.bindingTruckNo}}</span>
                 </el-form-item>
               </el-col>
             </el-row>
-            <el-row>
+            <el-row class="col-height-show">
               <el-col :span="12">
                 <el-form-item label="常住地址">
                   <span>{{showForm.usualAddr}}</span>
@@ -104,11 +94,18 @@
                 </el-form-item>
               </el-col>
             </el-row>
+            <el-row class="col-height-show">
+              <el-col :span="12">
+                <el-form-item label="备注">
+                  <span>{{showForm.remark}}</span>
+                </el-form-item>
+              </el-col>
+            </el-row>
           </el-form>
         </div>
         <div v-if="!displayForm">
           <el-form :model="editForm"  label-width="140px"  ref="editForm">
-            <el-row>
+            <el-row class="col-height">
               <el-col :span="6">
                 <el-form-item label="姓名">
                   <el-input v-model="editForm.driverName" placeholder="请输入内容"></el-input>
@@ -130,7 +127,7 @@
                 </el-form-item>
               </el-col>
             </el-row>
-            <el-row>
+            <el-row  class="col-height">
               <el-col :span="6">
                 <el-form-item label="身份证号">
                   <el-input v-model="editForm.idCard" placeholder="请输入内容"></el-input>
@@ -154,77 +151,62 @@
                 </el-form-item>
               </el-col>
             </el-row>
-            <el-row>
+            <el-row class="col-height">
               <el-col :span="6">
                 <el-form-item label="准驾车型">
                   <el-input v-model="editForm.allowDriveType" placeholder="请输入内容"></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="6">
-                <el-form-item label="驾驶证有效期起">
+                <el-form-item label="驾驶证有效期">
                   <el-date-picker
-                    v-model="editForm.driverLicenseStartStr"
-                    format="yyyy-MM-dd"
+                    v-model="editForm.driverLicenseEndStr"
                     type="date"
                     placeholder="选择日期"
-                    :picker-options="pickerOptions0">
-                  </el-date-picker>
-                </el-form-item>
-              </el-col>
-              <el-col :span="6">
-                <el-form-item label="驾驶证有效期止">
-                  <el-date-picker
-                    v-model="editForm.driverLicenseSedStr"
-                    type="date"
-                    placeholder="选择日期"
-                    :picker-options="pickerOptions0">
+                    >
                   </el-date-picker>
                 </el-form-item>
               </el-col>
               <el-col :span="6">
                 <el-form-item label="年审日期">
                   <el-date-picker
-                    v-model="editForm.nextReturnDue"
+                    v-model="editForm.nextReturnDueStr"
                     type="date"
                     placeholder="选择日期"
-                    :picker-options="pickerOptions0">
+                   >
                   </el-date-picker>
                 </el-form-item>
               </el-col>
             </el-row>
-            <el-row>
+            <el-row  class="col-height">
               <el-col :span="6">
-                <el-form-item label="从业资格证号">
+                <el-form-item label="资格证号">
                   <el-input v-model="editForm.workNo" placeholder="请输入内容"></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="6">
-                <el-form-item label="从业资格证有效期起">
-                  <el-date-picker
-                    v-model="editForm.workNoStartStr"
-                    type="date"
-                    placeholder="选择日期"
-                    :picker-options="pickerOptions0">
-                  </el-date-picker>
-                </el-form-item>
-              </el-col>
-              <el-col :span="6">
-                <el-form-item label="从业资格证有效期止">
+                <el-form-item label="资格证有效期">
                   <el-date-picker
                     v-model="editForm. workNoEndStr"
                     type="date"
                     placeholder="选择日期"
-                    :picker-options="pickerOptions0">
+                   >
                   </el-date-picker>
                 </el-form-item>
               </el-col>
               <el-col :span="6">
-                <el-form-item label="驾驶车牌">
-                  <el-input v-model="editForm.bindingTruckNo" placeholder="请输入内容"></el-input>
+                <el-form-item label="驾驶车辆">
+                  <el-autocomplete
+                    v-model="editForm.bindingTruckNo"
+                    :fetch-suggestions="plateNoSearch"
+                    placeholder="请输入内容"
+                    :disabled="true"
+                    @select="carHandleSelect"
+                  ></el-autocomplete>
                 </el-form-item>
               </el-col>
             </el-row>
-            <el-row>
+            <el-row  class="col-height">
               <el-col :span="12">
                 <el-form-item label="常住地址">
                   <el-input v-model="editForm.usualAddr" placeholder="请输入内容"></el-input>
@@ -233,6 +215,15 @@
               <el-col :span="12">
                 <el-form-item label="通讯地址">
                   <el-input v-model="editForm.contactAddr" placeholder="请输入内容"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row  class="col-height">
+              <el-col :span="12">
+                <el-form-item label="备注">
+                  <el-input v-model="editForm.remark"
+                            type="textarea"
+                            placeholder="请输入内容"></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -269,15 +260,15 @@
           usualAddr:'', //常住地址
           contactAddr:'',//通讯地址
           nextReturnDueStr:'',//年审日期后台
-          status:'1-有效',//状态
+          status:'有效',//状态
           bindingTruckNo:'', //绑定车牌
           allowDriveType:'',//准驾车型
-          driverLicenseStartStr:'',//驾驶证有效期起
-          driverLicenseSedStr:'',//驾驶证有效期止
+          driverLicenseEndStr:'',//驾驶证有效期止
           workNo:'', //从业资格证号
-          workNoStartStr:'',//从业资格证有效期起
           workNoEndStr:'',//从业资格证有效期止
-          options:[]
+          options:[],
+          remark:'' ,//备注
+          truckBaseId:''
         },
         showForm: {
           driverName:'', //姓名
@@ -289,14 +280,13 @@
           usualAddr:'', //常住地址
           contactAddr:'',//通讯地址
           nextReturnDueStr:'',//年审日期后台
-          status:'1-有效',//状态
+          status:'有效',//状态
           bindingTruckNo:'', //绑定车牌
           allowDriveType:'',//准驾车型
-          driverLicenseStartStr:'',//驾驶证有效期起
-          driverLicenseSedStr:'',//驾驶证有效期止
+          driverLicenseEndStr:'',//驾驶证有效期止
           workNo:'', //从业资格证号
-          workNoStartStr:'',//从业资格证有效期起
-          workNoEndStr:''//从业资格证有效期止
+          workNoEndStr:'',//从业资格证有效期止,
+          remark:'', //备注
         },
         //显示与编辑
         displayForm: true,
@@ -328,11 +318,8 @@
         let self = this;
         api.selectBusTypeHandle( 'status')
           .then(function (res) {
-            console.log("tttttt");
-          })
-          .catch(function(err){
             let selectData = [];
-            let { data } = err.data;
+            let { data } = res;
             console.log(data);
             for (let objTemp of data) {
               selectData.push({key:objTemp.value,"value":objTemp.display,label:objTemp.value })
@@ -340,13 +327,46 @@
             console.log(selectData);
             self.editForm.options = selectData;
           })
+          .catch(function(err){
+
+          })
       },
       accountTypeChange() {},
       //编辑按钮
       editFormBtn() {
+        let self = this;
+        console.log(this.selectData);
         if(this.selectData != null) {
           this.displayForm = false ;
+        }else {
+         self.$alert('请选择一条数据', '删除信息', {
+            confirmButtonText: '确定'
+          })
         }
+      },
+      //车牌号模糊搜索
+      plateNoSearch(queryString, callback) {
+        let self = this;
+        api.driverBindNo(queryString)
+          .then(function (res) {
+            console.log(res);
+            let  data  = res.data;
+            let resultData = [];
+            for(var objTemp of data){
+              resultData.push({
+                truckBaseId:objTemp.truckBaseId,
+                value:objTemp.tractorNo
+              })
+            }
+            callback(resultData);
+
+          }).catch(function(err){
+          console.log(err);
+
+        })
+      },
+      carHandleSelect(val) {
+        this.editForm.truckBaseId = val.truckBaseId;//车牌号ID赋值
       },
       //保存
       saveFormBtn() {
@@ -364,17 +384,20 @@
           nextReturnDueStr: this.formatDate(this.editForm.nextReturnDueStr),//年审日期
           status: this.editForm.status,//状态
           bindingTruckNo: this.editForm.bindingTruckNo, //绑定车牌
+          relTruckId: this.editForm.truckBaseId,
           allowDriveType: this.editForm.allowDriveType,//准驾车型
-          driverLicenseStartStr: this.formatDate(this.editForm.driverLicenseStartStr),//驾驶证有效期起
-          driverLicenseSedStr: this.formatDate(this.editForm.driverLicenseSedStr),//驾驶证有效期止
+          driverLicenseEndStr: this.formatDate(this.editForm.driverLicenseEndStr),//驾驶证有效期止
           workNo: this.editForm.workNo, //从业资格证号
-          workNoStartStr: this.formatDate(this.editForm.workNoStartStr),//从业资格证有效期起
-          workNoEndStr: this.formatDate(this.editForm.workNoEndStr)//从业资格证有效期止
+          workNoEndStr: this.formatDate(this.editForm.workNoEndStr),//从业资格证有效期止
+          remark: this.editForm.remark
         };
         console.log(params);
         api.driverEdit(params)
           .then(function(res) {
-            let data = err.data;
+            console.log("dsdasdasdasdsadsadsa");
+            console.log(res);
+            let data = res.data;
+
             self.$emit('editSucData',data); //将返回的值传给父级 让 其跟新表格数据
             self.displayForm = true;
             self.showForm = data;
@@ -394,35 +417,53 @@
           driverId: this.selectData.driverId
         };
         api.driverListShow(params)
-          .then(function() {})
-          .catch(function(err) {
-            let showData = err.data[0];
+          .then(function(res) {
+            let showData = res[0];
+            console.log(res);
             for(let showJson in showData) {
               self.showForm[showJson] = showData[showJson];
               self.editForm[showJson] = showData[showJson];
             }
+          })
+          .catch(function(err) {
+
             /*====================*/
           })
       },
       //删除按钮
       delFormBtn() {
         let self = this;
-        let params = {
-          driverId : this.selectData.driverId
-        };
-        api.driverDel(params)
-          .then(function(res) {
-            if(res.status === 'success') {
-              self.$emit('delData');
-              for(let item in self.showForm) {
-                self.showForm[item] = '';
-              }
-            }
-          })
-          .catch(function(err) {
-            console.log(err);
+        if(this.selectData != null ) {
+          let params = {
+            driverId : this.selectData.driverId
+          };
+          this.$confirm('确认删除该记录吗?', '提示', {
+              type: 'warning'
+            })
+            .then(function() {
+              api.driverDel(params)
+                .then(function(res) {
+                  console.log(res);
+                  if(res.status === 'success') {
+                    self.$emit('delData');
+                    for(let item in self.showForm) {
+                      self.showForm[item] = '';
+                    }
+                  }
+                })
+                .catch(function(err) {
+                  console.log(err);
 
+                })
+            })
+        }else {
+          this.$alert('请选择一条数据', '删除信息', {
+            confirmButtonText: '确定'
           })
+        }
+
+
+
       },
       //取消按钮
       cancelFormBtn() {
@@ -437,7 +478,12 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+  .col-height .el-col {
+    height:40px ;
+  }
+  .col-height-show .el-col {
+    height: 32px ;
+  }
 </style>
 
 

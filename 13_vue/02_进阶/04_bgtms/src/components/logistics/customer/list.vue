@@ -17,13 +17,14 @@
        </el-col>
      </el-row>
      <!--查询框-->
-     <el-row>
-       <el-form  :inline="true" :model="searchForm"  label-width="100px">
+<!--     <el-row>
+       <el-form  :model="searchForm"  label-width="100px">
          <el-row>
            <el-col :span="6">
              <el-form-item label="客户简称">
                <el-autocomplete
                  v-model="searchForm.customerBaseInfo"
+                 size="small"
                  placeholder="请输入内容"
                  :fetch-suggestions="customerQuerySearch"
                  @select="customerHandleSelect"
@@ -32,7 +33,7 @@
            </el-col>
            <el-col :span="6">
              <el-form-item label="状态">
-               <el-select v-model="searchForm.state" clearable placeholder="请选择">
+               <el-select v-model="searchForm.state" clearable placeholder="请选择" size="small">
                  <el-option
                    v-for="item in searchForm.options2"
                    :key="item.value"
@@ -44,7 +45,7 @@
            </el-col>
            <el-col :span="6">
              <el-form-item label="客户类型">
-               <el-select v-model="searchForm.custType" clearable placeholder="请选择">
+               <el-select v-model="searchForm.custType" clearable placeholder="请选择" >
                  <el-option
                    v-for="item in searchForm.custTypeOptions"
                    :key="item.value"
@@ -55,29 +56,29 @@
              </el-form-item>
            </el-col>
            <el-col :span="2">
-             <el-button type="primary" @click="listSearchBtn">查询</el-button>
+             <el-button type="primary" @click="listSearchBtn"  size="small">查询</el-button>
            </el-col>
          </el-row>
          </el-form-item>
        </el-form>
-     </el-row>
+     </el-row>-->
      <list-table :tableData="tableData" ref="refListTable" @seletClk="parentSelect"></list-table>
      <!--账户新增弹出框-->
-     <el-dialog :modal="false"  :close-on-click-modal="false"  title="客户新增" v-model="dialogFormVisible" size="large">
-       <el-form :model="addForm"  label-width="100px">
+     <el-dialog :modal="false" @close="addHandClose"  :close-on-click-modal="false"  title="客户新增" v-model="dialogFormVisible" size="large">
+       <el-form :model="addForm"  label-width="100px"  :rules="addFormRules"  ref="addForm">
            <el-row>
              <el-col :span="8">
-               <el-form-item label="客户简称">
+               <el-form-item label="客户简称" prop="custShortName">
                  <el-input v-model="addForm.custShortName" placeholder="请输入内容"></el-input>
                </el-form-item>
              </el-col>
-             <el-col :span="8">
+             <!--<el-col :span="8">
                <el-form-item label="结算方简称">
                  <el-input v-model="addForm.settleAccountsShortName" placeholder="请输入内容"></el-input>
                </el-form-item>
-             </el-col>
+             </el-col>-->
              <el-col :span="6">
-               <el-form-item label="状态">
+               <el-form-item label="状态" prop="status">
                  <el-select v-model="addForm.status"  placeholder="请选择">
                    <el-option
                      v-for="item in addForm.options3"
@@ -91,12 +92,12 @@
            </el-row>
            <el-row>
              <el-col :span="16">
-               <el-form-item label="客户名称">
+               <el-form-item label="客户全称" prop="custFullName">
                  <el-input v-model="addForm.custFullName" placeholder="请输入内容"></el-input>
                </el-form-item>
              </el-col>
              <el-col :span="6">
-               <el-form-item label="客户类型">
+               <el-form-item label="客户类型" prop="custType">
                  <el-select v-model="addForm.custType" multiple placeholder="请选择">
                    <el-option
                      v-for="item in addForm.options2"
@@ -110,43 +111,43 @@
            </el-row>
            <el-row>
              <el-col :span="16">
-               <el-form-item label="办公地点">
+               <el-form-item label="办公地点" prop="officeAddr">
                  <el-input v-model="addForm.officeAddr" placeholder="请输入内容"></el-input>
                </el-form-item>
              </el-col>
              <el-col :span="6">
-               <el-form-item label="业务员">
-                 <el-input v-model="addForm.tcustomerSales" placeholder="请输入内容"></el-input>
+               <el-form-item label="业务员" prop="customerSales">
+                 <el-input v-model="addForm.customerSales" placeholder="请输入内容"></el-input>
                </el-form-item>
              </el-col>
            </el-row>
            <el-row>
              <el-col :span="8">
-               <el-form-item label="负责人">
+               <el-form-item label="负责人" prop="principal">
                  <el-input v-model="addForm.principal" placeholder="请输入内容"></el-input>
                </el-form-item>
              </el-col>
              <el-col :span="8">
-               <el-form-item label="手机">
+               <el-form-item label="手机" prop="mobilephone">
                  <el-input v-model="addForm.mobilephone" placeholder="请输入内容"></el-input>
                </el-form-item>
              </el-col>
            </el-row>
            <el-row>
              <el-col :span="8">
-               <el-form-item label="固话">
+               <el-form-item label="固话" prop="telephone">
                  <el-input v-model="addForm.telephone" placeholder="请输入内容"></el-input>
                </el-form-item>
              </el-col>
              <el-col :span="8">
-               <el-form-item label="邮箱">
+               <el-form-item label="邮箱" prop="email">
                  <el-input v-model="addForm.email" placeholder="请输入内容"></el-input>
                </el-form-item>
              </el-col>
            </el-row>
            <el-row>
              <el-col :span="16">
-               <el-form-item label="备注">
+               <el-form-item label="备注" prop="remark">
                  <el-input v-model="addForm.remark" placeholder="请输入内容"></el-input>
                </el-form-item>
              </el-col>
@@ -175,6 +176,7 @@
       data() {
         return {
           tableData:[
+           // {name: "序号", isChecked:false,record: 'id'},
             {name: '客户简称', isChecked:true, record: "custShortName"},
             {name: "客户全称", isChecked:true,record: "custFullName"},
             {name: "客户类型", isChecked:true, record: "custType"},
@@ -198,12 +200,12 @@
           addForm: {
             custShortName:'', //客户简称
             settleAccountsShortName:'', //结算方简称
-            status:'1-有效', //状态
+            status:'有效', //状态
             options3: [], //状态的存储数据
             custFullName:'',//客户全称
             custType:[],//客户类型
             options2:[],
-            tcustomerSales:'',//业务员
+            customerSales:'',//业务员
             officeAddr:'', //办公地点
             principal:'', //负责人
             mobilephone:'', //手机
@@ -211,6 +213,7 @@
             email:'', //邮箱
             remark:'' //备注
           },
+          addFormRules: {},
           //获取表格选中的参数
           selectData: null,
           //车牌号存储数据
@@ -221,21 +224,12 @@
         }
       },
       methods: {
-        //客户名称模糊搜索
+        //客户全称模糊搜索
         customerQuerySearch(queryString,callback) {
           let self = this;
             api.customerSearch(queryString)
               .then(function(res){
-                console.log(res);
-                var data = res.data;
-                var resultData = [];
-                for(var objTemp of data){
-                  resultData.push({
-                    "key":objTemp.customerBaseId,
-                    "value":objTemp.custShortName
-                  });
-                }
-                callback(resultData);
+                callback(res);
               })
               .catch(function(err){
 
@@ -312,6 +306,10 @@
             })
 
         },
+        //新增取消
+        addHandClose() {
+          this.$refs['addForm'].resetFields();
+        },
         //新增按钮
         addBtn() {
           this.dialogFormVisible = true;
@@ -325,7 +323,7 @@
             status:this.addForm.status, //状态
             custFullName:this.addForm.custFullName,//客户全称
             custType:(this.addForm.custType).join(','),//客户类型
-            tcustomerSales:this.addForm.tcustomerSales,//业务员
+            customerSales:this.addForm.customerSales,//业务员
             officeAddr:this.addForm.officeAddr, //办公地点
             principal:this.addForm.principal, //负责人
             mobilephone:this.addForm.mobilephone, //手机
@@ -333,10 +331,12 @@
             email:this.addForm.email, //邮箱
             remark:this.addForm.remark //备注
           }
-          console.log(params.custType);
+          console.log(params);
           api.customerAdd(params)
             .then(function(res) {
+              self.$refs['addForm'].resetFields();
               self.dialogFormVisible = false;
+              self.$refs.refListTable.getRowData();
             })
             .catch(function(err) {
               console.log(err);

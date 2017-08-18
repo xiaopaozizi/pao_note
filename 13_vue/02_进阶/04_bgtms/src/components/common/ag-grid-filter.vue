@@ -56,22 +56,16 @@
     import { mapState } from 'vuex'
     import Tool from '@/api/tool'
     export default {
+      props:['tableData', 'type'],
       data(){
         return {
-          tableData :  [],
-          isShowInfo : false
+          isShowInfo : false,
+         // tableData : [],
         }
       },
-      mounted(){
-        let title = this.$route.name;
-        switch(title){
-          case '订单':
-            this.tableData = this.$store.state.tableModule.caseOrder;
-            break;
-          case  '运单':
-            this.tableData = this.$store.state.tableModule.caseTransform;
-            break;
-        }
+    mounted(){
+      let tool = new Tool();
+      //this.tableData = tool.getIte('caseOrder').bigHeader;
       },
       methods:{
         downMove(index,item) { //上移
@@ -87,14 +81,16 @@
           let title = this.$route.name;
           switch(title){
             case '订单':
-              tool.setIte("caseOrder", this.tableData);//把值存入
+              tool.setIte("caseOrder", this.type, this.tableData);//把值存入
               break;
             case  '运单':
-              tool.setIte("caseTransform", this.tableData);//把值存入
+              tool.setIte("caseTransform", this.type, this.tableData);//把值存入
               break;
+            case '预提' :
+              tool.setIte("caseWithHolding", this.type, this.tableData);//把值存入
           }
           this.isShowInfo = false;
-          this.$router.go(0);
+         this.$router.go(0);
         },
       }
     }

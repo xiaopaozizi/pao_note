@@ -37,7 +37,7 @@
             </el-col>
             <el-col :span="6">
               <el-form-item label="联系人/电话">
-                <span>{{showForm.contact}}</span>
+                <span>{{showForm.contactPeople}}</span>
               </el-form-item>
             </el-col>
             <el-col :span="6">
@@ -116,7 +116,6 @@
               </el-form-item>
             </el-col>
           </el-row>
-
         </el-form>
 
    <!--       <el-form :model="showForm">
@@ -305,7 +304,7 @@
                   <el-date-picker
                     style="width:245px"
                     v-model="editForm.cyClosingDayStr"
-                    type="datetime"
+                    type="date"
                     placeholder="选择日期时间">
                   </el-date-picker>
 
@@ -382,7 +381,7 @@
                 <el-form-item label="备注"  prop="remark">
                   <el-input
                     type="textarea"
-                    :autosize="{ minRows: 2, maxRows: 4}"
+                    autosize
                     v-model="editForm.remark"
                     placeholder="请输入内容"></el-input>
                 </el-form-item>
@@ -392,7 +391,7 @@
         </div>
       </el-tab-pane>
       <el-tab-pane label="拖卡信息" name="拖卡信息">
-        <tk-msg :selectData="selectData"   :activeName="activeName" ref="tkMsg"></tk-msg>
+        <tk-msg :selectData="selectData"   :activeName="activeName" ref="tkMsg" @interFace="msgInterface"></tk-msg>
        <!--<tk-msg :selectData="selectData"   :activeName="activeName" ref="tkMsg"></tk-msg>-->
       </el-tab-pane>
       <el-tab-pane label="费用信息" name="费用信息">
@@ -401,9 +400,9 @@
       <el-tab-pane label="上传图片" name="上传图片">
         <show-img></show-img>
       </el-tab-pane>
-      <el-tab-pane label="日志信息" name="日志信息">
+ <!--     <el-tab-pane label="日志信息" name="日志信息">
          <show-journal></show-journal>
-      </el-tab-pane>
+      </el-tab-pane>-->
     </el-tabs>
   </div>
 </template>
@@ -411,7 +410,8 @@
 <script>
   import api from '@/api/api'
   import tkMsg from './addOrder2.vue'
-  import showFee from './showFee.vue'
+//  import showFee from './showFee.vue'
+  import showFee from './showFeeTable'
   import showImg from './upload-img.vue'
   import journal from './journal.vue'
 
@@ -453,6 +453,8 @@
           downClpPlace: '', //进箱点
           shippingCompany: '', //船公司
           department: '',//部门
+          contact:'', //联系人
+          contactId:'',//联系人ID
           salesman: '', //业务员
           remark: '', //备注
           orderStatus: '',
@@ -480,7 +482,7 @@
           createUser: '',//录入人
           orderCode: '', //订单号
           shipperInfo: '', //托运方
-          contact:'', //联系人
+          contactPeople:'', //联系人
           contactId:'',//联系人ID
           expdateStr:'',  //装拆期限
           busType: '',//类型
@@ -513,7 +515,7 @@
     watch: {
       'selectData.xdOrderId':function () {
         console.log(this.selectData.xdOrderId);
-        this.showFormMsg();
+        this.showFormMsg(this.selectData);
       }
     },
     methods: {
@@ -779,8 +781,14 @@
       accountTypeChange() {},
       //编辑按钮
       editFormBtn() {
-        if(this.selectData != null) {
+        console.log(this.selectData);
+        if(this.selectData.xdOrderId != null) {
+
           this.displayForm = false ;
+        }else {
+          this.$alert('请选择一条数据', '标题', {
+            confirmButtonText: '确定'
+          });
         }
       },
       //保存
@@ -795,9 +803,11 @@
               customerCode: self.editForm.customerCode,//客户单号,
               expdateStr: self.formatDate(self.editForm.expdateStr) , //装拆期限
               busType: self.editForm.busType, //类型
+              contactPeople:self.editForm.contact, //联系人
+              relContactId: self.editForm.contactId, //联系人ID
               billNumber: self.editForm.billNumber,//提单号
               vesselVoyage: self.editForm.vesselVoyage, //船名航次
-              cyClosingDayStr: self.formatDateTime(self.editForm.cyClosingDayStr),//截关日期
+              cyClosingDayStr: self.formatDate(self.editForm.cyClosingDayStr),//截关日期
               orderSource: self.editForm.orderSource, //来源
               destination: self.editForm.destination, //装拆地
               getClpPlace: self.editForm.getClpPlace, //提箱点
@@ -810,15 +820,17 @@
               xdOrderId:self.editForm.xdOrderId,
               teuTypeCount: self.editForm.teuTypeCount
             };
-            console.log(params);
+           // console.log(params);
             api.xdOrderEdit(params)
               .then(function(res) {
                 let data = res.data;
+                console.log(data);
                 self.$emit('editSucData',data); //将返回的值传给父级 让 其跟新表格数据
                 self.displayForm = true;
                 for(let item in self.showForm) {
                   self.showForm[item] = data[item];
                 }
+                console.log(self.showForm);
               })
               .catch(function(err) {
 
@@ -827,8 +839,8 @@
         });
       },
       //单机显示列表 数据
-      showFormMsg() {
-            let showData = this.selectData;
+      showFormMsg(item) {
+            let showData = item;
             for(let showJson in showData) {
               this.showForm[showJson] = showData[showJson];
               this.editForm[showJson] = showData[showJson];
@@ -863,13 +875,33 @@
       handleClick(tab) {
         let self = this;
         if(tab.label === '拖卡信息') {
+         // self.$router.push('/business/orderAdd');
            self.$refs.tkMsg.getRowData(this.selectData.xdOrderId)
         } else if( tab.label === '费用信息') {
           self.$refs. showFee.test(this.selectData.xdOrderId)
+        }else if( tab.label === '基本信息') {
+          self.msgInterface(self.selectData.xdOrderId);
         }
          console.log(tab.label)
-      }
+      },
+      msgInterface(item) {
+        console.log('464989879887');
+        let self = this;
+        let params = {
+          xdOrderId: item
+        };
+        api.orderStatus(params)
+          .then(function(res) {
+            let objData = res[0];
+            console.log(objData);
+            self.showFormMsg(objData);
+            self.$emit('editSucData',objData); //将返回的值传给父级 让 其跟新表格数据
+          })
+          .catch(function(err) {})
+      },
 
+
+      /*============*/
     },
     mounted(){
      // this.showState();

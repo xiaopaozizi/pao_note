@@ -1,12 +1,17 @@
 <template>
   <div class="order-next">
     <el-row style="text-align: right">
-      <el-button  @click="addxdOrder">添加</el-button>
-      <el-button @click="editxdOrder">编辑</el-button>
-      <el-button @click="onRemoveSelect">删除</el-button>
-      <el-button @click="tkpaicheBtn">拖卡</el-button>
-      <el-button @click="inValid">作废</el-button>
-      <el-button @click="finishYd">完成</el-button>
+      <el-col  :span="22"   >
+        <el-button  @click="addxdOrder" size="small">添加</el-button>
+        <el-button @click="editxdOrder" size="small">编辑</el-button>
+        <el-button @click="onRemoveSelect" size="small">删除</el-button>
+        <el-button @click="tkpaicheBtn" size="small">拖卡</el-button>
+        <el-button @click="inValid" size="small">作废</el-button>
+        <el-button @click="finishYd" size="small">完成</el-button>
+      </el-col>
+      <el-col :span="2" >
+        <ag-grid-filter :tableData="defCol" :type="type"></ag-grid-filter>
+      </el-col>
 
 
     </el-row>
@@ -16,17 +21,19 @@
                  :enableSorting="true"
                  :enableColResize="true"
                  :rowClicked="tableClk"
+                 :rowDoubleClicked="onDoubleClicked"
+
+
                  :suppressMenuFilterPanel="true"
                  :suppressMenuMainPanel="true"
                  :suppressMenuColumnPanel="true"
                  :toolPanelSuppressValues="true"
-                 :rowDataChanged="rowDataChanged"
                  rowSelection="multiple"
                  :rowData="rowData">
     </ag-grid-vue>
 
     <!--运单的新增-->
-    <el-dialog :modal="false"  :close-on-click-modal="false"  title="运单新增" v-model="addYdFormVisible" size="small">
+    <el-dialog :modal="false"  :close-on-click-modal="false"  title="运单添加" v-model="addYdFormVisible" size="small">
       <el-form :model="addYdForm"  label-width="140px" :rules="addYdFormRules"  ref="addYdForm">
         <el-row>
           <el-col :span="12">
@@ -52,7 +59,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="铅封号" prop="sealNo">
+            <el-form-item label="封号" prop="sealNo">
               <el-input style="width:200px" v-model="addYdForm.sealNo" placeholder="请输入内容" :maxlength="11"></el-input>
             </el-form-item>
           </el-col>
@@ -109,13 +116,24 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="计划重量" prop="planWeight">
+            <el-form-item label="计划重量(KG)" prop="planWeight">
               <el-input style="width:200px" v-model="addYdForm.planWeight" placeholder="请输入内容" :maxlength="11"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="实际重量" prop="realWeight">
+            <el-form-item label="实际重量(KG)" prop="realWeight">
               <el-input style="width:200px" v-model="addYdForm.realWeight" placeholder="请输入内容" :maxlength="11"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="备注" prop="remark">
+              <el-input
+                style="width:200px"
+                type="textarea"
+                autosize
+                placeholder="请输入内容"
+                v-model="addYdForm.remark">
+              </el-input>
             </el-form-item>
           </el-col>
         </el-row>
@@ -151,7 +169,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="铅封号" prop="sealNo">
+            <el-form-item label="封号" prop="sealNo">
               <el-input style="width:200px" v-model="editYdForm.sealNo" placeholder="请输入内容" :maxlength="11"></el-input>
             </el-form-item>
           </el-col>
@@ -208,14 +226,26 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="计划重量" prop="planWeight">
+            <el-form-item label="计划重量(KG)" prop="planWeight">
               <el-input style="width:200px" v-model="editYdForm.planWeight" placeholder="请输入内容" :maxlength="11"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="实际重量" prop="realWeight">
+            <el-form-item label="实际重量(KG)" prop="realWeight">
               <el-input style="width:200px" v-model="editYdForm.realWeight" placeholder="请输入内容" :maxlength="11"></el-input>
             </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="备注" prop="remark">
+              <el-input
+                type="textarea"
+                style="width:200px"
+                autosize
+                placeholder="请输入内容"
+                v-model="editYdForm.remark">
+              </el-input>
+            </el-form-item>
+
           </el-col>
         </el-row>
       </el-form>
@@ -289,6 +319,14 @@
         <el-button type="primary" @click="tkSaveBtn">保存</el-button>
       </div>
     </el-dialog>
+
+
+    <!--详情弹出框-->
+
+    <el-dialog :modal="false"  :close-on-click-modal="false"  title="详情" v-model="billFormVisible" size="large">
+      <bill-details :doubleData="doubleData" :updateRow="updateRow"></bill-details>
+    </el-dialog>
+
   </div>
 </template>
 
@@ -297,6 +335,9 @@
   import {AgGridVue} from "ag-grid-vue";
   import api from '@/api/api'
   import axios from 'axios'
+  import Tool from '@/api/tool'
+  import agGridFilter from '@/components/common/ag-grid-filter'
+  import details from './billDetails'
   const neiP = '内排';
   const waiP = '外排';
   export default {
@@ -307,30 +348,8 @@
         gridOptions: null,
         columnDefs: [],
         rowData: null,
-        defCol: [
-          {name: '', isChecked:true, record: "",checkBox:true,},
-          {name: '运单号', isChecked:true, record: "tkBillCode"},
-          {name: "运单状态", isChecked:true, record: "billStatus"},
-          {name: "运单类型", isChecked:true,record: "billType"},
-          {name: "箱型", isChecked:true, record: "teuType"},
-          {name: "箱号", isChecked:true, record: "teuNo"},
-          {name: "铅封号", isChecked:true, record: "sealNo"},
-          {name: "提箱点",isChecked:true, record: "getClpPlace"},
-          {name: "进箱点",isChecked:true, record: "downClpPlace"},
-          {name: "装拆地",isChecked:true, record: "destination"},
-          {name: "是否需要白卡", isChecked:true, record: "needCcv"},
-          {name: "监管点", isChecked:true, record: "ccPlace"},
-          {name: "白卡号", isChecked:true, record: "ccvNo"},
-          {name: "装拆点", isChecked:true, record: "destinationPoint"},
-          {name: "装拆时间",isChecked:true, record: "destinationDateStr"},
-          {name: "计划重量",isChecked:true, record: "planWeight"},
-          {name: "实际重量",isChecked:true, record: "realWeight"},
-          {name: "托运方", isChecked:true, record: "sendBillInfo"},
-          {name: "接运方",isChecked:true, record: "receiveBillInfo"},
-          {name: "排单方式",isChecked:true, record: "doBillType"},
-          {name: "车牌号",isChecked:true, record: "plateNo"},
-          {name: "司机/手机",isChecked:true, record: "driverName"}
-        ],
+        defCol: [],
+        type : 'littleHeader',
         /*表单的输出*/
         addYdFormVisible:false, //运单新增显示
         addYdForm: {
@@ -346,6 +365,8 @@
           planWeight:'',
           realWeight:'',
           destinationPoint:'',
+          remark:''
+
         },
         addYdFormRules:{
           shipperInfo: [
@@ -368,6 +389,7 @@
           realWeight:'',
           destinationPoint:'',
           xdTkBillId:'',
+          remark:''
         },
         editYdFormRules:{
           shipperInfo: [
@@ -380,14 +402,17 @@
         tkForm:{
           sendType: '内排',//排单方式
           options:[],
-          transFleet:'',
-          transFleetId:'',
+          transFleet:'', //接运方
+          transFleetId:'',//接运方ID
           driverName:'',
           telephone1:'',
           driverPhone:'',
           driverTelphone:'',
+          sendTruckId:'',
+          truckId:'',
           driverId:'',
           plateNo:'',
+          relPlateNo:'',
           fleet:'',
           shipperId:'',
           transFleetShow:false,
@@ -397,11 +422,17 @@
         },
         tkFormRules: {
 
-        }
+        },
+
+        /*详情*/
+        billFormVisible: false,
+        doubleData: null,
       }
     },
     components: {
       "ag-grid-vue": AgGridVue,
+      'ag-grid-filter' : agGridFilter,
+      'bill-details': details
     },
     watch: {
       'selectData.xdOrderId': function(val) {
@@ -412,6 +443,42 @@
     }
     },
     methods: {
+      //转日期格式
+      formatDate(date) {
+        if(date === '') {
+          return date;
+        }else {
+          let  start = new Date(date);
+          let y = start.getFullYear();
+          let m = start.getMonth() + 1;
+          m = m < 10 ? '0' + m : m;
+          var d = start.getDate();
+          d = d < 10 ? ('0' + d) : d;
+          return y + '-' + m + '-' + d;
+        }
+
+      },
+      //转日期+时间的格式
+      formatDateTime(date) {
+        if(date === '') {
+          return date;
+        }else {
+          let  start = new Date(date);
+          let y = start.getFullYear();
+          let m = start.getMonth() + 1;
+          m = m < 10 ? '0' + m : m;
+          var d = start.getDate();
+          d = d < 10 ? ('0' + d) : d;
+          let  h = start.getHours();
+          h = h < 10 ? '0' + h : h;
+          let  z =  start.getMinutes();
+          z = z < 10 ? '0' + z : z;
+          let  s =  start.getSeconds();
+          s = s < 10 ? '0' + s : s;
+          return y + '-' + m + '-' + d + ' ' + h +':'+ z +':' + s;
+        }
+
+      },
       //改变表格自适应
       rowDataChanged() {
         let self = this;
@@ -437,43 +504,52 @@
  //       this.gridOptions.api.setRowData(xdtList);//将数据插入到表格里面
 //        this.rowData = this.gridOptions.api.setRowData(xdtList);
         //   this.createRowData(xdtList);
-        this.rowData = xdtList
+      //  this.rowData = xdtList;
+        this.createRowData(xdtList);
+        this.gridOptions.api.sizeColumnsToFit();
       },
       createRowData(xdtList) {//生成表格数据函数
         const rowData = [];
+        let self =this;
         rowData.splice(0,rowData.length);
         for(let objTemp of xdtList) {
           rowData.push({
-            account: objTemp.account,
-            accountNo: objTemp.accountNo,
-            allowDriveType: objTemp.allowDriveType,
-            bank: objTemp.bank,
-            bankAddr: objTemp.bankAddr,
-            bindingTruckNo: objTemp.bindingTruckNo,
-            contactAddr: objTemp.contactAddr,
-            createDateStr: objTemp.createDateStr,
-            createUser: objTemp.createUser,
-            driverHeadPic: objTemp.driverHeadPic,
-            driverId: objTemp.driverId,
-            driverLicenseEnd: objTemp.driverLicenseEnd,
-            driverLicenseStart: objTemp.driverLicenseStart,
+            billStatus: objTemp.billStatus,
+            billType: objTemp.billType,
+            ccPlace: objTemp.ccPlace,
+            ccvNo: objTemp.ccvNo,
+            destination: objTemp.destination,
+            destinationDate: objTemp.destinationDate,
+            destinationDateStr: objTemp.destinationDateStr,
+            destinationPoint: objTemp.destinationPoint,
+            doBillType: objTemp.doBillType,
+            downClpPlace: objTemp.downClpPlace,
             driverName: objTemp.driverName,
-            familyTel: objTemp.familyTel,
-            fleet: objTemp.fleet,
-            idAddr: objTemp.idAddr,
-            idCard: objTemp.idCard,
-            medicalCheck: objTemp.medicalCheck,
-            medicalCheckDate: objTemp.medicalCheckDate,
-            nextReturnDue: objTemp.nextReturnDue,
-            relFleetId: objTemp.relFleetId,
+            driverTelephone: objTemp.driverTelephone,
+            getClpPlace: objTemp.getClpPlace,
+            needCcv: objTemp.needCcv,
+            planWeight: objTemp.planWeight,
+            plateNo: objTemp.plateNo,
+            realWeight: objTemp.realWeight,
+            receiveBillId: objTemp.receiveBillId,
+            receiveBillInfo: objTemp.receiveBillInfo,
+            relDriverId: objTemp.relDriverId,
+            relOrderId: objTemp.relOrderId,
+            relTransFleetId: objTemp.relTransFleetId,
+            relTruckId: objTemp.relTruckId,
+            relXdOrderCode: objTemp.relXdOrderCode,
             remark: objTemp.remark,
-            status: objTemp.status,
-            telephone1: objTemp.telephone1,
-            telephone2: objTemp.telephone2,
-            usualAddr: objTemp.usualAddr,
-            workNo: objTemp.workNo,
-            workNoEnd: objTemp.workNoEnd,
-            workNoStart: objTemp.workNoStart
+            sealNo: objTemp.sealNo,
+            sendBillId: objTemp.sendBillId,
+            sendBillInfo: objTemp.sendBillInfo,
+            sendBillMark: objTemp.sendBillMark,
+            sendTruckId: objTemp.sendTruckId,
+            teuNo: objTemp.teuNo,
+            teuType: objTemp.teuType,
+            tkBillCode: objTemp.tkBillCode,
+            transFleet: objTemp.transFleet,
+            xdTkBillId: objTemp.xdTkBillId,
+            driverTep: self.isStringHandle(objTemp.driverName +'/' + objTemp.driverTelephone)
           })
         }
         this.rowData = rowData;
@@ -483,16 +559,19 @@
         let tableCol = this.defCol
         /*表头对应显示的数据内容field*/
         for(var i=0; i < tableCol.length; i++){
-          this.columnDefs.push(
-            {
-              headerName: tableCol[i].name,
-              field: tableCol[i].record,
-              suppressMenu: false,
-              suppressFilter: false,
-              checkboxSelection: tableCol[i].checkBox,
-              headerCheckboxSelection: tableCol[i].checkBox
-            }
-          )
+          if(this.defCol[i].isChecked) {
+            this.columnDefs.push(
+              {
+                headerName: tableCol[i].name,
+                field: tableCol[i].record,
+                suppressMenu: false,
+                suppressFilter: false,
+                checkboxSelection: tableCol[i].checkBox,
+                headerCheckboxSelection: tableCol[i].checkBox
+              }
+            )
+          }
+
         }
       },
       onCellClicked(event) {//选中哪一条 对应的数据显示
@@ -560,8 +639,17 @@
       },
       //增加表格数据
       addNewRow(objTemp){
-
         this.rowData.unshift(objTemp);
+
+        console.log(objTemp.xdTkBillId);
+       /* this.gridOptions.api.forEachNode( function (node) {
+          if (node.data.xdTkBillId == objTemp.xdTkBillId) {
+            console.log('我是运单');
+            console.log(node.data.xdTkBillId, );
+
+            node.setSelected(true);
+          }
+        });*/
     /*    var newStore = this.rowData.slice();
         newStore.unshift(objTemp);
         this.gridOptions.api.setRowData(newStore); //将数据设置到表格数据里*/
@@ -586,14 +674,15 @@
       //接运方模糊搜索接口
       shipperInfoSearch(queryString, callback) {
         let self = this;
-        api.customerSearch(queryString)
+        api.jieYunSearch(queryString)
           .then(function(res){
- /*           var data = res.data;
-            var resultData = [];
+            console.log(res);
+            let  data = res.data;
+            let resultData = [];
             for(var objTemp of data){
               resultData.push({"key":objTemp.customerBaseId, "value":objTemp.custShortName});
-            }*/
-            callback(res);
+            }
+            callback(resultData);
           })
           .catch(function(err){
 
@@ -607,8 +696,9 @@
       plateNoSearch(queryString, callback) {
         let self = this;
         api.getPlateNoSearch(queryString).then(function (res) {
-          let    data  = res.data
+          let    data  = res.data;
           let tkPcDataList = [];
+          console.log(data);
           for(var objTemp of data){
             tkPcDataList.push({
               driverId: objTemp.driverId,
@@ -617,11 +707,14 @@
               fleet:objTemp.fleet,
               relFleetId:objTemp.relFleetId,
               tractorNo:objTemp.tractorNo,
+              relTruckId: objTemp.truckBaseId,
               driver: objTemp.driverName + '/' + objTemp.telephone1,
-              value:objTemp.tractorNo + '/' + objTemp.driverName + '/' + objTemp.telephone1
+              //value:objTemp.tractorNo + '/' + objTemp.driverName + '/' + objTemp.telephone1
+              value: objTemp.memCode  +  '/' + objTemp.tractorNo
             });
           }
           callback(tkPcDataList);
+          console.log(tkPcDataList);
         }).catch(function(err){
           console.log(err);
 
@@ -629,14 +722,16 @@
       },
       //车牌号下拉选中函数
       plateNoSelect(item) {
-        this.tkForm.plateNo = item.tractorNo;
+        this.tkForm.plateNo = item.value;
+        this.tkForm.relPlateNo = item.tractorNo;
         this.tkForm.driverTelphone = item.driver;
         this.tkForm.fleet = item.fleet;
         this.tkForm.driverName = item.driverName;
         this.tkForm.driverId = item.driverId;
         this.tkForm.driverPhone = item.telephone1;
         this.tkForm.transFleetId = item.relFleetId;
-        console.log(item)
+        this.tkForm.truckId = item.relTruckId;
+        console.log(this.tkForm)
       },
       //司机的模糊搜索
       driverTelphoneSearch(queryString, callback) {
@@ -673,11 +768,11 @@
           .then(function (res) {
             let  selectData = [];
             let data  = res.data;
-            console.log(data)
+            console.log(data);
             for (let objTemp of data) {
               selectData.push({"value":objTemp.display })
             }
-            self.addYdForm.options = selectData
+            self.addYdForm.options = selectData;
             self.editYdForm.options = selectData;
           })
           .catch(function(err){
@@ -780,15 +875,26 @@
           console.log('为空值')
         }
       },
+      //判断字符串为空
+      isStringHandle(item) {
+        if(item.indexOf('null') ===0) {
+          return ' ';
+        }else {
+          return item;
+        }
+      },
       //装拆点模糊查询
       destinationpointSearch(queryString, callback) {
+        let self =this;
         if( queryString != '' ){
           api.getDestinationPointSearch(queryString)
             .then(function (res) {
               let data = res.data;
               let resultData = [];
               for(var objTemp of data){
-                resultData.push({"key":objTemp.destinationPointId,"value":objTemp.address + '/' + objTemp.contactPeopleOne + '/' + objTemp.mobilePhoneOne});
+                resultData.push({
+                  "key":objTemp.destinationPointId,
+                  "value": self.isStringHandle(objTemp.address + '/' + objTemp.contactPeopleOne + '/' + objTemp.mobilePhoneOne)});
               }
               callback(resultData);
             })
@@ -825,16 +931,18 @@
           getClpPlace: this.addYdForm.getClpPlace,
           downClpPlace: this.addYdForm.downClpPlace,
           destination:this.addYdForm.destination ,
-          destinationDateStr:this.addYdForm.destinationDateStr,
+          destinationDateStr:this.formatDate(this.addYdForm.destinationDateStr),
           planWeight: this.addYdForm. planWeight,
           realWeight: this.addYdForm.realWeight,
-          destinationPoint: this.addYdForm.destinationPoint
+          destinationPoint: this.addYdForm.destinationPoint,
+          remark: this.addYdForm.remark
         };
         console.log(params);
         api.tkAddSubmit(params).then(function (res) {
           let  data  = res.data;
           self.addNewRow(data);
           self.addYdFormVisible = false; //让新增dialog进行关闭
+          self.$emit("interFace",self.selectData.xdOrderId);
         }).catch(function(err){
 
         })
@@ -857,6 +965,7 @@
          this.editYdForm.realWeight = this.selectNowData.realWeight;
          this.editYdForm.destinationPoint = this.selectNowData.destinationPoint;
          this.editYdForm.xdTkBillId = this.selectNowData.xdTkBillId;
+         this.editYdForm.remark = this.selectNowData.remark;
          this.editYdFormVisible = true;
        }
       },
@@ -873,48 +982,90 @@
           getClpPlace: this.editYdForm.getClpPlace,
           downClpPlace: this.editYdForm.downClpPlace,
           destination:this.editYdForm.destination ,
-          destinationDateStr:this.editYdForm.destinationDateStr,
+          destinationDateStr:this.formatDate(this.editYdForm.destinationDateStr),
           planWeight: this.editYdForm. planWeight,
           realWeight: this.editYdForm.realWeight,
-          destinationPoint: this.editYdForm.destinationPoint
+          destinationPoint: this.editYdForm.destinationPoint,
+          remark: this.editYdForm.remark
         };
+        console.log(params);
         api.tkEditSubmit(params).then(function (res) {
           self.getRowData();
           self.editYdFormVisible = false;
+         self.$emit("interFace",self.selectData.xdOrderId);
         }).catch(function(err){
           console.log(err);
-
-
-
-
         })
       },
       //删除按钮
       onRemoveSelect() {
         let self = this;
+        let selectRows = this.gridOptions.api.getSelectedRows();
+        if(selectRows.length === 0 ) {
+          self.$alert('请选择一条数据','信息',{
+            confirmButtonText: '确定',
+          })
+        }else if( selectRows.length === 1  ) {
+          api.tkDelSubmit(self.selectNowData.xdTkBillId).then(function (res) {
+            self.getRowData();
+            self.$emit("interFace",self.selectData.xdOrderId);
+          }).catch(function(err){
+          })
+        }
         console.log(this.selectNowData.xdTkBillId);
-        api.tkDelSubmit(this.selectNowData.xdTkBillId).then(function (res) {
-          self.getRowData();
-        }).catch(function(err){
 
-        })
       },
-
+      //判断字符串为空
+      isStringHandle(item) {
+        if(item.indexOf('null') ===0) {
+          return ' ';
+        }else if(item.indexOf('undefined') ===0){
+          return ' ';
+        }else {
+          return item;
+        }
+      },
       //点击托卡按钮的函数
       tkpaicheBtn() {
+        let self = this;
         let selectedRows  = this.gridOptions.api.getSelectedRows();
+
         if(selectedRows.length == 1) {
-             this.tuoKaFormVisible = true;
-          this.tkForm.plateNoShow = true;
-          this.tkForm.transFleetShow = false;
-          this.tkForm.sendTypeDisabled = false;
-          this.tkForm.sendType = '内排';
+          self.tkForm.sendType = self.selectNowData.doBillType; //排单方式
+          self.tkForm.transFleet = self.selectNowData.receiveBillInfo; //接运方
+          self.tkForm.transFleetId = self.selectNowData.receiveBillId; //接运方ID
+          self.tkForm.remark =  self.selectNowData.remark; //备注
+          self.tkForm.plateNo = self.selectNowData.plateNo ; //车牌号
+          self.tkForm.truckId =self.selectNowData.relTruckId; //车牌ID
+          self.tkForm.driverTelphone = self.isStringHandle(self.selectNowData.driverName + '/' + self.selectNowData.driverTelephone); //低级手机/电话
+          self.tkForm.driverId =   self.selectNowData.relDriverId; //司机Id
+          self.tkForm.fleet = self.selectNowData.transFleet;
+          self.tkForm.sendTruckId = self.selectNowData.sendTruckId;
+
+          if( self.selectNowData.doBillType == null || self.selectNowData.doBillType == '内排') {
+            this.tuoKaFormVisible = true;
+            this.tkForm.plateNoShow = true;
+            this.tkForm.transFleetShow = false;
+            this.tkForm.sendTypeDisabled = false;
+            this.tkForm.sendType = '内排';
+          }else {
+            this.tuoKaFormVisible = true;
+            this.tkForm.plateNoShow = false;
+            this.tkForm.transFleetShow = true;
+            this.tkForm.sendType = '外排';
+
+          }
+
         } else if( selectedRows.length > 1) {
           this.tuoKaFormVisible = true;
           this.tkForm.plateNoShow = false;
           this.tkForm.transFleetShow = true;
           this.tkForm.sendTypeDisabled = true;
           this.tkForm.sendType = '外排';
+        }else {
+          self.$alert('请选择一条数据','信息',{
+            confirmButtonText: '确定',
+          })
         }
 
       },
@@ -925,16 +1076,19 @@
           sendType: this.tkForm.sendType,
           transFleet:this.tkForm.transFleet,
           relTransFleetId:this.tkForm.transFleetId,
-          remark: this.tkForm.remark
+          remark: this.tkForm.remark,
+          sendTruckId:this.tkForm.sendTruckId,
         };
         let tkNp = {
+          sendTruckId:this.tkForm.sendTruckId,
           sendType: this.tkForm.sendType,
           transFleet:this.tkForm.fleet,
           relTransFleetId:this.tkForm.transFleetId,
           driverName:this.tkForm.driverName,
-          plateNo: this.tkForm.plateNo,
+          plateNo: this.tkForm.relPlateNo,
           relDriverId: this.tkForm.driverId,
           driverTelephone:this.tkForm.driverPhone,
+          relTruckId: this.tkForm.truckId,
           remark:  this.tkForm.remark
         };
         let tkData = this.gridOptions.api.getSelectedRows();
@@ -958,7 +1112,9 @@
             .then(function(res){
               self.getRowData();
               self.tuoKaFormVisible = false;
-              self.$refs['tkForm'].resetFields();
+             // self.$refs['tkForm'].resetFields();
+              //数据清空
+              self.restData();
             })
             .catch(function(err){
               console.log(err);
@@ -977,7 +1133,9 @@
             then(function(res){
               self.getRowData();
               self.tuoKaFormVisible = false;
-              self.$refs['tkForm'].resetFields();
+             // self.$refs['tkForm'].resetFields();
+              //数据清空
+              self.restData();
             })
             .catch(function(err){
               console.log(err);
@@ -986,7 +1144,21 @@
         }
 
       },
-
+//清空数据函数
+      restData() {
+         this.tkForm.transFleet= '';
+        this.tkForm.transFleetId= '';
+        this.tkForm.driverName= '';
+        this.tkForm.telephone1= '';
+        this. tkForm.driverPhone= '';
+        this.tkForm.driverTelphone= '';
+        this.tkForm.truckId= '';
+        this.tkForm.driverId= '';
+        this.tkForm.plateNo= '';
+        this.tkForm.fleet= '';
+        this.tkForm.shipperId= '';
+        this.tkForm.remark= '';
+      },
       //作废按钮操作
       inValid() {
         let self = this ;
@@ -1031,6 +1203,14 @@
         }
       },
 
+      /*=================*/
+      onDoubleClicked(item) {
+        this.billFormVisible = true;
+
+        console.log(item.data);
+        this.doubleData = item.data;
+      }
+
     },
     beforeMount() {
       this.gridOptions = {
@@ -1049,13 +1229,18 @@
           loadingOoo: '正在加载....',
         }
       };
-      this.createColumnDefs();
     },
     mounted() {
+      let tool = new Tool();
+      this.defCol = tool.getIte('caseOrder').littleHeader;
+
+      console.log(33333,this.defCol);
       this.getRowData();
       this.teuTypeHandle();
       this.sendTypeHandle();
       this.gridOptions.api.sizeColumnsToFit();
+
+     this.createColumnDefs();
     },
     destroyed(){
 

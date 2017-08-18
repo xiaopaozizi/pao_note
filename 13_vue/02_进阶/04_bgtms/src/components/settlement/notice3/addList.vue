@@ -1,7 +1,6 @@
 <template>
   <div class="add-write">
-
-    <el-row>
+<!--    <el-row>
       <el-form  :model="addSearchForm" ref="addSearchForm" label-width="100px">
         <el-row>
           <el-col :span="6">
@@ -34,13 +33,30 @@
           </el-col>
         </el-row>
       </el-form>
-    </el-row>
-    <div></div>
+    </el-row>-->
+
     <!--合计内容-->
-    <el-row :gutter="20">
-      <el-col :span="6">应收合计: {{yShou}}</el-col>
-      <el-col :span="6">应付合计: {{yFu}}</el-col>
-      <el-col :span="6">合计金额:{{yShou + yFu }}</el-col>
+    <el-row>
+      <el-col :span="8"  class="searchText">
+        <span>应收合计: {{yShou}}</span>
+        <span>应付合计: {{yFu}}</span>
+        <span>合计金额: {{yShou + yFu }}</span>
+      </el-col>
+      <el-col :span="16">
+        <el-date-picker
+          v-model="addSearchForm.date"
+          size="small"
+          type="daterange"
+          align="right"
+          placeholder="选择日期范围"
+          range-separator=" ~ "
+          @change="setChangedValue"
+          :picker-options="pickerOptions2">
+        </el-date-picker>
+        <el-button type="primary" @click="addSearchFormSubmit"  size="small">查询</el-button>
+        <el-button @click="billSaveBtn"  size="small">保存</el-button>
+        <el-button @click="billCancelBtn"  size="small">取消</el-button>
+      </el-col>
     </el-row>
     <!--表格内容-->
     <add-table :tableData="tableData" ref="addCostTable" @seletClk="selectClick" :getDataForm="getDataForm"></add-table>
@@ -337,6 +353,14 @@
     padding: 5px 10px 5px 10px;
     background-color: lightblue;
     margin-top: 5px;
+  }
+  .searchText {
+    padding-top: 8px;
+
+  }
+  .searchText span {
+    display: inline-block;
+    padding-right: 25px;;
   }
 </style>
 

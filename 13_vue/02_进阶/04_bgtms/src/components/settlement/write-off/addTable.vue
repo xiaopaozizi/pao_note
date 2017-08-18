@@ -11,7 +11,6 @@
                  :suppressMenuColumnPanel="true"
                  :toolPanelSuppressValues="true"
                  rowSelection="multiple"
-                 :rowDataChanged="rowDataChanged"
                  :rowData="rowData">
     </ag-grid-vue>
   </div>

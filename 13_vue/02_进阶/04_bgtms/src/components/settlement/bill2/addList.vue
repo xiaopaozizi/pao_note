@@ -1,7 +1,6 @@
 <template>
   <div class="add-write">
-
-    <el-row>
+<!--    <el-row>
       <el-form  :model="addSearchForm" ref="addSearchForm" label-width="100px">
         <el-row>
           <el-col :span="6">
@@ -33,13 +32,33 @@
           </el-col>
         </el-row>
       </el-form>
-    </el-row>
-    <div></div>
+    </el-row>-->
     <!--合计内容-->
-    <el-row :gutter="20">
-      <el-col :span="6">应收合计: {{yShou}}</el-col>
-      <el-col :span="6">应付合计: {{yFu}}</el-col>
-      <el-col :span="6">合计金额:{{yShou + yFu }}</el-col>
+    <el-row>
+      <el-col :span="8" class="searchText">
+        <span>应收合计:{{yShou}}</span>
+        <span>应付合计:{{yFu}}</span>
+        <span>合计金额:{{yShou + yFu }}</span>
+      </el-col>
+       <el-col :span="16">
+         <span>制单日期</span>
+         <el-date-picker
+           size="small"
+           v-model="addSearchForm.date"
+           type="daterange"
+           align="right"
+           placeholder="选择日期范围"
+           range-separator=" ~ "
+           @change="setChangedValue"
+           :picker-options="pickerOptions2">
+         </el-date-picker>
+         <el-button type="primary" @click="addSearchFormSubmit"  size="small" style="margin-right: 30px">查询</el-button>
+         <span>备注</span>
+         <el-input type="textarea" :rows="1"
+                   v-model="writeEditForm.remark" style="width:300px"  size="small"></el-input>
+         <el-button @click="billSaveBtn"  size="small">保存</el-button>
+         <el-button @click="billCancelBtn"  size="small">取消</el-button>
+       </el-col>
     </el-row>
     <!--表格内容-->
     <add-table :tableData="tableData" ref="addCostTable" @seletClk="selectClick" :getDataForm="getDataForm"></add-table>
@@ -157,6 +176,7 @@
     },
     watch: {
       'addSearchForm.receiptPaymentId' :function(val,oldVal) {
+        console.log('我 是watch函数');
         this.addSearchFormSubmit();
       }
     },
@@ -168,14 +188,6 @@
 
       //初始化数据
       initSearchForm() {
-        if(this.dialogType === 'add'){
-          console.log(this.addSearchForm);
-          this.addSearchForm.settleAccountsFullName ="";//结算人全称
-          this.addSearchForm.shipper = "";   //结算方简称
-          this.addSearchForm.shipperId =  ""; // 结算人Id.
-          this.addSearchForm.date = '';
-          this.$refs.addCostTable.clearRowData(); //清空表格数据
-        }else if(this.dialogType === 'edit'){
           //初始化方法
           this.addSearchForm.monthlyStatementNo = this.getDataForm.monthlyStatementNo;//账单ID
           this.addSearchForm.monthlyStatementId = this.getDataForm.monthlyStatementId;//账单ID
@@ -185,7 +197,6 @@
           this.addSearchForm.disabled = true;
           this.addSearchForm.customType = false;
           this.$refs.addCostTable.selectPaymentNo(this.getDataForm.monthlyStatementId)
-        }
       },
       //表单查询
       addSearchFormSubmit() {
@@ -336,6 +347,14 @@
     padding: 5px 10px 5px 10px;
     background-color: lightblue;
     margin-top: 5px;
+  }
+  .searchText {
+    padding-top: 8px;
+
+  }
+  .searchText span {
+    display: inline-block;
+    padding-right: 25px;;
   }
 </style>
 

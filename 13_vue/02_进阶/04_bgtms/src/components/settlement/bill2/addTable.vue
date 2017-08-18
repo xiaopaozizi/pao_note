@@ -197,6 +197,9 @@
       //让其默认选中
       selectPaymentNo(item) {
         console.log('我是默认的函数');
+        this.gridOptions.api.sizeColumnsToFit();
+        this.rowDataChanged();
+        this.autoColumns();
         this.gridOptions.api.forEachNode( function (node) {
           if (node.data.relMonthlyStatementId === item) {
             node.setSelected(true);
@@ -255,6 +258,7 @@
       this.createColumnDefs();
     },
     mounted() {
+      console.log('我 加载了没？？？');
       this.gridOptions.api.sizeColumnsToFit();
     }
   }
@@ -262,9 +266,7 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  .grid {
-    text-align: center;
-  }
+
 </style>
 
 

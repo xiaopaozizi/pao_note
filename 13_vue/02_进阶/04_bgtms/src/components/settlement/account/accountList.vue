@@ -3,7 +3,7 @@
      <div style="margin-top: 10px"></div>
      <!--查询框-->
      <el-row>
-       <el-form   :model="searchForm"  label-width="100px">
+       <!--<el-form   :model="searchForm"  label-width="100px">
          <el-row>
            <el-col :span="6">
              <el-form-item label="账户类型">
@@ -34,11 +34,28 @@
            </el-col>
          </el-row>
          </el-form-item>
-       </el-form>
+       </el-form>-->
+
+       <el-col :span="18">
+         <span>制单日期:</span>
+         <el-date-picker
+           v-model="searchForm.date"
+           size="small"
+           type="daterange"
+           align="right"
+           placeholder="选择日期范围"
+           range-separator=" ~ "
+           @change="setChangedValue"
+           :picker-options="pickerOptions2">
+         </el-date-picker>
+         <el-button type="primary" @click="listSearchBtn"  size="small">查询</el-button>
+       </el-col>
+       <el-col :span="6" style="text-align: right">
+         <el-button @click="addBtn" size="small" type="primary" >新增</el-button>
+         <el-button @click="editBtn" size="small" type="primary" >编辑</el-button>
+         <el-button @click="delBtn" size="small" type="primary" >删除</el-button>
+       </el-col>
      </el-row>
-     <el-button @click="addBtn">新增</el-button>
-     <el-button @click="editBtn">编辑</el-button>
-     <el-button @click="delBtn">删除</el-button>
      <list-table :tableData="tableData" ref="refListTable" @seletClk="parentSelect"></list-table>
      <!--账户新增弹出框-->
      <el-dialog :modal="false"  :close-on-click-modal="false"  title="账户新增" v-model="dialogFormVisible" size="large">
@@ -209,7 +226,12 @@
        </div>
      </el-dialog>
 
-
+     <!--切换框-->
+     <el-tabs v-model="activeName">
+       <el-tab-pane label="流水信息" name="流水信息">
+   55555
+       </el-tab-pane>
+     </el-tabs>
 
    </div>
 </template>
@@ -244,7 +266,10 @@
             accountType:'',//账户类型
             options:[],//存储账户类型数据
             state:'', //状态
-            options2: [] //存储状态数据
+            options2: [], //存储状态数据
+            dateStr:'', //传给后台的时间日期
+            date: '',  //前台显示的时间日期
+            initFlag: true
           },
           dialogFormVisible:false,
           editDialogFormVisible: false,
@@ -312,6 +337,36 @@
           },
           //获取表格选中的参数
           selectData: null,
+
+          //查询日期
+          pickerOptions2: {
+            shortcuts: [{
+              text: '最近一周',
+              onClick(picker) {
+                const end = new Date();
+                const start = new Date();
+                start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+                picker.$emit('pick', [start, end]);
+              }
+            }, {
+              text: '最近一个月',
+              onClick(picker) {
+                const end = new Date();
+                const start = new Date();
+                start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+                picker.$emit('pick', [start, end]);
+              }
+            }, {
+              text: '最近三个月',
+              onClick(picker) {
+                const end = new Date();
+                const start = new Date();
+                start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+                picker.$emit('pick', [start, end]);
+              }
+            }]
+          },
+          activeName: '流水信息'
         }
       },
       methods: {
@@ -486,12 +541,29 @@
 
            }
 
-        }
+        },
+        //时间转换格式化
+        setChangedValue(value){
+          this.searchForm.dateStr = value;
+          //页面首次加载成功后调用初始数据
+          let params = {
+            createDateQuery: value
+          };
+          if(this.searchForm.initFlag){
+            this.$refs.refListTable.getRowData(params);
+            this.searchForm.initFlag = false;
+          }
+        },
       },
       mounted(){
         this.showAccountType(); //加载账户类型
         this.showState(); //存储状态
         this.$refs.refListTable.getRowData();
+
+        var stateDate = (new Date()).setTime(new Date().getTime() - 3600 * 1000 * 24 *  30);
+        var endDate = new Date();
+        this.searchForm.date = [stateDate,endDate];
+
       }
     }
 </script>

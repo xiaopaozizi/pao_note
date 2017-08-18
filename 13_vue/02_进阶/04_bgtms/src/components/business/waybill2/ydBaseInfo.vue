@@ -137,7 +137,7 @@
              </el-form-item>
            </el-col>
            <el-col :span="6">
-             <el-form-item label="铅封号">
+             <el-form-item label="封号">
                <span>{{showForm.sealNo}}</span>
              </el-form-item>
            </el-col>
@@ -209,7 +209,7 @@
                <span>{{showForm.teuNo}}</span>
            </el-col>
            <el-col :span="8">
-             <label >铅封号</label>
+             <label >封号</label>
                <span>{{showForm.sealNo}}</span>
            </el-col>
            <el-col :span="8">
@@ -288,7 +288,7 @@
              </el-form-item>
            </el-col>
            <el-col :span="8">
-             <el-form-item label="铅封号" prop="sealNo">
+             <el-form-item label="封号" prop="sealNo">
                <el-input style="width:200px" v-model="otherForm.sealNo" placeholder="请输入内容" :maxlength="11"></el-input>
              </el-form-item>
            </el-col>
@@ -327,7 +327,7 @@
                <el-date-picker
                  style="width:200px"
                  v-model="otherForm.destinationDateStr"
-                 type="date"
+                 type="datetime"
                  placeholder="选择日期"
                  :editable="false"
                >
@@ -356,8 +356,8 @@
            </el-col>
 
            <el-col :span="8">
-             <el-form-item label="备注">
-               <span>{{otherForm.remark}}</span>
+             <el-form-item label="备注" prop="remark">
+               <el-input style="width:200px" v-model="otherForm.remark" placeholder="请输入内容"></el-input>
              </el-form-item>
            </el-col>
          </el-row>
@@ -392,7 +392,7 @@
             billType:'', //运单类型
             teuType:'', //箱型
             teuNo:'',  //箱号
-            seaNo:'', //铅封号
+            seaNo:'', //封号
             getClpPlace:'', //提箱点
             downClpPlace:'', //进箱点
             destination:'', //装拆地
@@ -421,8 +421,10 @@
             telephone1:'',
             driverPhone:'',
             driverTelphone:'',
+            truckId:'',
             driverId:'',
             plateNo:'',
+            relPlateNo:'',
             fleet:'', ///承运车队
             relFleetId:'',//承运车队ID
             shipperId:'',
@@ -460,9 +462,10 @@
         }
       },
       watch:{
-        'showData' : function() {
+        'showData' : function(val,oldVal) {
           let self= this ;
           if(this.activeName == '运单信息'){
+            console.log(val,oldVal);
             self.showInfoMsg();
           }
 
@@ -487,8 +490,8 @@
         },
         //转日期+时间的格式
         formatDateTime(date) {
-          if (date === '') {
-            return date;
+          if (!date) {
+            return '';
           } else {
             let start = new Date(date);
             let y = start.getFullYear();
@@ -524,7 +527,7 @@
         //车牌号模糊搜索
         plateNoSearch(queryString, callback) {
           api.getPlateNoSearch(queryString).then(function (res) {
-            let  data  = res.data
+            let  data  = res.data;
             let tkPcDataList = [];
             for (var objTemp of data) {
               tkPcDataList.push({
@@ -533,9 +536,11 @@
                 telephone1: objTemp.telephone1,
                 fleet: objTemp.fleet,
                 relFleetId: objTemp.relFleetId,
+                relTruckId: objTemp.truckBaseId,
                 tractorNo: objTemp.tractorNo,
                 driver: objTemp.driverName + '/' + objTemp.telephone1,
-                value: objTemp.tractorNo + '/' + objTemp.driverName + '/' + objTemp.telephone1
+              //  value: objTemp.tractorNo + '/' + objTemp.driverName + '/' + objTemp.telephone1
+                value: objTemp.memCode  +  '/' + objTemp.tractorNo
               });
             }
             callback(tkPcDataList);
@@ -546,12 +551,14 @@
         },
         //车牌号下拉选中函数
         plateNoSelect(item) {
-          this.tkForm.plateNo = item.tractorNo;
-          this.tkForm.driverTelphone = item.driver;
+          this.tkForm.plateNo = item.value;
+          this.tkForm.relPlateNo = item.tractorNo;
+          this.tkForm.driverTelphone = item.driver +  item.telephone1;
           this.tkForm.transFleet = item.fleet;
           this.tkForm.relFleetId = item.relFleetId;
           this.tkForm.driverName = item.driverName;
           this.tkForm.driverId = item.driverId;
+          this.tkForm.truckId = item.relTruckId;
           this.tkForm.driverPhone = item.telephone1;
           console.log(item)
         },
@@ -766,8 +773,9 @@
             transFleet: this.tkForm.transFleet, //承运车队
             relTransFleetId: this.tkForm.relFleetId, //承运方id
             driverName: this.tkForm.driverName, //司机名字
-            plateNo: this.tkForm.plateNo,   //车牌号
+            plateNo: this.tkForm.relPlateNo,   //车牌号
             relDriverId: this.tkForm.driverId, //司机ID
+
             driverTelephone: this.tkForm.driverPhone //司机电话
           };
           let tkData = [this.showData];
@@ -825,7 +833,7 @@
               for(let item in self.showForm) {
                 self.showForm[item] = data[item];
               }
-              self.showForm.driverTelphone = data.driverName + '/' + data.driverTelphone;
+              self.showForm.driverTelphone = data.driverName + '/' + data.driverTelephone;
           })
             .catch(function(err){
 
@@ -861,7 +869,7 @@
               getClpPlace: this.otherForm.getClpPlace,
               downClpPlace: this.otherForm.downClpPlace,
               destination: this.otherForm.destination ,
-              destinationDateStr: this.formatDate(this.otherForm.destinationDateStr),
+              destinationDateStr: this.formatDateTime(this.otherForm.destinationDateStr),
               planWeight: this.otherForm.planWeight,
               realWeight: this.otherForm.realWeight,
               destinationPoint: this.otherForm.destinationPoint

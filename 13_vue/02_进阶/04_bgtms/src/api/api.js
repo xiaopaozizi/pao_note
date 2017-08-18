@@ -82,6 +82,12 @@ export default {
         })
     })
   },
+
+  //接运方模糊查询
+  jieYunSearch(item) {
+    return fetch('/customerbaseinfo/getfleetlistforsearch',{ searchStr:item})
+  },
+
   //托运方联系人电话查询接口
   getShipperInfoContactSearch(params) {
     return fetch('customerbaseinfo/getshipperinfoforsearch', params)
@@ -342,11 +348,84 @@ export default {
   carHeaderMod(params) {
     return fetch('truckbaseinfo/mod',params)
   },
+//客户端承运车队接口
+    fleetCarSearch(item) {
+         return fetch('customerbaseinfo/getfleetlistforsearch',{ searchStr:item })
+    },
+  //车头关联车队接口
+    fleetRelSelect(item) {
+      return fetch('customerbaseinfo/getlist',{ custType:item })
+    },
 
-  /*
-  * 权限部分的接口
-  *
-  * */
+  //挂车显示列表接口
+    guaCarListShow(params) {
+      return fetch('trailerinfo/getlist',params)
+    },
+  //查询挂车号接口
+  guaCarSearchList(item) {
+    return fetch('trailerinfo/getlistforbind',{ searchStr:item })
+  },
+  //绑定挂车接口
+  bindGuaCar(params) {
+    return fetch('truckbaseinfo/addbindtrailer',params)
+  },
+
+  //解绑
+   cancelGuaCar(params) {
+     return fetch('truckbaseinfo/modnotbindtrailer',params)
+   },
+
+  //挂车新增接口
+   guaCarAdd(params) {
+     return fetch('/trailerinfo/add',params)
+   },
+//挂车编辑接口
+  guaCarEdit(params) {
+    return fetch('/trailerinfo/mod',params)
+  },
+  //挂车删除接口
+  guaCarDel(params) {
+    return fetch('/trailerinfo/del',params)
+  },
+
+
+  //联系人列表接口
+  contactList(params) {
+    return fetch('contactinfo/getlist',params)
+  },
+  //联系人新增接口
+  contactAdd(params) {
+    return fetch('contactinfo/add',params)
+  },
+  //联系人编辑接口
+  contactEdit(params) {
+    return fetch('contactinfo/mod',params)
+  },
+  //联系人删除接口
+  contactDel(params) {
+    return fetch('contactinfo/del',params)
+  },
+  //联系人默认首选接口
+  contactSelect(params) {
+    return fetch('contactinfo/modfordefault',params)
+  },
+
+  //装拆点列表接口
+  destinationPointList(params) {
+    return fetch('destinationpoint/getlist',params)
+  },
+  //装拆点新增接口
+  destinationPointAdd(params) {
+    return fetch('destinationpoint/add',params)
+  },
+  //装拆点编辑接口
+  destinationPointEdit(params) {
+    return fetch('destinationpoint/mod',params)
+  },
+  //装拆点删除接口
+  destinationPointDel(params) {
+    return fetch('destinationpoint/del',params)
+  },
 
 
   // 获取公司，部门，员工三级树节点
@@ -424,6 +503,8 @@ export default {
     return fetch('sysstaffinfo/del',parmas)
   },
 
+
+
   // 角色列表
   powerRoleList(parmas){
     return fetch('sysroleinfo/getlist',parmas)
@@ -463,45 +544,11 @@ export default {
   },
 
 
+  // 用户登录
+  userLogin(parmas){
+    return fetch('login',parmas)
+  },
+
+
 }
 
-
-
-
-/*import axios from 'axios';
-import qs from 'qs';
-import {MessageBox} from 'element-ui'
-
-let base = '/api';
-
-axios.defaults.timeout = 5000;
-//默认设置请求表头
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
-//POST传参序列化(添加请求拦截器)
-// 添加请求拦截器
-axios.interceptors.request.use(function (config) {
-  // 在发送请求之前做些什么
-  return config;
-}, function (error) {
-  // 对请求错误做些什么
-  return Promise.reject(error);
-});
-
-//返回状态判断(添加响应拦截器)
-axios.interceptors.response.use((res) =>{
-  //对响应数据做些事
-  if(!res.data.success){
-    // _.toast(res.data.msg);
-    return Promise.reject(res);
-  }
-  return res;
-}, (error) => {
-
-  return Promise.reject(error);
-});
-
-
-export const addUser = params => { return axios.post(`${base}/orderinfo/addimage.do`, { params: params }); };
-export const getUserListPage = params => { return axios.get(`${base}/`, { params: params }); };
-export const uploadFile = params => { return axios.post(`${base}/orderinfo/addimage.do`, { file: {name: params} }); };
-export const customerInfo = params => { return axios.post(`${base}/customerbaseinfo/add`,params); };*/

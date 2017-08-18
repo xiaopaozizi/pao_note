@@ -69,7 +69,7 @@
                  style="width:245px"
                  v-model="addForm.cyClosingDayStr"
                  size="small"
-                 type="datetime"
+                 type="date"
                  placeholder="选择日期时间">
                </el-date-picker>
 
@@ -205,10 +205,10 @@
        <step-next  :selectData="selectData"></step-next>
      </div>
      <div  style="text-align: center">
-       <el-button v-if="nextShow" type="primary" @click="addSaveBtn" size="small">就此完成</el-button>
-       <el-button v-if="nextShow"  type="primary" @click="goOnBtn" size="small">继续排车</el-button>
+       <el-button v-if="nextShow" type="primary" @click="addSaveBtn" size="small">完成</el-button>
+       <el-button v-if="nextShow"  type="primary" @click="goOnBtn" size="small">排单</el-button>
        <el-button  @click="returnStep" v-if="!nextShow" type="info" size="small">返回基本信息</el-button>
-       <el-button  @click="cancelStep"  type="warning" size="small">放弃操作</el-button>
+       <el-button  @click="cancelStep"  type="warning" size="small">取消</el-button>
      </div>
    </div>
 </template>
@@ -236,7 +236,7 @@
             billNumber: '',//提单号
             vesselVoyage: '', //船名航次
             cyClosingDayStr: '',//截关日期
-            orderSource: '', //来源
+            orderSource: '自揽', //来源
             orderSourceOptions:[],
             destination: '', //装拆地
             getClpPlace: '', //提箱点
@@ -275,8 +275,8 @@
       methods:{
         //转日期格式
         formatDate(date) {
-          if(date === '') {
-            return date;
+          if(!date) {
+            return '';
           }else {
             let  start = new Date(date);
             let y = start.getFullYear();
@@ -542,7 +542,7 @@
                 busType: self.addForm.busType, //类型
                 billNumber: self.addForm.billNumber,//提单号
                 vesselVoyage: self.addForm.vesselVoyage, //船名航次
-                cyClosingDayStr: self.formatDateTime(self.addForm.cyClosingDayStr),//截关日期
+                cyClosingDayStr: self.formatDate(self.addForm.cyClosingDayStr),//截关日期
                 orderSource: self.addForm.orderSource, //来源
                 destination: self.addForm.destination, //装拆地
                 getClpPlace: self.addForm.getClpPlace, //提箱点
@@ -558,7 +558,8 @@
               api.addBaseInfo(params)
                 .then(function(res) {
                   console.log(res);
-                  self.$router.push('/business/order2');
+                  let id  = res.data.xdOrderId;
+                  self.$router.push('/business/order2/' + id);
                   self.$refs['addForm'].resetFields();
                 })
                 .catch(function(err) {
@@ -587,7 +588,7 @@
                   busType: self.addForm.busType, //类型
                   billNumber: self.addForm.billNumber,//提单号
                   vesselVoyage: self.addForm.vesselVoyage, //船名航次
-                  cyClosingDayStr: self.formatDateTime(self.addForm.cyClosingDayStr),//截关日期
+                  cyClosingDayStr: self.formatDate(self.addForm.cyClosingDayStr),//截关日期
                   orderSource: self.addForm.orderSource, //来源
                   destination: self.addForm.destination, //装拆地
                   getClpPlace: self.addForm.getClpPlace, //提箱点
@@ -627,8 +628,8 @@
         cancelStep() {
           this.$router.push('/business/order2');
           this.nextShow = true;
-/*          this.$refs['addForm'].resetFields();
-          this.$refs.refListTable.getRowData('');*/
+          this.$refs['addForm'].resetFields();
+/*          this.$refs.refListTable.getRowData('');*/
         },
         //关闭新增
         closeAdd() {

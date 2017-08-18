@@ -25,11 +25,9 @@
 </template>
 
 <script>
-    import Vue from "vue";
     import {AgGridVue} from "ag-grid-vue";
     import NumericEditorComponent from './NumericEditorComponent'
     import costNameComponent from './costNameComponent'
-    import CostType from './costType'
     import SpecType from './specType'
     import api from '@/api/api'
     const  yingShou = '应收';
@@ -56,6 +54,7 @@
         'showData.xdTkBillId': function (val,oldVal) {
           let self = this;
           if(this.activeName == '费用信息') {
+            console.log('执行的数据')
             self.getCostList(val);
           }
 
@@ -88,9 +87,10 @@
           //获取行样式
           rowStyle() {
             this.gridOptions.getRowStyle = function(params){
-              if(params.data.costType === yingShou) {
+              if(params.data.unitPrice < 0) {
+
                 return {color:'red'}
-              } else if( params.data.costType === yingFu ) {
+              } else if( params.data.unitPrice > 0 ) {
                 return {color:'blue'}
               }
             };
@@ -126,12 +126,12 @@
                   {
                     headerName: "费用ID",
                     field: "costItemId",
-                   // hide:true
+                    hide:true
                   },
                   {
                     headerName: "类型",
                     field: "costType",
-//                    cellEditorFramework: CostType,
+                    colId: "lx"
                     /*                 cellStyle:function (params) {
                      if (params.value=='应收') {
                      console.log(params);
@@ -139,29 +139,64 @@
                      }
                      },*/
 //                    editable: true,
-                    sortingOrder: ['asc','desc']
                   },
                   {
                     headerName: "结算方简称",
                     field: "settleAccountsShortName",
                     cellEditorFramework: NumericEditorComponent,
-                    editable: true
+                    editable: function(node){
+                      let  a = node.node.data.costStatus;
+                      let self= this;
+                      if(a == '未审核') {
+                        return true;
+                      }else {
+                        console.log('我是编辑的 数据');
+                        console.log(node);
+                      }
+                    }
                   },
                   {
                     headerName: "费用名称",
                     field: "costName",
                     cellEditorFramework: costNameComponent,
-                    editable: true
+                    editable: function(node){
+                      let  a = node.node.data.costStatus;
+                      let self= this;
+                      if(a == '未审核') {
+                        return true;
+                      }else {
+                        console.log('我是编辑的 数据');
+                        console.log(node);
+                      }
+                    }
                   },
                   {
                     headerName: "单价",
                     field: "unitPrice",
-                    editable: true
+                    editable: function(node){
+                      let  a = node.node.data.costStatus;
+                      let self= this;
+                      if(a == '未审核') {
+                        return true;
+                      }else {
+                        console.log('我是编辑的 数据');
+                        console.log(node);
+                      }
+                    }
                   },
                   {
                     headerName: "数量",
                     field: "number",
-                    editable: true
+                    editable: function(node){
+                      let  a = node.node.data.costStatus;
+                      let self= this;
+                      if(a == '未审核') {
+                        return true;
+                      }else {
+                        console.log('我是编辑的 数据');
+                        console.log(node);
+                      }
+                    }
                   },
                   {
                     headerName: "金额",
@@ -171,8 +206,17 @@
                   {
                     headerName: "类别",
                     field: "specsModel",
-                    cellEditorFramework: SpecType,
-                    editable: true
+//                    cellEditorFramework: SpecType,
+                    editable: function(node){
+                      let  a = node.node.data.costStatus;
+                      let self= this;
+                      if(a == '未审核') {
+                        return true;
+                      }else {
+                        console.log('我是编辑的 数据');
+                        console.log(node);
+                      }
+                    }
                   },
                   {
                     headerName: "审核",
@@ -181,7 +225,16 @@
                   {
                     headerName: "备注",
                     field: "remark",
-                    editable: true,
+                    editable: function(node){
+                      let  a = node.node.data.costStatus;
+
+                      if(a == '未审核') {
+                        return true;
+                      }else {
+                        let self= this;
+                        alert('费用已审核');
+                      }
+                    },
                     cellEditor: 'largeText',
                     cellEditorParams: {
                       cols: '26',
@@ -206,47 +259,42 @@
           //点击新增按钮
           addFeeBtn() {
             let self = this;
-            var selectedRows  = this.gridOptions.api.getSelectedRows();
+            console.log(this.showData);
             if(this.showData != null ) {
-              let costItem = {
+              let  selectedRows  = this.gridOptions.api.getSelectedRows();
+              let costItem = { //应付初始值
                 relBillId: self.showData.xdTkBillId, //托卡 的ID
                 billCodes: self.showData.tkBillCode,
                 number: 1, //数量
                 relSettleAccountsId: self.showData.sendBillId,
                 costType: yingShou
               };
-              if(selectedRows.length === 0 ) {
-                let costItem2 = {
-                  relBillId: self.showData.xdTkBillId, //托卡 的ID
-                  billCodes: self.showData.tkBillCode,
-                  number: 1, //数量
-                  relSettleAccountsId: self.showData.sendTruckId,
-                  costType: yingFu
-                };
-                console.log('我 是没复制的值');
-                console.log(costItem);
-                console.log(costItem2);
-                self.addInterface(costItem);
-                self.addInterface(costItem2);
-              }else   if(selectedRows.length === 1){
-                costItem['costType'] = selectedRows[0].costType;  //类型
-                costItem['settleAccountsShortName'] = selectedRows[0].settleAccountsShortName; //简称
-                costItem['specsModel'] = selectedRows[0].specsModel; //类别
-                costItem['unitPrice'] = selectedRows[0].unitPrice; //单价
-                costItem['number'] = selectedRows[0].number; //数量
-                costItem['money'] = selectedRows[0].money; //金额
-                costItem['remark'] = selectedRows[0].remark; //备注
-                costItem['costName'] = selectedRows[0].costName; //费用名称
-                self.addInterface(costItem);
-                console.log('我是选中一条的复制');
-                console.log(costItem);
-              }
-
-
-
-
+              let costItem2 = {//应收初始值
+                relBillId: self.showData.xdTkBillId, //托卡 的ID
+                billCodes: self.showData.tkBillCode,
+                number: 1, //数量
+                relSettleAccountsId: self.showData.relTruckId,
+                costType: yingFu
+              };
+                 if(selectedRows.length === 0 ) { //没有选中费用表格数据的新增
+                   console.log(costItem);
+                   console.log(costItem2);
+                   self.addInterface(costItem);
+                   self.addInterface(costItem2);
+                 }else if(selectedRows.length === 1) { //当选择费用表格里面的一条数据进行新增
+                   costItem['costType'] = selectedRows[0].costType;  //类型
+                   costItem['settleAccountsShortName'] = selectedRows[0].settleAccountsShortName; //简称
+                   costItem['relSettleAccountsId'] = selectedRows[0].relSettleAccountsId; //ID
+                   costItem['specsModel'] = selectedRows[0].specsModel; //类别
+                   costItem['unitPrice'] = selectedRows[0].unitPrice; //单价
+                   costItem['number'] = selectedRows[0].number; //数量
+                   costItem['money'] = selectedRows[0].money; //金额
+                   costItem['remark'] = selectedRows[0].remark; //备注
+                   costItem['costName'] = selectedRows[0].costName; //费用名称
+                   console.log(costItem);
+                  self.addInterface(costItem);
+                 }
             }
-
           },
           //新增接口
           addInterface(params) {
@@ -254,144 +302,88 @@
             console.log(params);
            api.costAdd(params)
              .then(function (res) {
-               console.log('我是新增后返回的值');
-               console.log(res);
                if(res.status === 'fail') {
                  this.$alert('系统出错', '警告！', {
                    confirmButtonText: '确定'
                  })
                  } else {
                  /*成功 新增以后前台插入一条数据*/
-                 self.rowData.push(res.data);
-                 self.addInsertData(res.data);
+                   self.addInsertData(res.data);
                }
              })
              .catch(function(err) {
-
            })
           },
-          //成功后返回的函数
-          addInsertData(costItem) {
-            console.log('我是成功后返回的数据add');
-            console.log(this.rowData);
-            let self = this;
-            var newStore = self.rowData.slice();
-            newStore.push(costItem);
-            this.gridOptions.api.setRowData(newStore); //将数据设置到表格数据里
-            let num =  self.rowData.length;
-            self.gridOptions.api.setFocusedCell(num-1, 'costType');
-            self.gridOptions.api.startEditingCell({
-              rowIndex:num-1,
-              colKey: 'costType',
-            });
+          //新增成功后返回的函数
+          addInsertData(item) {
+            this.rowData.push(item); //将成功后的参数插入
           },
+
+          alertHand() {
+            this.$alert('该条费用 已经审核，不能删除', '信息', {
+              confirmButtonText: '确定'
+            })
+          },
+
           //点击当前行的数据
-          tableClk(item) {//获取表格选中的个数
+          tableClk(item) {//获取表格选中的参数
             this.selectNowData = item.data;
           },
           //开始编辑行数据触发函数
           startEdit(item) {
             let self =  this;
             let costStatus = item.data.costStatus;
-
+            console.log('开始新增');
             if(costStatus != '未审核') {
                console.log('我 是审核 状态');
-              //item.colDef.editable = false;
             }
           },
-/*          stopEdit(item) {
-            console.log('我已经停止编辑');
-            console.log(item);
-            let self = this;
-            let d = item.colDef.field;
-            let costItem = {costItemId:item.data.costItemId};
-
-            if(d === 'settleAccountsShortName'){
-              costItem['settleAccountsFullName'] = item.data.settleAccountsFullName;
-              costItem['relSettleAccountsId'] = item.data.relSettleAccountsId;
-              costItem[d] = item.value;
-              this.costEditInterface(costItem);
-            }else if(d === 'unitPrice') {
-              console.log('我是应付金额');
-              if( item.data.costType === yingFu) {
-                item.data.unitPrice =  -item.data.unitPrice ;
-                costItem['unitPrice']  =   item.data.unitPrice;
-              }else if (  item.data.costType === yingShou ) {
-                costItem['unitPrice']  =   item.value;
-              }
-              costItem['money'] = item.data.unitPrice * item.data.number;
-              item.data.money = costItem['money'];
-              this.costEditInterface(costItem);
-
-              console.log(item.node);
-            }else if( d === 'number') {
-              costItem['number']  =   item.value;
-              costItem['money'] = item.data.unitPrice * item.data.number;
-              item.data.money = costItem['money'];
-              this.costEditInterface(costItem);
-              console.log(item.node);
-            }else {
-              //编辑当前想后台传数据
-              console.log(costItem);
-              costItem[d] = item.value;
-              this.costEditInterface(costItem);
-              //this.gridOptions.api.refreshRows([item.node]);
-            }
-          },*/
           stopEdit(item) {
             console.log('我已经停止编辑');
-            console.log(item.data.costItemId);
+            console.log(item.data);
             let self = this;
             let d = item.colDef.field;
             let costItem = {costItemId:item.data.costItemId};
-
-            if(d === 'settleAccountsShortName'){
+            if(d === 'settleAccountsShortName') {
               costItem['settleAccountsFullName'] = item.data.settleAccountsFullName;
               costItem['relSettleAccountsId'] = item.data.relSettleAccountsId;
               costItem[d] = item.value;
-              this.costEditInterface(costItem);
-            }else if(d === 'unitPrice') {
-              console.log('我是应付金额');
-              costItem['unitPrice']  =   item.value;
+              console.log(11111111,costItem);
+              this.costEditInterface(costItem,item.data);
+            }else if(d === 'unitPrice' || d === 'number') {
+              costItem[d]  =   item.value;
               costItem['money'] = item.data.unitPrice * item.data.number;
               item.data.money = costItem['money'];
-              console.log(costItem);
-              this.costEditInterface(costItem);
-
-            }else if( d === 'number') {
-              costItem['number']  =   item.value;
-              costItem['money'] = item.data.unitPrice * item.data.number;
-              item.data.money = costItem['money'];
-              console.log(costItem);
-              this.costEditInterface(costItem);
-            }else {
-              //编辑当前想后台传数据
+              console.log(222222,costItem);
+              this.costEditInterface(costItem,item.data);
+            }else{
               costItem[d] = item.value;
-              console.log(costItem);
-              this.costEditInterface(costItem);
-              //this.gridOptions.api.refreshRows([item.node]);
+              console.log(3333333,costItem);
+              this.costEditInterface(costItem,item.data);
             }
           },
           setCustomData(data){
             console.log('是我==============');
           },
-          updateRow(row){
-           let selectedRow = this.gridOptions.api.getSelectedRows();
-            console.log(selectedRow);
-            for( let  objShow in selectedRow[0]) {
-              selectedRow[objShow] =  row[objShow];
+          updateRow(row,data){
+            console.log('我是update');
+            console.log(data);
+      //      this.getCostList(this.showData.xdTkBillId);
+      //      let selectedRow = this.gridOptions.api.getSelectedRows();
+            for( let  objShow in row) {
+              data[objShow] =  row[objShow];
             }
             this.gridOptions.api.refreshView();
+            console.log('成功');
           },
           //编辑函数接口
-          costEditInterface(params) {
+          costEditInterface(params,data) {
             let self =this;
+            console.log(params,data);
             api.costEdit(params)
               .then(function(res) {
                 console.log('我是成功编辑以后返回的结果集');
-                console.log(res);
-                self.updateRow(res.data);
-                self. getStatistics();
+                self.updateRow(res.data,data);
               })
               .catch(function(err) {
                 console.log(err);
@@ -404,19 +396,27 @@
           delFeeBtn() {
             let self = this;
             let params = { costItemId: this.selectNowData.costItemId };
-            this.$confirm('确认删除该记录吗?', '提示', {
-                type: 'warning'
-              })
-              .then(function() {
-                api.costDel(params)
-                  .then(function(res) {
-                    self.getCostList(); //获取费用列表
-                  })
-                  .catch(function(err) {
-                    console.log(err);
+            let state = this.selectNowData.costStatus;
+            if(state == '未审核') {
+              self.$confirm('确认删除该记录吗?', '提示', {
+                  type: 'warning'
+                })
+                .then(function() {
+                  api.costDel(params)
+                    .then(function(res) {
+                      self.getCostList(self.showData.xdTkBillId); //获取费用列表
+                    })
+                    .catch(function(err) {
+                      console.log(err);
 
-                  })
+                    })
+                })
+            }else {
+              this.$alert('该条费用 已经审核，不能删除', '信息', {
+                confirmButtonText: '确定'
               })
+            }
+
           },
           //获取费用的列表
           getCostList(xdTkBillId) {

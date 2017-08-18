@@ -2,24 +2,23 @@
   <div class="car-list">
     <!--tab切换框-->
     <el-tabs v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane label="综合" name="综合">
-           <compre :tableData="tableData"></compre>
-      </el-tab-pane>
-      <el-tab-pane label="车头登记" name="车头登记">
-         <car-header :activeNameMsg="activeName"></car-header>
+      <!--<el-tab-pane label="车辆" name="车辆">-->
+           <!--<compre :tableData="tableData"></compre>-->
+      <!--</el-tab-pane>-->
+      <el-tab-pane label="车辆" name="车辆">
+         <car-header :activeNameMsg="activeName" ref="carHeader"></car-header>
       </el-tab-pane>
       <el-tab-pane label="挂车登记" name="挂车登记">
-        <gua-car></gua-car>
+        <gua-car :activeNameMsg="activeName"></gua-car>
       </el-tab-pane>
     </el-tabs>
-
   </div>
 </template>
 
 <script>
-  import compre from './comprehensive.vue'
+  import compre from './comprehensive/comprehensive.vue'
   import carHead from './carHeader.vue'
-  import carFooter from './guaCar.vue'
+  import carFooter from './guaCar/guaCar.vue'
     export default {
       components: {
         'compre': compre,
@@ -51,12 +50,14 @@
             {name: "归属车队",  isChecked:false, record: "fleet"},
             {name: "备注",  isChecked:false, record: "remark"}
           ],
-          activeName: '综合'
+          activeName: '车辆'
         };
       },
       methods: {
         handleClick(tab) {
-          if(tab.label === '')
+          if(tab.label === '车辆'){
+            this.$refs.carHeader.getRowData();
+          }
           console.log(tab.label);
         }
       }

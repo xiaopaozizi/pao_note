@@ -50,7 +50,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="铅封号" prop="sealNo">
+            <el-form-item label="封号" prop="sealNo">
               <el-input style="width:200px" v-model="addYdForm.sealNo" placeholder="请输入内容" :maxlength="11"></el-input>
             </el-form-item>
           </el-col>
@@ -149,7 +149,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="铅封号" prop="sealNo">
+            <el-form-item label="封号" prop="sealNo">
               <el-input style="width:200px" v-model="editYdForm.sealNo" placeholder="请输入内容" :maxlength="11"></el-input>
             </el-form-item>
           </el-col>
@@ -306,7 +306,7 @@
           {name: "运单类型", isChecked:true,record: "billType"},
           {name: "箱型", isChecked:true, record: "teuType"},
           {name: "箱号", isChecked:true, record: "teuNo"},
-          {name: "铅封号", isChecked:true, record: "sealNo"},
+          {name: "封号", isChecked:true, record: "sealNo"},
           {name: "提箱点",isChecked:true, record: "getClpPlace"},
           {name: "进箱点",isChecked:true, record: "downClpPlace"},
           {name: "装拆地",isChecked:true, record: "destination"},
